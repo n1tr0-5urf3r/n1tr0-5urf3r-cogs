@@ -29,8 +29,8 @@ class Ihlebot:
     @commands.command(pass_context=True)
     async def beleidige(self, ctx, name):
         """Second Test, Variablenverarbeitung"""
-        msg = await self.bot.say(name + 'ist ein Behindi!')
-        await msg.add_reaction('\U0001F44D')
+        msg = await self.bot.say(name + ' ist ein Behindi!')
+        await Client.add_reaction(msg, '\U0001F44D')
 
 def setup(bot):
     n = Ihlebot(bot)
