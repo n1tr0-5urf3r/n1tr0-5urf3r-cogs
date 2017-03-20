@@ -89,8 +89,16 @@ class Ihlebot:
         """Outputs a random image from pr0gramm.com (sfw)"""
         # RNG
         post = randint(0,1831010)
-        urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, temp.html)
-
+        await self.bot.say('DEBUG RND is ' + post)
+        urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, 'temp.html')
+        file = open('temp.html')
+        match = false
+        for line in file.readlines():
+            if match:
+                await self.bot.say('Match! ' + line)
+            if "img src" in line:
+                match = true
+            file.close()
 
 def setup(bot):
     n = Ihlebot(bot)
