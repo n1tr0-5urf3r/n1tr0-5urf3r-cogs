@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+import os
+import time
 #from .utils import checks
 from cogs import * #dataIO, fileIO
 #from __main__ import send_cmd_help
@@ -48,7 +50,19 @@ class Ihlebot:
         server = ctx.message.server
         with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
             f = imageFile.read()
-        await self.bot.create_custom_emoji('temp', f)
+        await self.bot.create_custom_emoji(server, 'temp', f)
+
+    @commands.command(pass_context=True)
+    async def ping(self, ctx, ip):
+        """Check if Server is online"""
+        start = time.time()
+        response = os.system("ping -c 1 -w3" + ip)
+        duration = time.time()-start
+
+        if response == 0:
+            await self.bot.say(ip + ' is up and responding in ' + duration + 'ms.')
+        else:
+            await self.bot.say(ip + ' is not reachable.')
 
 
 def setup(bot):
