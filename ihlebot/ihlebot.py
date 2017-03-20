@@ -70,8 +70,8 @@ class Ihlebot:
         elif valid_hostname.match(ip):
             valid = True
             await self.bot.say('Doing DNS lookup...')
-            ip = socket.gethostbyname('ip')
-            await self.bot.say('DEBUG: looked up ip is '+ip)
+            hostname = socket.gethostbyname('ip')
+            await self.bot.say('DEBUG: looked up ip is '+hostname)
         if valid == True:
             start = time.time()
             response = os.system("sudo ping -c 1 -w3 " + ip)
