@@ -6,8 +6,7 @@ from .utils import checks
 from cogs import * #dataIO, fileIO
 from __main__ import send_cmd_help
 
-
-import json
+import re
 import os
 import asyncio
 import aiohttp
@@ -55,10 +54,17 @@ class Ihlebot:
     @commands.command(pass_context=True)
     async def ping(self, ctx, ip):
         """Check if Server is online"""
-        start = time.time()
-        response = os.system("sudo ping -c 1 -w3 " + ip)
-        duration = time.time()-start
-        duration = round(duration * 1000,0)
+
+        # Check for valid IP
+        valid_ip = re.compile("[0-9]{,3}\.[0-9]{,3}\.[0-9]{,3}")
+
+        if valid_ip.match(ip):
+            start = time.time()
+            response = os.system("sudo ping -c 1 -w3 " + ip)
+            duration = time.time()-start
+            duration = round(duration * 1000,0)
+        else:
+            await self.bot.say('Not a valid IP!')
 
         if response == 0:
             await self.bot.say(ip + ' is up and responding in ' + str(duration) + 'ms.')
