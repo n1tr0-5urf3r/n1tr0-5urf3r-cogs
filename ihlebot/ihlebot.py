@@ -39,7 +39,7 @@ class Ihlebot:
         data = discord.Embed(description="Emojilist")
         for ej in self.bot.get_all_emojis():
             msg = " Name: " + ej.name + " ID: " + ej.id
-            data.add_field(value=ej.name+':'+ej.id + msg, inline=False)
+            data.add_field(name=' ', value=ej.name+':'+ej.id + msg, inline=False)
 
         await self.bot.say(embed=data)
 
