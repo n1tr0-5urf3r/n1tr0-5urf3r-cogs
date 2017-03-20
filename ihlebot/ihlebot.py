@@ -35,9 +35,10 @@ class Ihlebot:
     @commands.command(pass_context=True)
     async def emojis(self, ctx):
         """Returns a list of all Server Emojis"""
+        server = ctx.message.server
         await self.bot.say('This may take some time, generating list...')
         data = discord.Embed(description="Emojilist")
-        for ej in self.bot.get_all_emojis():
+        for ej in server.emojis():
             msg = " Name: " + ej.name + " ID: " + ej.id
             data.add_field(name=ej.name, value=ej.name+':'+ej.id + msg, inline=False)
 
