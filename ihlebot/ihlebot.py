@@ -53,7 +53,7 @@ class Ihlebot:
 #        await self.bot.create_custom_emoji(server, 'temp', f)
 
     @commands.command(pass_context=True)
-    async def check(self, ctx, ip):
+    async def ping(self, ctx, ip):
         """Check if Server is online"""
         start = time.time()
         response = os.system("sudo ping -c 1 -w3 " + ip)
@@ -62,7 +62,7 @@ class Ihlebot:
 
 
         if response == 0:
-            await self.bot.say(ip + ' is up and responding in ' + duration + 'ms.')
+            await self.bot.say(ip + ' is up and responding in ' + {0} + 'ms.'.format(duration))
         else:
             await self.bot.say(ip + ' is not reachable.')
 
