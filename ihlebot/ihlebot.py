@@ -6,8 +6,13 @@ from .utils import checks
 from cogs import * #dataIO, fileIO
 from __main__ import send_cmd_help
 
+# Used for DNS lookup
+import socket
+# Used for regexp
 import re
+# Used for ping
 import os
+# General stuff for discord
 import asyncio
 import aiohttp
 import datetime
@@ -57,19 +62,26 @@ class Ihlebot:
 
         # Check for valid IP
         valid_ip = re.compile("[0-9]{,3}\.[0-9]{,3}\.[0-9]{,3}")
+        valid_hostname = re.compile(".*\.[a-zA-Z]{2,}")
+        valid = False
 
         if valid_ip.match(ip):
+            valid = True
+        elif valid_hostname.match(ip):
+            await self.bot.say('Doing DNS lookup...')
+            ip = socket.gethostbyname('ip')
+            valid = True
+        if valid == True:
             start = time.time()
             response = os.system("sudo ping -c 1 -w3 " + ip)
-            duration = time.time()-start
-            duration = round(duration * 1000,0)
+            duration = time.time() - start
+            duration = round(duration * 1000, 0)
+            if response == 0:
+                await self.bot.say(ip + ' is up and responding in ' + str(duration) + 'ms.')
+            else:
+                await self.bot.say(ip + ' is not reachable.')
         else:
-            await self.bot.say('Not a valid IP!')
-
-        if response == 0:
-            await self.bot.say(ip + ' is up and responding in ' + str(duration) + 'ms.')
-        else:
-            await self.bot.say(ip + ' is not reachable.')
+            await self.bot.say(ip + ' is not valid.')
 
 
 def setup(bot):
