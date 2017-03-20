@@ -36,7 +36,7 @@ class Ihlebot:
     async def emojis(self, ctx):
         """Returns a list of all Server Emojis"""
         for ej in self.bot.get_all_emojis():
-            msg = print(ej.name, ej.id, ej.managed, ej.server)
+            msg = " Name: " + ej.name + " ID: " + ej.id
             await self.bot.say(msg)
 
 def setup(bot):
