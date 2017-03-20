@@ -27,7 +27,7 @@ class Ihlebot:
         await self.bot.say('Ihle ist der beste!')
 
     @commands.command(pass_context=True)
-    async def beleidige(selfself, ctx, name):
+    async def beleidige(self, ctx, name):
         """Second Test, Variablenverarbeitung"""
         await self.bot.say(name + 'ist ein Behindi!')
 
