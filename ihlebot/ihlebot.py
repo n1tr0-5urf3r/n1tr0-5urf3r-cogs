@@ -60,7 +60,7 @@ class Ihlebot:
     async def ping(self, ctx, ip):
         """Check if Server is online"""
 
-        # Check for valid IP
+        # Check for valid IP else do DNS lookup
         valid_ip = re.compile("[0-9]{,3}\.[0-9]{,3}\.[0-9]{,3}")
         valid_hostname = re.compile(".*\.[a-zA-Z]{2,}")
         valid = False
@@ -71,7 +71,6 @@ class Ihlebot:
             valid = True
             await self.bot.say('Doing DNS lookup...')
             ip = socket.gethostbyname(ip)
-            await self.bot.say('DEBUG: looked up ip is '+ip)
         if valid == True:
             start = time.time()
             response = os.system("sudo ping -c 1 -w3 " + ip)
@@ -82,7 +81,7 @@ class Ihlebot:
             else:
                 await self.bot.say(ip + ' is not reachable.')
         else:
-            await self.bot.say(ip + ' is not valid.')
+            await self.bot.say(ip + ' is not a valid IP or Domain.')
 
 
 def setup(bot):
