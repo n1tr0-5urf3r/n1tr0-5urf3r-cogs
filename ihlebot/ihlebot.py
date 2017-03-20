@@ -94,10 +94,11 @@ class Ihlebot:
         file = open('temp.html')
         match = false
         for line in file.readlines():
-            if match:
-                await self.bot.say('Match! ' + line)
-            if "img src" in line:
-                match = true
+            while not match:
+                if "img src" in line:
+                    match = true
+                if match:
+                    await self.bot.say('Match! ' + line)
             file.close()
 
 def setup(bot):
