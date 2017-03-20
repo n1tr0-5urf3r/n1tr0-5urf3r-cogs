@@ -56,7 +56,7 @@ class Ihlebot:
     async def ping(self, ctx, ip):
         """Check if Server is online"""
         start = time.time()
-        response = os.system("ping -c 1 -w3 " + str(ip))
+        response = os.system("sudo ping -c 1 -w3 " + str(ip))
         duration = time.time()-start
 
         if response == 0:
