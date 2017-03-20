@@ -12,6 +12,7 @@ import socket
 import re
 # Used for ping
 import os
+import urllib.request
 # General stuff for discord
 import asyncio
 import aiohttp
@@ -82,6 +83,13 @@ class Ihlebot:
                 await self.bot.say(ip + ' is not reachable.')
         else:
             await self.bot.say(ip + ' is not a valid IP or Domain.')
+
+    @commands.command(pass_context=True)
+    async def pr0(self,ctx):
+        """Outputs a random image from pr0gramm.com (sfw)"""
+        # RNG
+        post = randint(0,1831010)
+        urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, temp.html)
 
 
 def setup(bot):
