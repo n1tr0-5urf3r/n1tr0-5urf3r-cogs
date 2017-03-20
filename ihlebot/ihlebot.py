@@ -90,7 +90,10 @@ class Ihlebot:
         # RNG
         post = randint(0,1831010)
         await self.bot.say('DEBUG RND is ' + post)
+        # Download page from static pr0gramm, save to tempfile
         urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, 'temp.html')
+        # open tempfile, read line as long as img src doesnt match, if so output the line and close file
+        # TODO testing, crop line to url only, remove tempfile
         file = open('temp.html')
         match = false
         for line in file.readlines():
