@@ -23,8 +23,13 @@ class Ihlebot:
 
     @commands.group(pass_context=True)
     async def ihle(self, ctx):
-        """Erster Test, Commandaufruf"""
+        """First Test, Commandcall"""
         await self.bot.say('Ihle ist der beste!')
+
+    @commands.command(pass_context=True)
+    async def beleidige(selfself, ctx, name):
+        """Second Test, Variablenverarbeitung"""
+        await self.bot.say(name + 'ist ein Behindi!')
 
 def setup(bot):
     n = Ihlebot(bot)
