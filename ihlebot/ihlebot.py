@@ -1,8 +1,8 @@
 import discord
 from discord.ext import commands
-#from .utils import checks
-from cogs import * #dataIO, fileIO
-#from __main__ import send_cmd_help
+from .utils import checks
+from cogs import dataIO, fileIO
+from __main__ import send_cmd_help
 
 
 import json
@@ -11,13 +11,6 @@ import asyncio
 import aiohttp
 import datetime
 
-
-class APIError(Exception):
-    pass
-
-
-class APIKeyError(Exception):
-    pass
 
 class Ihlebot:
     """ Command definitions"""
@@ -31,7 +24,7 @@ class Ihlebot:
     @commands.group(pass_context=True)
     async def ihle(self, ctx):
         """Erster Test, Commandaufruf"""
-        self.bot.say('Ihle ist der beste!')
+        await self.bot.say('Ihle ist der beste!')
 
 def setup(bot):
     n = Ihlebot(bot)
