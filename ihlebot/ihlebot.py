@@ -32,9 +32,10 @@ class Ihlebot:
         msg = await self.bot.say(name + ' ist ein Behindi!')
         await self.bot.add_reaction(msg,'👀')
 
-#@client.event
-#async def add_reaction(message):
-#    client.add_reaction(msg, '\U0001F44D')
+    @commands.command(pass_context=True)
+    async def emojis(self, ctx, name):
+        """Returns a list of all Server Emojis"""
+        await self.bot.say(self.bot.get_all_emojis)
 
 def setup(bot):
     n = Ihlebot(bot)
