@@ -41,7 +41,6 @@ class Ihlebot:
         for ej in server.emojis:
             #msg = " Name: " + ej.name + " ID: " + ej.id
             data.add_field(name=ej.name, value=str(ej) + " " + ej.id, inline=False)
-            data.
 
         await self.bot.say(embed=data)
 
