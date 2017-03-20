@@ -30,7 +30,7 @@ class Ihlebot:
     async def beleidige(self, ctx, name):
         """Second Test, Variablenverarbeitung"""
         msg = await self.bot.say(name + ' ist ein Behindi!')
-        await Client.add_reaction(msg, '\U0001F44D')
+        await self.add_reaction(msg, '\U0001F44D')
 
 def setup(bot):
     n = Ihlebot(bot)
