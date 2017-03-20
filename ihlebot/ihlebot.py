@@ -30,7 +30,7 @@ class Ihlebot:
     async def beleidige(self, ctx, name):
         """Second Test, Variablenverarbeitung"""
         msg = await self.bot.say(name + ' ist ein Behindi!')
-        self.bot.add_reaction(msg,'\N{THUMBS UP SIGN}')
+        self.bot.add_reaction(msg,'👀')
 
 #@client.event
 #async def add_reaction(message):
