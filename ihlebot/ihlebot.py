@@ -2,9 +2,9 @@ import discord
 from discord.ext import commands
 import os
 import time
-#from .utils import checks
+from .utils import checks
 from cogs import * #dataIO, fileIO
-#from __main__ import send_cmd_help
+from __main__ import send_cmd_help
 
 
 import json
@@ -44,13 +44,13 @@ class Ihlebot:
             data.add_field(name=ej.name, value=str(ej) + " " + ej.id, inline=False)
         await self.bot.say(embed=data)
 
-    @commands.command(pass_context=True)
-    async def create(self, ctx):
-        """Create custom emojis"""
-        server = ctx.message.server
-        with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
-            f = imageFile.read()
-        await self.bot.create_custom_emoji(server, 'temp', f)
+#    @commands.command(pass_context=True)
+#    async def create(self, ctx):
+#        """Create custom emojis"""
+#        server = ctx.message.server
+#        with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
+#            f = imageFile.read()
+#        await self.bot.create_custom_emoji(server, 'temp', f)
 
     @commands.command(pass_context=True)
     async def ping(self, ctx, ip):
