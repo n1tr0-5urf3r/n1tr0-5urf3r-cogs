@@ -58,6 +58,7 @@ class Ihlebot:
         start = time.time()
         response = os.system("sudo ping -c 1 -w3 " + ip)
         duration = time.time()-start
+        duration = duration / 1000
 
         if response == 0:
             await self.bot.say(ip + ' is up and responding in ' + str(duration) + 'ms.')
