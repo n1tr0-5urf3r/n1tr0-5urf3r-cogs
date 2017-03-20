@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from .utils import checks
-from cogs import dataIO, fileIO
+from cogs import * #dataIO, fileIO
 from __main__ import send_cmd_help
 
 
