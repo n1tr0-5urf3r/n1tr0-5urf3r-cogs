@@ -41,7 +41,7 @@ class Ihlebot:
             msg = " Name: " + ej.name + " ID: " + ej.id
             data.add_field(name=ej.name, value=':' + ej.name + ':' + msg, inline=False)
 
-        await self.bot.say(msg)
+        await self.bot.say(embed=data)
 
 def setup(bot):
     n = Ihlebot(bot)
