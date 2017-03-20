@@ -32,3 +32,9 @@ class Ihlebot:
     async def ihle(self, ctx):
         """Erster Test, Commandaufruf"""
         self.bot.say('Ihle ist der beste!')
+
+def setup(bot):
+    n = Ihlebot(bot)
+    loop = asyncio.get_event_loop()
+    loop.create_task(n._gamebuild_checker())
+    bot.add_cog(n)
