@@ -38,7 +38,7 @@ class Ihlebot:
         await self.bot.say('This may take some time, generating list...')
         data = discord.Embed(description="Emojilist")
         for ej in self.bot.get_all_emojis():
-            #msg = " Name: " + ej.name + " ID: " + ej.id
+            msg = " Name: " + ej.name + " ID: " + ej.id
             data.add_field(name=ej.name, value=':' + ej.name + ':' + msg, inline=False)
 
         await self.bot.say(msg)
