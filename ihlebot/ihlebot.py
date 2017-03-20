@@ -44,6 +44,16 @@ class Ihlebot:
 
         await self.bot.say(embed=data)
 
+     @commands.command(pass_context=True)
+    async def create(self, ctx,name):
+         server = ctx.message.server
+         with open("icon.png", 'rb') as imageFile:
+             f = imageFile.read()
+             b = bytearray(f)
+
+         await self.bot.create_custom_emoji(server, 'temp', b)
+
+
 def setup(bot):
     n = Ihlebot(bot)
     loop = asyncio.get_event_loop()
