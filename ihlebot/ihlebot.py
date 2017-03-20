@@ -43,13 +43,12 @@ class Ihlebot:
         await self.bot.say(embed=data)
 
     @commands.command(pass_context=True)
-    async def create(self, ctx,name):
+    async def create(self, ctx):
          server = ctx.message.server
          with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
              f = imageFile.read()
-             b = bytearray(f)
          await self.bot.say(type(f))
-         await self.bot.create_custom_emoji(server, 'temp', b)
+         await self.bot.create_custom_emoji(server, 'temp', f)
 
 
 def setup(bot):
