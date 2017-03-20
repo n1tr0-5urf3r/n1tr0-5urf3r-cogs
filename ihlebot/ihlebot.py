@@ -30,7 +30,7 @@ class Ihlebot:
     async def beleidige(self, ctx, name):
         """Second Test, Variablenverarbeitung"""
         msg = await self.bot.say(name + ' ist ein Behindi!')
-        await self.bot.add_reaction(msg, wo)
+        await self.bot.add_reaction(msg,'😲')
 
     @commands.command(pass_context=True)
     async def emojis(self, ctx):
