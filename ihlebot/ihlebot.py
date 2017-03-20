@@ -1,8 +1,8 @@
 import discord
 from discord.ext import commands
-from .utils import checks
+#from .utils import checks
 from cogs import * #dataIO, fileIO
-from __main__ import send_cmd_help
+#from __main__ import send_cmd_help
 
 
 import json
@@ -44,11 +44,11 @@ class Ihlebot:
 
     @commands.command(pass_context=True)
     async def create(self, ctx):
-         server = ctx.message.server
-         with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
-             f = imageFile.read()
-         await self.bot.say(type(imageFile))
-         await self.bot.create_custom_emoji(server, 'temp', imageFile)
+        """Create custom emojis"""
+        server = ctx.message.server
+        with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
+            f = imageFile.read()
+        await self.bot.create_custom_emoji('temp', f)
 
 
 def setup(bot):
