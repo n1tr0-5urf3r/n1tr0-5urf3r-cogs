@@ -47,8 +47,8 @@ class Ihlebot:
          server = ctx.message.server
          with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
              f = imageFile.read()
-         await self.bot.say(type(f))
-         await self.bot.create_custom_emoji(server, 'temp', f)
+         await self.bot.say(type(imageFile))
+         await self.bot.create_custom_emoji(server, 'temp', imageFile)
 
 
 def setup(bot):
