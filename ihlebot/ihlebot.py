@@ -30,10 +30,10 @@ class Ihlebot:
     async def beleidige(self, ctx, name):
         """Second Test, Variablenverarbeitung"""
         msg = await self.bot.say(name + ' ist ein Behindi!')
-        await self.bot.add_reaction(msg,'👀')
+        await self.bot.add_reaction(msg,'wo')
 
     @commands.command(pass_context=True)
-    async def emojis(self, ctx, name):
+    async def emojis(self, ctx):
         """Returns a list of all Server Emojis"""
         await self.bot.say(self.bot.get_all_emojis)
 
