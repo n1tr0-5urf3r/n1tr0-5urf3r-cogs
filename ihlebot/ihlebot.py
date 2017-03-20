@@ -39,14 +39,13 @@ class Ihlebot:
         await self.bot.say('This may take some time, generating list...')
         data = discord.Embed(description="Emojilist")
         for ej in server.emojis:
-            #msg = " Name: " + ej.name + " ID: " + ej.id
             data.add_field(name=ej.name, value=str(ej) + " " + ej.id, inline=False)
         await self.bot.say(embed=data)
 
     @commands.command(pass_context=True)
     async def create(self, ctx,name):
          server = ctx.message.server
-         with open("icon.png", 'rb') as imageFile:
+         with open(icon.png, 'rb') as imageFile:
              f = imageFile.read()
              b = bytearray(f)
          await self.bot.create_custom_emoji(server, 'temp', b)
