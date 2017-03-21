@@ -98,7 +98,8 @@ class Ihlebot:
             while not valid:
                 post = str(randint(0, 1831010))
                 ret = requests.head('http://pr0gramm.com/static/'+post)
-                status = str(ret.status_code)[-3:]
+                status = str(ret.status_code)
+                status = status[-3:]
                 await self.bot.say('DEBUG Statuscode ' + post + " " + status)
                 if status is not '404':
                     valid = True
