@@ -25,6 +25,8 @@ class Ihlebot:
     def __init__(self, bot):
         self.bot = bot
         self.session = aiohttp.ClientSession(loop=self.bot.loop)
+        game = discord.Game(name='Justified Loyalty')
+        self.bot.change_status(game)
 
     def __unload(self):
         self.session.close()
