@@ -91,6 +91,7 @@ class Ihlebot:
         post = str(randint(0,1831010))
         await self.bot.say('DEBUG RND is ' + post)
         # Download page from static pr0gramm, save to tempfile
+        await self.bot.say('DEBUG: http://pr0gramm.com/static/'+post)
         urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, 'temp.html')
         # open tempfile, read line as long as img src doesnt match, if so output the line and close file
         # TODO testing, crop line to url only, remove tempfile
@@ -98,9 +99,9 @@ class Ihlebot:
         match = False
         for line in file.readlines():
             while not match:
+                await self.bot.say('DEBUG ' + line)
                 if "img src" in line:
                     match = True
-                if match:
                     await self.bot.say('Match! ' + line)
             file.close()
 
