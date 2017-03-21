@@ -87,16 +87,18 @@ class Ihlebot:
     @commands.command(pass_context=True)
     async def pr0(self,ctx):
         """Outputs a random image from pr0gramm.com (sfw)"""
-        # RNG
-        post = str(randint(0,1831010))
-        await self.bot.say('DEBUG RND is ' + post)
-        # Download page from static pr0gramm, save to tempfile
-        await self.bot.say('DEBUG: http://pr0gramm.com/static/'+post)
+
+       # await self.bot.say('DEBUG RND is ' + post)
+       # await self.bot.say('DEBUG: http://pr0gramm.com/static/'+post)
+
         # open tempfile, read line as long as img src doesnt match, if so output the line and close file
         # TODO testing, crop line to url only, remove tempfile
         match = False
 
         while not match:
+            # RNG
+            post = str(randint(0, 1831010))
+            # Download page from static pr0gramm, save to tempfile
             urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, 'temp.html')
             file = open('temp.html', 'r')
             line = file.readlines()[62]
