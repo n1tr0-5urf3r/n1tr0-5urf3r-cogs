@@ -106,14 +106,17 @@ class Ihlebot:
                     valid = True
                     # Download page from static pr0gramm, save to tempfile
                     urllib.request.urlretrieve('http://pr0gramm.com/static/' + post, 'temp.html')
-                elif ret.status_code == 404:
-                    await self.bot.say('DEBUG 404:' + post + ' Statuscode: ' + str(ret.status_code))
+                #elif ret.status_code == 404:
+                #    await self.bot.say('DEBUG 404:' + post + ' Statuscode: ' + str(ret.status_code))
 
             file = open('temp.html', 'r')
             line = file.readlines()[62]
             if "img src" in line:
+                tags = line.replace('^.*alt="', '')
+                tags = tags.replace('"/>', '')
                 line = line.replace('<img src="','http:')
                 line = re.sub('".*$', '', line)
+                await self.bot.say('Tags: ' + tags)
                 await self.bot.say(line)
                 match = True
                 file.close()
