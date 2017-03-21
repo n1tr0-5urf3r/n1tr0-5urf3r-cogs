@@ -19,6 +19,12 @@ import asyncio
 import aiohttp
 import datetime
 
+client = discord.Client()
+
+@client.event
+async def init_status(self, bot):
+    game = discord.Game(name='Justified Loyalty')
+    await self.bot.change_status(game)
 
 class Ihlebot:
     """ Command definitions"""
@@ -26,20 +32,13 @@ class Ihlebot:
         self.bot = bot
         self.session = aiohttp.ClientSession(loop=self.bot.loop)
 
-
     def __unload(self):
         self.session.close()
-
-    async def init_status(self, bot):
-        game = discord.Game(name='Justified Loyalty')
-        await self.bot.change_status(game)
 
     @commands.group(pass_context=True)
     async def ihle(self, ctx):
         """First Test, Commandcall"""
         await self.bot.say('Ihle ist der beste!')
-        game = discord.Game(name='Justified Loyalty')
-        await self.bot.change_status(game)
 
     @commands.command(pass_context=True)
     async def beleidige(self, ctx, name):
