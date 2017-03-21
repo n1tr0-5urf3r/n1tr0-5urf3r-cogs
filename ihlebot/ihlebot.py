@@ -105,6 +105,8 @@ class Ihlebot:
                     valid = True
                     # Download page from static pr0gramm, save to tempfile
                     urllib.request.urlretrieve('http://pr0gramm.com/static/' + post, 'temp.html')
+                elif ret.status_code == 404:
+                    await self.bot.say('DEBUG 404:' + post + 'Statuscode: ' + str(ret.status_code))
 
             file = open('temp.html', 'r')
             line = file.readlines()[62]
