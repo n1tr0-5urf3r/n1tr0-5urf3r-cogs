@@ -98,8 +98,8 @@ class Ihlebot:
             while not valid:
                 post = str(randint(0, 1831010))
                 ret = requests.head('http://pr0gramm.com/static/'+post)
-                await self.bot.say('DEBUG Statuscode ' + post + " " + str(ret.status_code))
-                if str(ret.status_code) is not '404':
+                await self.bot.say('DEBUG Statuscode ' + post + " " + str(ret.status_code)[-3:])
+                if str(ret.status_code)[-3:] is not '404':
                     valid = True
                     # Download page from static pr0gramm, save to tempfile
                     urllib.request.urlretrieve('http://pr0gramm.com/static/' + post, 'temp.html')
