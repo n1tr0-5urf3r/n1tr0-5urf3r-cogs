@@ -95,15 +95,16 @@ class Ihlebot:
         urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, 'temp.html')
         # open tempfile, read line as long as img src doesnt match, if so output the line and close file
         # TODO testing, crop line to url only, remove tempfile
-        file = open('temp.html')
+        file = open('temp.html', 'r')
         match = False
-        for line in file:
-            while not match:
-                await self.bot.say('DEBUG ' + line)
-                if "img src" in line:
-                    match = True
-                    await self.bot.say('Match! ' + line)
-            file.close()
+
+        line = file.readline()[62:]
+        await self.bot.say('DEBUG ' + line)
+
+        if "img src" in line:
+            await self.bot.say('Match! ' + line)
+
+        file.close()
 
 def setup(bot):
     n = Ihlebot(bot)
