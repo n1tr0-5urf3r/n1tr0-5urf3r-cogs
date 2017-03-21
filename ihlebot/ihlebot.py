@@ -106,6 +106,7 @@ class Ihlebot:
 
             if "img src" in line:
                 line = line.replace('<img src="','http:')
+                line = re.sub('".*$', '', line)
                 await self.bot.say('Match! ' + line)
                 match = True
                 file.close()
