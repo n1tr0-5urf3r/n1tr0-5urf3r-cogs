@@ -105,6 +105,7 @@ class Ihlebot:
             await self.bot.say('DEBUG ' + line)
 
             if "img src" in line:
+                line = line.replace('<img src="','http:')
                 await self.bot.say('Match! ' + line)
                 match = True
                 file.close()
