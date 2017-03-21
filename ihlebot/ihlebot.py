@@ -97,7 +97,7 @@ class Ihlebot:
         # TODO testing, crop line to url only, remove tempfile
         file = open('temp.html')
         match = False
-        for line in file.readlines():
+        for line in file:
             while not match:
                 await self.bot.say('DEBUG ' + line)
                 if "img src" in line:
