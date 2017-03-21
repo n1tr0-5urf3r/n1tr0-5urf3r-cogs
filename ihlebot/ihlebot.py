@@ -12,6 +12,7 @@ import re
 # Used for ping
 import os
 import urllib.request
+import requests
 from random import randint
 # General stuff for discord
 import asyncio
@@ -88,28 +89,27 @@ class Ihlebot:
     async def pr0(self,ctx):
         """Outputs a random image from pr0gramm.com (sfw)"""
 
-       # await self.bot.say('DEBUG RND is ' + post)
-       # await self.bot.say('DEBUG: http://pr0gramm.com/static/'+post)
-
         # open tempfile, read line as long as img src doesnt match, if so output the line and close file
-        # TODO testing, crop line to url only, remove tempfile
+        # TODO only, remove tempfile
         match = False
-
         while not match:
             # RNG
-            post = str(randint(0, 1831010))
-            # Download page from static pr0gramm, save to tempfile
-            urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, 'temp.html')
-            file = open('temp.html', 'r')
-            line = file.readlines()[62]
-            await self.bot.say('DEBUG ' + line)
-
-            if "img src" in line:
-                line = line.replace('<img src="','http:')
-                line = re.sub('".*$', '', line)
-                await self.bot.say('Match! ' + line)
-                match = True
-                file.close()
+            valid = False
+            while not valid:
+                post = str(randint(0, 1831010))
+                ret = requests.head('http://pr0gramm.com/static/'+post)
+                if ret.status_code is not '404':
+                    valid = True
+                # Download page from static pr0gramm, save to tempfile
+                urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, 'temp.html')
+                file = open('temp.html', 'r')
+                line = file.readlines()[62]
+                if "img src" in line:
+                    line = line.replace('<img src="','http:')
+                    line = re.sub('".*$', '', line)
+                    await self.bot.say(line)
+                    match = True
+                    file.close()
 
 def setup(bot):
     n = Ihlebot(bot)
