@@ -25,10 +25,13 @@ class Ihlebot:
     def __init__(self, bot):
         self.bot = bot
         self.session = aiohttp.ClientSession(loop=self.bot.loop)
-        self.bot.change_presence(game=discord.Game(name='Justified Loyalty'))
 
     def __unload(self):
         self.session.close()
+
+    async def init_status(self, bot):
+        game = discord.Game(name='Justified Loyalty')
+        await self.bot.change_status(game)
 
     @commands.group(pass_context=True)
     async def ihle(self, ctx):
