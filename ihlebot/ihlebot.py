@@ -95,11 +95,11 @@ class Ihlebot:
         # open tempfile, read line as long as img src doesnt match, if so output the line and close file
         # TODO testing, crop line to url only, remove tempfile
         file = open('temp.html')
-        match = false
+        match = False
         for line in file.readlines():
             while not match:
                 if "img src" in line:
-                    match = true
+                    match = True
                 if match:
                     await self.bot.say('Match! ' + line)
             file.close()
