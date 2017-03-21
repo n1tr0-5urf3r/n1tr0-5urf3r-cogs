@@ -88,7 +88,7 @@ class Ihlebot:
     async def pr0(self,ctx):
         """Outputs a random image from pr0gramm.com (sfw)"""
         # RNG
-        post = randint(0,1831010)
+        post = str(randint(0,1831010))
         await self.bot.say('DEBUG RND is ' + post)
         # Download page from static pr0gramm, save to tempfile
         urllib.request.urlretrieve('http://pr0gramm.com/static/'+post, 'temp.html')
