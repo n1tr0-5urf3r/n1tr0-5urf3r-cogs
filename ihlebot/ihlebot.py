@@ -55,11 +55,11 @@ class Ihlebot:
 
     @commands.command(pass_context=True)
     async def create(self, ctx):
-        """Create custom emojis"""
+        """Create custom emojis Currently not working"""
         server = ctx.message.server
         with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
             f = imageFile.read()
-        await self.bot.create_custom_emoji(self,server, 'temp', f)
+        await self.bot.create_custom_emoji(f)
 
     @commands.command(pass_context=True)
     async def ping(self, ctx, ip):
