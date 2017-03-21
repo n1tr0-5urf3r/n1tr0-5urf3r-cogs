@@ -1,10 +1,9 @@
 import discord
 from discord.ext import commands
-import os
 import time
-from .utils import checks
+#from .utils import checks
 from cogs import * #dataIO, fileIO
-from __main__ import send_cmd_help
+#from __main__ import send_cmd_help
 
 # Used for DNS lookup
 import socket
@@ -13,6 +12,7 @@ import re
 # Used for ping
 import os
 import urllib.request
+from random import randint
 # General stuff for discord
 import asyncio
 import aiohttp
