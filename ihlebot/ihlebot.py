@@ -112,7 +112,7 @@ class Ihlebot:
             file = open('temp.html', 'r')
             line = file.readlines()[62]
             if "img src" in line:
-                tags = line.replace('^.*alt="', '')
+                tags = line.replace('^.*alt=', '')
                 tags = tags.replace('"/>', '')
                 line = line.replace('<img src="','http:')
                 line = re.sub('".*$', '', line)
