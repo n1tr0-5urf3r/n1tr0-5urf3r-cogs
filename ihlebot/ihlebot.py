@@ -98,7 +98,7 @@ class Ihlebot:
         file = open('temp.html', 'r')
         match = False
 
-        line = file.readline()[62:]
+        line = file.readlines()[63]
         await self.bot.say('DEBUG ' + line)
 
         if "img src" in line:
