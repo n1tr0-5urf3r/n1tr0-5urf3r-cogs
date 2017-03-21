@@ -59,7 +59,7 @@ class Ihlebot:
         server = ctx.message.server
         with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
             f = imageFile.read()
-        await self.bot.create_custom_emoji('temp', f)
+        await self.bot.create_custom_emoji(name='temp', image=f)
 
     @commands.command(pass_context=True)
     async def ping(self, ctx, ip):
