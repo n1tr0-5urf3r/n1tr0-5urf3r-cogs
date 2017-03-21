@@ -53,13 +53,13 @@ class Ihlebot:
             data.add_field(name=ej.name, value=str(ej) + " " + ej.id, inline=False)
         await self.bot.say(embed=data)
 
-#    @commands.command(pass_context=True)
-#    async def create(self, ctx):
-#        """Create custom emojis"""
-#        server = ctx.message.server
-#        with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
-#            f = imageFile.read()
-#        await self.bot.create_custom_emoji(server, 'temp', f)
+    @commands.command(pass_context=True)
+    async def create(self, ctx):
+        """Create custom emojis"""
+        server = ctx.message.server
+        with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
+            f = imageFile.read()
+        await self.bot.create_custom_emoji(self,server, 'temp', f)
 
     @commands.command(pass_context=True)
     async def ping(self, ctx, ip):
@@ -124,6 +124,7 @@ class Ihlebot:
                 match = True
                 file.close()
                 os.remove('temp.html')
+
 
 def setup(bot):
     n = Ihlebot(bot)
