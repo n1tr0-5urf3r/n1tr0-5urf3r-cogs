@@ -89,8 +89,11 @@ class Ihlebot:
     async def pr0(self,ctx):
         """Outputs a random image from pr0gramm.com (sfw)"""
 
-        # open tempfile, read line as long as img src doesnt match, if so output the line and close file
-        # TODO only, remove tempfile
+        # Generate random number, check if header responds with 200 (OK)
+        # If not generate new number
+        # Hardcoded img src from webpage in line 63
+        # Extract path to image from webpage
+        # Clean up
         match = False
         while not match:
             # RNG
@@ -98,15 +101,13 @@ class Ihlebot:
             while not valid:
                 post = str(randint(0, 1831010))
                 ret = requests.head('http://pr0gramm.com/static/'+post)
-
-                #status = re.sub('^.* ', '', status)
-                await self.bot.say('DEBUG Statuscode: ' + str(ret.status_code))
+                #await self.bot.say('DEBUG Statuscode: ' + str(ret.status_code))
                 if ret.status_code != 404:
                     valid = True
                     # Download page from static pr0gramm, save to tempfile
                     urllib.request.urlretrieve('http://pr0gramm.com/static/' + post, 'temp.html')
                 elif ret.status_code == 404:
-                    await self.bot.say('DEBUG 404:' + post + 'Statuscode: ' + str(ret.status_code))
+                    await self.bot.say('DEBUG 404:' + post + ' Statuscode: ' + str(ret.status_code))
 
             file = open('temp.html', 'r')
             line = file.readlines()[62]
@@ -116,6 +117,7 @@ class Ihlebot:
                 await self.bot.say(line)
                 match = True
                 file.close()
+                os.remove('temp.html')
 
 def setup(bot):
     n = Ihlebot(bot)
