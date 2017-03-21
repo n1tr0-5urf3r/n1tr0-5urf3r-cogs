@@ -25,8 +25,7 @@ class Ihlebot:
     def __init__(self, bot):
         self.bot = bot
         self.session = aiohttp.ClientSession(loop=self.bot.loop)
-        game = discord.Game(name='Justified Loyalty')
-        self.bot.change_status(game)
+
 
     def __unload(self):
         self.session.close()
@@ -39,6 +38,8 @@ class Ihlebot:
     async def ihle(self, ctx):
         """First Test, Commandcall"""
         await self.bot.say('Ihle ist der beste!')
+        game = discord.Game(name='Justified Loyalty')
+        await self.bot.change_status(game)
 
     @commands.command(pass_context=True)
     async def beleidige(self, ctx, name):
