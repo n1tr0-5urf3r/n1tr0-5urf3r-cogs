@@ -21,11 +21,6 @@ import datetime
 
 client = discord.Client()
 
-@client.event
-async def init_status(self, bot):
-    game = discord.Game(name='Justified Loyalty')
-    await self.bot.change_status(game)
-
 class Ihlebot:
     """ Command definitions"""
     def __init__(self, bot):
@@ -39,6 +34,8 @@ class Ihlebot:
     async def ihle(self, ctx):
         """First Test, Commandcall"""
         await self.bot.say('Ihle ist der beste!')
+        game = discord.Game(name='Justified Loyalty')
+        await self.bot.change_status(game)
 
     @commands.command(pass_context=True)
     async def beleidige(self, ctx, name):
