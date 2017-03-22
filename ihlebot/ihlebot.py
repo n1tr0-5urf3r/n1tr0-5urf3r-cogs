@@ -44,6 +44,11 @@ class Ihlebot:
         await self.bot.add_reaction(msg,'😲')
 
     @commands.command(pass_context=True)
+    async def pizza(self,ctx):
+        """Pizza!"""
+        await self.bot.say('David muss sich noch überlegen, was hier passieren soll.')
+
+    @commands.command(pass_context=True)
     async def emojis(self, ctx):
         """Returns a list of all Server Emojis"""
         server = ctx.message.server
