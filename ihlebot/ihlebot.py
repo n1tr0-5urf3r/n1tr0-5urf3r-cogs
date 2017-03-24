@@ -74,7 +74,7 @@ class Ihlebot:
 
         data = discord.Embed(description='Erklärung zu den Befehlen', color=color)
         data.set_author(name='Justified Loyalty')
-        data.add_field(name='Schlüssel hinzufügen', value='!key add <schlüssel>  Fügt euren Schlüssel hinzu, um Daten auslesen zu können. Wird für andere Befehle benötigt.', inline=False)
+        data.add_field(name='Schlüssel hinzufügen', value='**!key add <schlüssel>**  Fügt euren Schlüssel hinzu, um Daten auslesen zu können. Wird für andere Befehle benötigt.', inline=False)
         data.add_field(name='Informationen zur Gilde', value='!guild info Justified Loyalty (nur für Gildenleader', inline=False)
         data.add_field(name='Gildenmitglieder anzeigen', value='!guild members Justified Loyalty (nur für Gildenleader', inline=False)
         data.add_field(name='Informationen zum Charakter', value='!character info <name>', inline=False)
