@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands
 import time
-#from .utils import checks
+from .utils import checks
 from cogs import * #dataIO, fileIO
-#from __main__ import send_cmd_help
+from __main__ import send_cmd_help
 
 # Used for DNS lookup
 import socket
