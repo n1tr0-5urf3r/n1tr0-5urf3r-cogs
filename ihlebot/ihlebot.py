@@ -71,7 +71,7 @@ class Ihlebot:
         """Displays general help information for my guild"""
         user = ctx.message.author
 
-        data = discord.Embed(description='Erklärung zu den Befehlen', color=user.color)
+        data = discord.Embed(description='Erklärung zu den Befehlen', color=user.colour)
         data.set_author(name='Justified Loyalty')
         data.add_field(name='Schlüssel hinzufügen', value='key add <schlüssel>  Fügt euren Schlüssel hinzu, um Daten auslesen zu können. Wird für andere Befehle benötigt.', inline=False)
         data.add_field(name='Informationen zur Gilde', value='!guild info Justified Loyalty (nur für Gildenleader', inline=False)
