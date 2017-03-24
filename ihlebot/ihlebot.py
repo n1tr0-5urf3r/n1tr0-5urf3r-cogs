@@ -81,8 +81,12 @@ class Ihlebot:
         data.add_field(name='Informationen zum Account', value='!account', inline=False)
         data.add_field(name='PvP Statistiken', value='!pvp stats', inline=False)
         data.add_field(name='Auktionen im Handelsposten einsehen', value='!tp current buys/sells', inline=False)
-        data.add_field(name='WvW Punktestand', value='!wvw info', inline=False)
+        data.add_field(name='WvW Punktestand', value='!wvw info  Kann auch mit anderen Servern aufgerufen werden.', inline=False)
         data.add_field(name='Geldbeutelinhalt (Geld oder Dungeonmarken) anzeigen', value='!wallet show/tokens', inline=False)
+        data.add_field(name='Dailies anzeigen', value='!daily pvp/pve/wvw/fractals', inline=False)
+        data.set_footer(text='Bei Fragen an Fabi wenden')
+
+        await self.bot.say(embed=data)
 
     @commands.command(pass_context=True)
     async def ping(self, ctx, ip):
