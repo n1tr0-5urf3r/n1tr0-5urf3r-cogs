@@ -142,7 +142,7 @@ class Ihlebot:
                 #    await self.bot.say('DEBUG 404:' + post + ' Statuscode: ' + str(ret.status_code))
 
             file = open('temp.html', 'r')
-            line = file.readlines()[51]
+            line = file.readlines()[50]
             if "img src" in line:
                 tags = re.sub('^.*alt="', '', line)
                 tags = tags.replace('"/>', '')
