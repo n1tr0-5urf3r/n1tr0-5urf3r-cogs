@@ -120,7 +120,7 @@ class Ihlebot:
                     await self.bot.say(ip + ' is not a valid IP or Domain.')
 
             except socket.gaierror:
-                await self.bot.say('Whoops! That Adress cant be resolved!')
+                await self.bot.say('Whoops! That Address cant be resolved!')
 
     @commands.command(pass_context=True)
     async def pr0(self,ctx):
