@@ -106,19 +106,21 @@ class Ihlebot:
             try:
                 await self.bot.say('Doing DNS lookup...')
                 ip = socket.gethostbyname(ip)
+
+                if valid == True:
+                    start = time.time()
+                    response = os.system("sudo ping -c 1 -w3 " + ip)
+                    duration = time.time() - start
+                    duration = round(duration * 1000, 0)
+                    if response == 0:
+                        await self.bot.say(ip + ' is up and responding in ' + str(duration) + 'ms.')
+                    else:
+                        await self.bot.say(ip + ' is not reachable.')
+                else:
+                    await self.bot.say(ip + ' is not a valid IP or Domain.')
+
             except socket.gaierror:
                 await self.bot.say('Whoops! That Adress cant be resolved!')
-        if valid == True:
-            start = time.time()
-            response = os.system("sudo ping -c 1 -w3 " + ip)
-            duration = time.time() - start
-            duration = round(duration * 1000, 0)
-            if response == 0:
-                await self.bot.say(ip + ' is up and responding in ' + str(duration) + 'ms.')
-            else:
-                await self.bot.say(ip + ' is not reachable.')
-        else:
-            await self.bot.say(ip + ' is not a valid IP or Domain.')
 
     @commands.command(pass_context=True)
     async def pr0(self,ctx):
