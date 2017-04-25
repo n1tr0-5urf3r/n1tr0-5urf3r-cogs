@@ -103,8 +103,11 @@ class Ihlebot:
             valid = True
         elif valid_hostname.match(ip):
             valid = True
-            await self.bot.say('Doing DNS lookup...')
-            ip = socket.gethostbyname(ip)
+            try:
+                await self.bot.say('Doing DNS lookup...')
+                ip = socket.gethostbyname(ip)
+            except socket.gaierror:
+                await self.bot.say('Whoops! That Adress cant be resolved!')
         if valid == True:
             start = time.time()
             response = os.system("sudo ping -c 1 -w3 " + ip)
