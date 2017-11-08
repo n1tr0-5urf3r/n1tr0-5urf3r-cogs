@@ -82,6 +82,7 @@ class Ihlebot:
         data.add_field(name='Informationen zum Account', value='*!account*', inline=False)
         data.add_field(name='PvP Statistiken', value='*!pvp stats*', inline=False)
         data.add_field(name='Auktionen im Handelsposten einsehen', value='*!tp current buys/sells*', inline=False)
+        data.add_field(name='Lieferungen im Handelsposten einsehen', value='*!tp delivery*', inline=False)
         data.add_field(name='WvW Punktestand', value='*!wvw info*  Kann auch mit anderen Servern aufgerufen werden.', inline=False)
         data.add_field(name='Geldbeutelinhalt (Geld oder Dungeonmarken) anzeigen', value='*!wallet show/tokens*', inline=False)
         data.add_field(name='Dailies anzeigen', value='*!daily pvp/pve/wvw/fractals*', inline=False)
