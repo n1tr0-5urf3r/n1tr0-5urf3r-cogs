@@ -161,7 +161,7 @@ class Ihlebot:
                 os.remove('temp.html')
 
     @commands.command(pass_context=True)
-    async def coinflip(self, player1=None, player2=None, *,ctx):
+    async def coinflip(self, *,player1=None, player2=None,ctx):
         rng = randint(1,10)
 
         if player1 is None:
