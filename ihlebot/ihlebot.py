@@ -134,8 +134,8 @@ class Ihlebot:
             data = json.loads(url.read().decode())
 
         items = data["items"]
-        item = random.choice(items)
-        await self.bot.say(item)
+        item = random.choice(items)["image"]
+        await self.bot.say("https://img.pr0gramm.com/{}".format(item))
 
 
     @commands.command(pass_context=True)
