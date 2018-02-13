@@ -1,9 +1,7 @@
 import discord
 from discord.ext import commands
 import time
-from .utils import checks
-from cogs import * #dataIO, fileIO
-from __main__ import send_cmd_help
+
 
 # Used for DNS lookup
 import socket
@@ -12,6 +10,7 @@ import re
 # Used for ping
 import os
 from random import randint
+import random
 # General stuff for discord
 import asyncio
 import aiohttp
@@ -133,7 +132,8 @@ class Ihlebot:
         # Clean up
         with urllib.request.urlopen("https://pr0gramm.com/api/items/get") as url:
             data = json.loads(url.read().decode())
-        await self.bot.say(str(type(data)))
+        item = random.choice(data.keys())
+        await self.bot.say(item)
 
 
     @commands.command(pass_context=True)
