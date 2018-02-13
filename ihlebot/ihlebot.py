@@ -167,10 +167,9 @@ class Ihlebot:
 
         if player1 is None and player2 is None:
             if rng < 5:
-                await self.bot.say(player1)
-                return await self.bot.say("Kopf")
+                return await self.bot.say("Kopf gewinnt!")
             else:
-                return await self.bot.say("Zahl")
+                return await self.bot.say("Zahl gewinnt!")
         else:
             if rng < 5:
                 return await self.bot.say("{} hat gewonnen!".format(player1))
