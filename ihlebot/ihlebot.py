@@ -130,11 +130,21 @@ class Ihlebot:
         # Hardcoded img src from webpage in line 63
         # Extract path to image from webpage
         # Clean up
+        user = ctx.message.author
+        color = self.getColor(user)
+
+
         with urllib.request.urlopen("https://pr0gramm.com/api/items/get") as url:
             data = json.loads(url.read().decode())
 
         items = data["items"]
         item = random.choice(items)["image"]
+        upvotes = random.choice(items)["up"]
+        downvotes = random.choice(items)["down"]
+        uploader = random.choice(items)["user"]
+        embed = discord.Embed(description='Uploaded by {}'.format(uploader), color=color)
+        embed.add_field(name="Score", value="{0} :arrow_up: {1} :arrow_down:".format(upvotes, downvotes))
+
         await self.bot.say("https://img.pr0gramm.com/{}".format(item))
 
 
