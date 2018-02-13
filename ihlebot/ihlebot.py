@@ -132,6 +132,7 @@ class Ihlebot:
         # Clean up
         with urllib.request.urlopen("https://pr0gramm.com/api/items/get") as url:
             data = json.loads(url.read().decode())
+
         item = random.choice(list(data["items"].keys()))
         await self.bot.say(item)
 
