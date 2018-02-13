@@ -161,7 +161,7 @@ class Ihlebot:
                 os.remove('temp.html')
 
     @commands.command(pass_context=True)
-    async def coinflip(self, ctx, *, player1, player2):
+    async def coinflip(self, ctx, player1, *, player2):
         """Coinflip, defaults to Kopf/Zahl if no players are given"""
         rng = randint(1,10)
 
