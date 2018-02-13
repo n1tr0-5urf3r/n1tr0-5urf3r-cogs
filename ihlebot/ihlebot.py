@@ -11,13 +11,12 @@ import socket
 import re
 # Used for ping
 import os
-import urllib.request
-import requests
 from random import randint
 # General stuff for discord
 import asyncio
 import aiohttp
-import datetime
+
+import urllib.request, json
 
 client = discord.Client()
 
@@ -132,33 +131,10 @@ class Ihlebot:
         # Hardcoded img src from webpage in line 63
         # Extract path to image from webpage
         # Clean up
-        match = False
-        while not match:
-            # RNG
-            valid = False
-            while not valid:
-                post = str(randint(0, 1831010))
-                ret = requests.head('http://pr0gramm.com/static/'+post)
-                #await self.bot.say('DEBUG Statuscode: ' + str(ret.status_code))
-                if ret.status_code != 404:
-                    valid = True
-                    # Download page from static pr0gramm, save to tempfile
-                    urllib.request.urlretrieve('http://pr0gramm.com/static/' + post, 'temp.html')
-                #elif ret.status_code == 404:
-                #    await self.bot.say('DEBUG 404:' + post + ' Statuscode: ' + str(ret.status_code))
+        with urllib.request.urlopen("https://pr0gramm.com/api/items/get") as url:
+            data = json.loads(url.read().decode())
+        await self.bot.say(str(type(data)))
 
-            file = open('temp.html', 'r')
-            line = file.readlines()[50]
-            if "img src" in line:
-                tags = re.sub('^.*alt="', '', line)
-                tags = tags.replace('"/>', '')
-                line = line.replace('<img src="','http:')
-                line = re.sub('".*$', '', line)
-                await self.bot.say('Tags: ' + tags)
-                await self.bot.say(line)
-                match = True
-                file.close()
-                os.remove('temp.html')
 
     @commands.command(pass_context=True)
     async def coinflip(self, ctx, player1=None, *, player2=None):
