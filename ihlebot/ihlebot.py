@@ -141,11 +141,11 @@ class Ihlebot:
         upvotes = random.choice(items)["up"]
         downvotes = random.choice(items)["down"]
         uploader = random.choice(items)["user"]
-        embed = discord.Embed(description='Uploaded by {}'.format(uploader), color=color)
+        embed = discord.Embed(description='Uploaded by **{}**'.format(uploader), color=color)
         embed.add_field(name="Score", value="{0} :arrow_up: {1} :arrow_down:".format(upvotes, downvotes))
 
-        await self.bot.say("https://img.pr0gramm.com/{}".format(item))
         await self.bot.say(embed=embed)
+        await self.bot.say("https://img.pr0gramm.com/{}".format(item))
 
     @commands.command(pass_context=True)
     async def coinflip(self, ctx, player1=None, *, player2=None):
