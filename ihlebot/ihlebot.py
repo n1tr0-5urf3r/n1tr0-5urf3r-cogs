@@ -160,6 +160,13 @@ class Ihlebot:
                 file.close()
                 os.remove('temp.html')
 
+    async def coinflip(self, ctx):
+        rng = randint(1,10)
+        if rng < 5:
+            await self.bot.say("Kopf")
+        else:
+            await self.bot.say("Zahl")
+
 
     def getColor(self, user):
         try:
