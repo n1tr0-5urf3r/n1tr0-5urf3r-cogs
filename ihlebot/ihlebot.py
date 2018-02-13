@@ -165,11 +165,11 @@ class Ihlebot:
         """Coinflip, defaults to Kopf/Zahl if no players are given"""
         rng = randint(1,10)
 
-        await self.bot.say(player1, player2)
-
         if player1 is None or player2 is None:
             if rng < 5:
+                await self.bot.say(player1)
                 return await self.bot.say("Kopf")
+
             else:
                 return await self.bot.say("Zahl")
         else:
