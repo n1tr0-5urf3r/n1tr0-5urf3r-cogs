@@ -145,7 +145,7 @@ class Ihlebot:
         embed.add_field(name="Score", value="{0} :arrow_up: {1} :arrow_down:".format(upvotes, downvotes))
 
         await self.bot.say("https://img.pr0gramm.com/{}".format(item))
-        await self.bot.say(embed=data)
+        await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True)
     async def coinflip(self, ctx, player1=None, *, player2=None):
