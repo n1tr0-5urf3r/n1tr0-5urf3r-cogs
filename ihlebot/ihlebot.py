@@ -162,6 +162,7 @@ class Ihlebot:
 
     @commands.command(pass_context=True)
     async def coinflip(self, *,player1=None, player2=None,ctx):
+        """Coinflip, defaults to Kopf/Zahl if no players are given"""
         rng = randint(1,10)
 
         if player1 is None:
