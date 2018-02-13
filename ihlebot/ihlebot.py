@@ -161,21 +161,21 @@ class Ihlebot:
                 os.remove('temp.html')
 
     @commands.command(pass_context=True)
-    async def coinflip(self, player1=None, *, player2=None, ctx):
+    async def coinflip(self, player1=None, player2=None, *,ctx):
         """Coinflip, defaults to Kopf/Zahl if no players are given"""
         rng = randint(1,10)
 
         if player1 is None:
             if rng < 5:
-                await self.bot.say("Kopf")
+                return await self.bot.say("Kopf")
             else:
-                await self.bot.say("Zahl")
+                return await self.bot.say("Zahl")
 
         if player1 is not None and player2 is not None:
             if rng < 5:
-                await self.bot.say("{} hat gewonnen!".format(player1))
+                return await self.bot.say("{} hat gewonnen!".format(player1))
             else:
-                await self.bot.say("{} hat gewonnen!".format(player2))
+                return await self.bot.say("{} hat gewonnen!".format(player2))
 
 
     def getColor(self, user):
