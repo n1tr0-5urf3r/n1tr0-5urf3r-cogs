@@ -134,8 +134,8 @@ class Ihlebot:
             data = json.loads(url.read().decode())
 
         items = data["items"]
-        #item = random.choice(list(items.keys()))
-        await self.bot.say(str(type(items)))
+        item = random.choice(items)
+        await self.bot.say(item)
 
 
     @commands.command(pass_context=True)
