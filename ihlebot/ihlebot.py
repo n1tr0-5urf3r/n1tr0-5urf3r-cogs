@@ -160,6 +160,7 @@ class Ihlebot:
                 file.close()
                 os.remove('temp.html')
 
+    @commands.command(pass_context=True)
     async def coinflip(self, ctx):
         rng = randint(1,10)
         if rng < 5:
