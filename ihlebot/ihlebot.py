@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import time
 
-
 # Used for DNS lookup
 import socket
 # Used for regexp
@@ -14,13 +13,14 @@ import random
 # General stuff for discord
 import asyncio
 import aiohttp
-
 import urllib.request, json
 
 client = discord.Client()
 
+
 class Ihlebot:
     """ Command definitions"""
+
     def __init__(self, bot):
         self.bot = bot
         self.session = aiohttp.ClientSession(loop=self.bot.loop)
@@ -39,12 +39,25 @@ class Ihlebot:
     async def beleidige(self, ctx, name):
         """Second Test, Variablenverarbeitung"""
         msg = await self.bot.say(name + ' ist ein Behindi!')
-        await self.bot.add_reaction(msg,'😲')
+        await self.bot.add_reaction(msg, '😲')
 
     @commands.command(pass_context=True)
-    async def pizza(self,ctx):
+    async def pizza(self, ctx):
         """Pizza!"""
-        await self.bot.say('https://i.imgur.com/BrXB1VU.gifv')
+        pizza_list = [
+            'https://media1.giphy.com/media/iThaM3NlpjH0Y/200w.gif',
+            'https://media1.giphy.com/media/POmeDOmoTg9CU/200w.gif',
+            'https://i.imgur.com/BrXB1VU.gifv',
+            'https://media0.giphy.com/media/3o7aDdeZzsZyx4qkqk/200w.gif',
+            'https://media0.giphy.com/media/sTUWqCKtxd01W/200w.gif',
+            'https://media0.giphy.com/media/YfLdTsfMIfHX2/200w.gif',
+            'https://media0.giphy.com/media/AeWntMyxGFXXi/200w.gif',
+            'https://media0.giphy.com/media/10kxE34bJPaUO4/giphy.gif',
+            'https://media0.giphy.com/media/RRRSdQ6tuUXBu/200w.gif'
+        ]
+
+        rng = random.randint(0,len(pizza_list))
+        await self.bot.say(pizza_list[rng])
 
     @commands.command(pass_context=True)
     async def emojis(self, ctx):
@@ -53,7 +66,8 @@ class Ihlebot:
         await self.bot.say('This may take some time, generating list...')
         data = discord.Embed(description="Emojilist")
         for ej in server.emojis:
-            data.add_field(name=ej.name, value=str(ej) + " " + ej.id, inline=False)
+            data.add_field(
+                name=ej.name, value=str(ej) + " " + ej.id, inline=False)
         await self.bot.say(embed=data)
 
     @commands.command(pass_context=True)
@@ -70,22 +84,58 @@ class Ihlebot:
         user = ctx.message.author
         color = self.getColor(user)
 
-        data = discord.Embed(description='Erklärung zu den Befehlen', color=color)
+        data = discord.Embed(
+            description='Erklärung zu den Befehlen', color=color)
         data.set_author(name='Justified Loyalty')
-        data.add_field(name='Schlüssel hinzufügen', value='*!key add <schlüssel>*  Fügt euren Schlüssel hinzu, wird benötigt, um Daten auszulesen.', inline=False)
-        data.add_field(name='Informationen zur Gilde', value='*!guild info Justified Loyalty* (nur für Gildenleader)', inline=False)
-        data.add_field(name='Gildenmitglieder anzeigen', value='*!guild members Justified Loyalty* (nur für Gildenleader)', inline=False)
-        data.add_field(name='Inhalt der Schatzkammer anzeigen', value='*!guild treasury Justified Loyalty* (nur für Gildenleader)', inline=False)
-        data.add_field(name='Informationen zum Charakter', value='*!character info <name>*', inline=False)
-        data.add_field(name='Informationen zum Account', value='*!account*', inline=False)
-        data.add_field(name='PvP Statistiken', value='*!pvp stats*', inline=False)
-        data.add_field(name='Auktionen im Handelsposten einsehen', value='*!tp current buys/sells*', inline=False)
-        data.add_field(name='Lieferungen im Handelsposten einsehen', value='*!tp delivery*', inline=False)
-        data.add_field(name='WvW Punktestand', value='*!wvw info*  Kann auch mit anderen Servern aufgerufen werden.', inline=False)
-        data.add_field(name='Geldbeutelinhalt (Geld oder Dungeonmarken) anzeigen', value='*!wallet show/tokens*', inline=False)
-        data.add_field(name='Dailies anzeigen', value='*!daily pvp/pve/wvw/fractals*', inline=False)
+        data.add_field(
+            name='Schlüssel hinzufügen',
+            value=
+            '*!key add <schlüssel>*  Fügt euren Schlüssel hinzu, wird benötigt, um Daten auszulesen.',
+            inline=False)
+        data.add_field(
+            name='Informationen zur Gilde',
+            value='*!guild info Justified Loyalty* (nur für Gildenleader)',
+            inline=False)
+        data.add_field(
+            name='Gildenmitglieder anzeigen',
+            value='*!guild members Justified Loyalty* (nur für Gildenleader)',
+            inline=False)
+        data.add_field(
+            name='Inhalt der Schatzkammer anzeigen',
+            value='*!guild treasury Justified Loyalty* (nur für Gildenleader)',
+            inline=False)
+        data.add_field(
+            name='Informationen zum Charakter',
+            value='*!character info <name>*',
+            inline=False)
+        data.add_field(
+            name='Informationen zum Account', value='*!account*', inline=False)
+        data.add_field(
+            name='PvP Statistiken', value='*!pvp stats*', inline=False)
+        data.add_field(
+            name='Auktionen im Handelsposten einsehen',
+            value='*!tp current buys/sells*',
+            inline=False)
+        data.add_field(
+            name='Lieferungen im Handelsposten einsehen',
+            value='*!tp delivery*',
+            inline=False)
+        data.add_field(
+            name='WvW Punktestand',
+            value=
+            '*!wvw info*  Kann auch mit anderen Servern aufgerufen werden.',
+            inline=False)
+        data.add_field(
+            name='Geldbeutelinhalt (Geld oder Dungeonmarken) anzeigen',
+            value='*!wallet show/tokens*',
+            inline=False)
+        data.add_field(
+            name='Dailies anzeigen',
+            value='*!daily pvp/pve/wvw/fractals*',
+            inline=False)
         data.set_footer(text='Bei Fragen an Fabi wenden')
-        data.set_thumbnail(url='https://cdn.discordapp.com/emojis/294742647069868032.png')
+        data.set_thumbnail(
+            url='https://cdn.discordapp.com/emojis/294742647069868032.png')
 
         await self.bot.say(embed=data)
 
@@ -112,7 +162,8 @@ class Ihlebot:
                     duration = time.time() - start
                     duration = round(duration * 1000, 0)
                     if response == 0:
-                        await self.bot.say(ip + ' is up and responding in ' + str(duration) + 'ms.')
+                        await self.bot.say(ip + ' is up and responding in ' +
+                                           str(duration) + 'ms.')
                     else:
                         await self.bot.say(ip + ' is not reachable.')
                 else:
@@ -122,7 +173,7 @@ class Ihlebot:
                 await self.bot.say('Whoops! That Address cant be resolved!')
 
     @commands.command(pass_context=True)
-    async def pr0(self,ctx):
+    async def pr0(self, ctx):
         """Outputs a random image from pr0gramm.com (sfw)"""
 
         # Generate random number, check if header responds with 200 (OK)
@@ -133,7 +184,8 @@ class Ihlebot:
         user = ctx.message.author
         color = self.getColor(user)
 
-        with urllib.request.urlopen("https://pr0gramm.com/api/items/get") as url:
+        with urllib.request.urlopen(
+                "https://pr0gramm.com/api/items/get") as url:
             data = json.loads(url.read().decode())
 
         items = data["items"]
@@ -141,8 +193,11 @@ class Ihlebot:
         upvotes = random.choice(items)["up"]
         downvotes = random.choice(items)["down"]
         uploader = random.choice(items)["user"]
-        embed = discord.Embed(description='Uploaded by **{}**'.format(uploader), color=color)
-        embed.add_field(name="Score", value="{0} :arrow_up: {1} :arrow_down:".format(upvotes, downvotes))
+        embed = discord.Embed(
+            description='Uploaded by **{}**'.format(uploader), color=color)
+        embed.add_field(
+            name="Score",
+            value="{0} :arrow_up: {1} :arrow_down:".format(upvotes, downvotes))
 
         await self.bot.say(embed=embed)
         await self.bot.say("https://img.pr0gramm.com/{}".format(item))
@@ -150,7 +205,7 @@ class Ihlebot:
     @commands.command(pass_context=True)
     async def coinflip(self, ctx, player1=None, *, player2=None):
         """Coinflip, defaults to Kopf/Zahl if no players are given"""
-        rng = randint(1,10)
+        rng = randint(1, 10)
 
         if player1 is None and player2 is None:
             if rng < 5:
@@ -162,8 +217,6 @@ class Ihlebot:
                 return await self.bot.say("{} hat gewonnen!".format(player1))
             else:
                 return await self.bot.say("{} hat gewonnen!".format(player2))
-
-
 
     def getColor(self, user):
         try:
