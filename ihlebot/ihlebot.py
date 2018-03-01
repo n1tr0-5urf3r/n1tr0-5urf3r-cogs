@@ -44,7 +44,7 @@ class Ihlebot:
     @commands.command(pass_context=True)
     async def pizza(self,ctx):
         """Pizza!"""
-        await self.bot.say('David muss sich noch überlegen, was hier passieren soll.')
+        await self.bot.say('https://i.imgur.com/BrXB1VU.gifv')
 
     @commands.command(pass_context=True)
     async def emojis(self, ctx):
@@ -162,6 +162,7 @@ class Ihlebot:
                 return await self.bot.say("{} hat gewonnen!".format(player1))
             else:
                 return await self.bot.say("{} hat gewonnen!".format(player2))
+
 
 
     def getColor(self, user):
