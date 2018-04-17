@@ -260,8 +260,18 @@ class Ihlebot:
         embed = discord.Embed(
             description="Mensa Morgenstelle, KW {}".format(cal_week), color=color)
 
+        counter = 0
         for speise in menu1:
-            embed.add_field(name="Tag", value="Tagesmenü:\n{}\n\nTagesmenü vegetarisch:\n{}".format(speise, speise))
+            if not menu2[counter]:
+                vegetarisch = ""
+            else:
+                vegetarisch = menu2[counter]
+            if not menu3[counter]:
+                vegan = ""
+            else:
+                vegan = menu3[counter]
+            embed.add_field(name="Tag", value="Tagesmenü:\n{}\n\nTagesmenü vegetarisch:\n{}\n\nMensaVital:\n{}".format(speise, vegetarisch, vegan))
+            counter += 1
 
         await self.bot.say(embed=embed)
 
