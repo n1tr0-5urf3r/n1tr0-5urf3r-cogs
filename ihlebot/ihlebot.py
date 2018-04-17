@@ -262,14 +262,14 @@ class Ihlebot:
 
         counter = 0
         for speise in menu1:
-            if not menu2[counter]:
-                vegetarisch = ""
-            else:
+            try:
                 vegetarisch = menu2[counter]
-            if not menu3[counter]:
-                vegan = ""
-            else:
+            except IndexError:
+                vegetarisch = ""
+            try:
                 vegan = menu3[counter]
+            except IndexError:
+                vegan = ""
             embed.add_field(name="Tag", value="Tagesmenü:\n{}\n\nTagesmenü vegetarisch:\n{}\n\nMensaVital:\n{}".format(speise, vegetarisch, vegan))
             counter += 1
 
