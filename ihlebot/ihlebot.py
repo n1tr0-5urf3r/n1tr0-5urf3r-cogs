@@ -15,6 +15,9 @@ import asyncio
 import aiohttp
 import urllib.request, json
 
+import datetime
+import requests
+
 client = discord.Client()
 
 
@@ -224,6 +227,43 @@ class Ihlebot:
         except:
             color = discord.Embed.Empty
         return color
+
+    @commands.command(pass_context=True)
+    async def mensa(self, ctx):
+        user = ctx.message.author
+        color = self.getColor(user)
+
+        # Get current calendarweek
+        today = datetime.datetime.now()
+        cal_week = today.strftime("%W")
+
+        url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
+
+        r = requests.get(url_mensa)
+        html_mensa = re.sub('\n', ' ', r.content.decode('utf8'))
+        tagesmenu = re.findall(r"(<td>Tagesmenü</td>.*?)(</td>)", html_mensa)
+        tagesmenu_veg = re.findall(r"(<td>Tagesmenü vegetarisch</td>.*?)(</td>)", html_mensa)
+        mensa_vital = re.findall(r"(<td>mensaVital|mensaVital vegan</td>.*?)(</td>)", html_mensa)
+
+        def cleanUp(menu):
+            daily_menu = []
+            for m in menu:
+                t_menu = re.sub("(<.*?>)", "", m[0])
+                t_menu = re.sub("  |, ", "\n", t_menu)
+                t_menu = re.sub("Tagesmenü vegetarisch|Tagesmenü|mensaVital vegan|mensaVital", "", t_menu)
+                daily_menu.append((t_menu))
+            return daily_menu
+
+        menu1 = cleanUp(tagesmenu)
+        menu2 = cleanUp(tagesmenu_veg)
+        menu3 = cleanUp(mensa_vital)
+        embed = discord.Embed(
+            description="Mensa Morgenstelle, KW {}".format(cal_week), color=color)
+
+        for speise in menu1:
+            embed.add_field(name="Tag", value="Tagesmenü:\n{}\n\nTagesmenü vegetarisch:\n{}".format(speise, speise))
+
+        await self.bot.say(embed=embed)
 
 
 def setup(bot):
