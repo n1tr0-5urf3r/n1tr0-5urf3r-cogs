@@ -239,7 +239,6 @@ class Ihlebot:
         weekday = datetime.datetime.today().weekday()
         week_start = today - datetime.timedelta(days=weekday)
         week_end = today + datetime.timedelta(days=4 - weekday)
-        print(week_end.strftime("%d.%m."))
 
         url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
 
