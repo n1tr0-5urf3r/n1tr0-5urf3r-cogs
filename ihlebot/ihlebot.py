@@ -261,6 +261,7 @@ class Ihlebot:
             description="Mensa Morgenstelle, KW {}".format(cal_week), color=color)
 
         counter = 0
+        wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
         for speise in menu1:
             try:
                 vegetarisch = menu2[counter]
@@ -270,9 +271,12 @@ class Ihlebot:
                 vegan = menu3[counter]
             except IndexError:
                 vegan = ""
-            embed.add_field(name="Tag", value="Tagesmenü:\n{}\n\nTagesmenü vegetarisch:\n{}\n\nMensaVital:\n{}".format(speise, vegetarisch, vegan))
+            embed.add_field(name="{}".format(wochentage[counter]), value="*Tagesmenü:*\n{}\n\n*Tagesmenü vegetarisch:*\n{}\n\n*MensaVital:*\n{}".format(speise, vegetarisch, vegan))
             counter += 1
 
+        embed.set_thumbnail(
+            url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
+        embed.set_footer(text='(c) Fabian Ihle')
         await self.bot.say(embed=embed)
 
 
