@@ -59,7 +59,7 @@ class Ihlebot:
             'https://media0.giphy.com/media/RRRSdQ6tuUXBu/200w.gif'
         ]
 
-        rng = random.randint(0,len(pizza_list))
+        rng = random.randint(0, len(pizza_list))
         await self.bot.say(pizza_list[rng])
 
     @commands.command(pass_context=True)
@@ -237,7 +237,7 @@ class Ihlebot:
         today = datetime.datetime.now()
         cal_week = today.strftime("%W")
         weekday = datetime.datetime.today().weekday()
-        week_start = today - datetime.timedelta(days = weekday)
+        week_start = today - datetime.timedelta(days=weekday)
         week_end = today + datetime.timedelta(days=4 - weekday)
         print(week_end.strftime("%d.%m."))
 
@@ -264,8 +264,8 @@ class Ihlebot:
         menu2 = cleanUp(tagesmenu_veg)
         menu3 = cleanUp(mensa_vital)
         embed = discord.Embed(
-            description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."), week_end.strftime("%d.%m.")), color=color)
-
+            description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."),
+                                                                         week_end.strftime("%d.%m.")), color=color)
 
         if weekday > 0:
             counter = 0 + weekday
@@ -274,14 +274,16 @@ class Ihlebot:
         wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
         for speise in menu1:
             try:
-                vegetarisch = menu2[counter-weekday]
+                vegetarisch = menu2[counter - weekday]
             except IndexError:
                 vegetarisch = ""
             try:
-                vegan = menu3[counter-weekday]
+                vegan = menu3[counter - weekday]
             except IndexError:
                 vegan = ""
-            embed.add_field(name="{}".format(wochentage[counter]), value="*Tagesmenü:*\n{}\n\n*Tagesmenü vegetarisch:*\n{}\n\n*MensaVital:*\n{}\n".format(speise, vegetarisch, vegan), inline=False)
+            embed.add_field(name="{}".format(wochentage[counter]),
+                            value="*Tagesmenü:*\n- {}\n\n*Tagesmenü vegetarisch:*\n- {}\n\n*MensaVital:*\n- {}\n".format(
+                                speise, vegetarisch, vegan), inline=False)
             counter += 1
 
         embed.set_thumbnail(
