@@ -263,15 +263,19 @@ class Ihlebot:
         embed = discord.Embed(
             description="Mensa Morgenstelle, KW {}".format(cal_week), color=color)
 
-        counter = 0 + weekday
+
+        if weekday > 0:
+            counter = 0 + weekday
+        else:
+            counter = 0
         wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
         for speise in menu1:
             try:
-                vegetarisch = menu2[counter-1]
+                vegetarisch = menu2[counter-weekday]
             except IndexError:
                 vegetarisch = ""
             try:
-                vegan = menu3[counter-1]
+                vegan = menu3[counter-weekday]
             except IndexError:
                 vegan = ""
             embed.add_field(name="{}".format(wochentage[counter]), value="*Tagesmenü:*\n{}\n\n*Tagesmenü vegetarisch:*\n{}\n\n*MensaVital:*\n{}\n".format(speise, vegetarisch, vegan), inline=False)
