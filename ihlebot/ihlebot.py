@@ -236,6 +236,7 @@ class Ihlebot:
         # Get current calendarweek
         today = datetime.datetime.now()
         cal_week = today.strftime("%W")
+        weekday = datetime.datetime.today().weekday()
 
         url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
 
@@ -261,7 +262,7 @@ class Ihlebot:
         embed = discord.Embed(
             description="Mensa Morgenstelle, KW {}".format(cal_week), color=color)
 
-        counter = 0
+        counter = 0 + weekday
         wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
         for speise in menu1:
             try:
