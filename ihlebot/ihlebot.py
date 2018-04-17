@@ -250,6 +250,7 @@ class Ihlebot:
             for m in menu:
                 t_menu = re.sub("(<.*?>)", "", m[0])
                 t_menu = re.sub("  |, ", "\n", t_menu)
+                t_menu = re.sub("Tagessuppe ", "Tagessupe\n", t_menu)
                 t_menu = re.sub("Tagesmenü vegetarisch|Tagesmenü|mensaVital vegan|mensaVital", "", t_menu)
                 daily_menu.append((t_menu))
             return daily_menu
@@ -271,7 +272,7 @@ class Ihlebot:
                 vegan = menu3[counter]
             except IndexError:
                 vegan = ""
-            embed.add_field(name="{}".format(wochentage[counter]), value="*Tagesmenü:*\n{}\n\n*Tagesmenü vegetarisch:*\n{}\n\n*MensaVital:*\n{}".format(speise, vegetarisch, vegan))
+            embed.add_field(name="{}\n".format(wochentage[counter]), value="*Tagesmenü:*\n{}\n\n*Tagesmenü vegetarisch:*\n{}\n\n*MensaVital:*\n{}".format(speise, vegetarisch, vegan))
             counter += 1
 
         embed.set_thumbnail(
