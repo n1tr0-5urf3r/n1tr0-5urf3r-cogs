@@ -274,7 +274,7 @@ class Ihlebot:
                 vegan = menu3[counter-1]
             except IndexError:
                 vegan = ""
-            embed.add_field(name="{}".format(wochentage[counter]), value="*Tagesmenü:*\n{}\n\n*Tagesmenü vegetarisch:*\n{}\n\n*MensaVital:*\n{}\n".format(speise, vegetarisch, vegan))
+            embed.add_field(name="{}".format(wochentage[counter]), value="*Tagesmenü:*\n{}\n\n*Tagesmenü vegetarisch:*\n{}\n\n*MensaVital:*\n{}\n".format(speise, vegetarisch, vegan), inline=True)
             counter += 1
 
         embed.set_thumbnail(
