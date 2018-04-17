@@ -237,6 +237,9 @@ class Ihlebot:
         today = datetime.datetime.now()
         cal_week = today.strftime("%W")
         weekday = datetime.datetime.today().weekday()
+        week_start = today - datetime.timedelta(days = weekday)
+        week_end = today + datetime.timedelta(days=4 - weekday)
+        print(week_end.strftime("%d.%m."))
 
         url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
 
@@ -261,7 +264,7 @@ class Ihlebot:
         menu2 = cleanUp(tagesmenu_veg)
         menu3 = cleanUp(mensa_vital)
         embed = discord.Embed(
-            description="Mensa Morgenstelle, KW {}".format(cal_week), color=color)
+            description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."), week_end.strftime("%d.%m.")), color=color)
 
 
         if weekday > 0:
