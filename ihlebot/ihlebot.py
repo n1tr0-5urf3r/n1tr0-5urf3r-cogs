@@ -255,7 +255,7 @@ class Ihlebot:
             for m in menu:
                 t_menu = re.sub("(<.*?>)", "", m[0])
                 t_menu = re.sub("  |, ", "\n- ", t_menu)
-                t_menu = re.sub("Tagessuppe ", "Tagessuppe\n", t_menu)
+                t_menu = re.sub("Tagessuppe ", "Tagessuppe\n- ", t_menu)
                 t_menu = re.sub("Tagesmenü vegetarisch|Tagesmenü|mensaVital vegan|mensaVital", "", t_menu)
                 daily_menu.append((t_menu))
             return daily_menu
