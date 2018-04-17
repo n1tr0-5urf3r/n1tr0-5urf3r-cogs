@@ -244,7 +244,8 @@ class Ihlebot:
         html_mensa = re.sub('\n', ' ', r.content.decode('utf8'))
         tagesmenu = re.findall(r"(<td>Tagesmenü</td>.*?)(</td>)", html_mensa)
         tagesmenu_veg = re.findall(r"(<td>Tagesmenü vegetarisch</td>.*?)(</td>)", html_mensa)
-        mensa_vital = re.findall(r"(<td>mensaVital vegan| mensaVital vegetarisch|mensaVital</td>.*?)(</td>)", html_mensa)
+        # Probably should make an regex OR
+        mensa_vital = re.findall(r"(<td>mensaVital.*?</td>.*?)(</td>)", html_mensa)
 
         def cleanUp(menu):
             daily_menu = []
