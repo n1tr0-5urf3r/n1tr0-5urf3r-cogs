@@ -311,7 +311,7 @@ Mensa:
 
         embed.set_thumbnail(
             url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
-        embed.set_footer(text='(c) Fabian Ihle')
+        embed.set_footer(text='Bot by Fabi')
         await self.bot.say(embed=embed)
 
 
