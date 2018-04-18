@@ -239,12 +239,15 @@ class Ihlebot:
 
         # Probably should make this in a subcommand
         weekday = datetime.datetime.today().weekday()
+        week_start = today - datetime.timedelta(days = weekday)
+        week_end = today + datetime.timedelta(days = 4 - weekday)
         if subcommand:
             if subcommand.lower() == "nextweek":
                 cal_week = int(cal_week) + 1
                 weekday = 0
-        week_start = today - datetime.timedelta(days=weekday)
-        week_end = today + datetime.timedelta(days=4 - weekday)
+                week_start = today + datetime.timedelta(days = (7 - today.weekday()))
+                week_end = week_start + datetime.timedelta(days = 4)
+            
 
         url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
 
