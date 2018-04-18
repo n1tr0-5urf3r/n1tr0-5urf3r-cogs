@@ -247,8 +247,8 @@ class Ihlebot:
                 weekday = 0
                 week_start = today + datetime.timedelta(days = (7 - today.weekday()))
                 week_end = week_start + datetime.timedelta(days = 4)
-            if subcommand.lower() == "help" or subcommand.lower == "h":
-                await ctx.send("""```
+            elif subcommand.lower() == "help" or subcommand.lower == "h":
+                return await ctx.send("""```
                                 Mensa:
                                    help         Diese Nachricht
                                    <leer>       Speiseplan der aktuellen Woche
