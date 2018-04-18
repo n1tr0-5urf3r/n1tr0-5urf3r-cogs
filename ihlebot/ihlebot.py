@@ -38,11 +38,11 @@ class Ihlebot:
         game = discord.Game(name='Justified Loyalty')
         await self.bot.change_status(game)
 
-    @commands.command(pass_context=True)
-    async def beleidige(self, ctx, name):
-        """Second Test, Variablenverarbeitung"""
-        msg = await self.bot.say(name + ' ist ein Behindi!')
-        await self.bot.add_reaction(msg, '😲')
+    # @commands.command(pass_context=True)
+    # async def beleidige(self, ctx, name):
+    #     """Second Test, Variablenverarbeitung"""
+    #     msg = await self.bot.say(name + ' ist ein Behindi!')
+    #     await self.bot.add_reaction(msg, '😲')
 
     @commands.command(pass_context=True)
     async def pizza(self, ctx):
@@ -73,13 +73,13 @@ class Ihlebot:
                 name=ej.name, value=str(ej) + " " + ej.id, inline=False)
         await self.bot.say(embed=data)
 
-    @commands.command(pass_context=True)
-    async def create(self, ctx):
-        """Create custom emojis Currently not working"""
-        server = ctx.message.server
-        with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
-            f = imageFile.read()
-        await self.bot.create_custom_emoji(server=server, name='temp', image=f)
+    # @commands.command(pass_context=True)
+    # async def create(self, ctx):
+    #     """Create custom emojis Currently not working"""
+    #     server = ctx.message.server
+    #     with open('/opt/Red-DiscordBot/cogs/icon.png', 'rb') as imageFile:
+    #         f = imageFile.read()
+    #     await self.bot.create_custom_emoji(server=server, name='temp', image=f)
 
     @commands.command(pass_context=True)
     async def just(self, ctx):
