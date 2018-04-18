@@ -242,12 +242,21 @@ class Ihlebot:
         week_start = today - datetime.timedelta(days = weekday)
         week_end = today + datetime.timedelta(days = 4 - weekday)
         if subcommand:
-            if subcommand.lower() == "nextweek":
+            if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
                 cal_week = int(cal_week) + 1
                 weekday = 0
                 week_start = today + datetime.timedelta(days = (7 - today.weekday()))
                 week_end = week_start + datetime.timedelta(days = 4)
-            
+            if subcommand.lower() == "help" or subcommand.lower == "h":
+                await ctx.send("""```
+                                Mensa:
+                                   help         Diese Nachricht
+                                   <leer>       Speiseplan der aktuellen Woche
+                                   nextweek     Speiseplan der nächsten Woche
+                                
+                                z.B. !mensa oder !mensa nextweek
+                                Alternativ auch Abkürzungen wie "h" oder "nw"
+                                ```""")
 
         url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
 
