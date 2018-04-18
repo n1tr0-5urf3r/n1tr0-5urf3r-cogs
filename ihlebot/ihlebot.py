@@ -238,10 +238,11 @@ class Ihlebot:
         cal_week = today.strftime("%W")
 
         # Probably should make this in a subcommand
+        weekday = datetime.datetime.today().weekday()
         if subcommand:
             if subcommand.lower() == "nextweek":
                 cal_week = int(cal_week) + 1
-        weekday = datetime.datetime.today().weekday()
+                weekday = 0
         week_start = today - datetime.timedelta(days=weekday)
         week_end = today + datetime.timedelta(days=4 - weekday)
 
