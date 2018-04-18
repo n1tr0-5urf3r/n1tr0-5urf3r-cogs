@@ -249,14 +249,14 @@ class Ihlebot:
                 week_end = week_start + datetime.timedelta(days = 4)
             elif subcommand.lower() == "help" or subcommand.lower() == "h":
                 return await self.bot.say("""```
-                                Mensa:
-                                   help         Diese Nachricht
-                                   <leer>       Speiseplan der aktuellen Woche
-                                   nextweek     Speiseplan der nächsten Woche
+Mensa:
+    help         Diese Nachricht
+    <leer>       Speiseplan der aktuellen Woche
+    nextweek     Speiseplan der nächsten Woche
                                 
-                                z.B. !mensa oder !mensa nextweek
-                                Alternativ auch Abkürzungen wie "h" oder "nw"
-                                ```""")
+    z.B. !mensa oder !mensa nextweek
+    Alternativ auch Abkürzungen wie "h" oder "nw"
+```""")
 
         url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
 
