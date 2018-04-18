@@ -264,8 +264,8 @@ Mensa:
         html_mensa = re.sub('\n', ' ', r.content.decode('utf8'))
         tagesmenu = re.findall(r"(<td>Tagesmenü</td>.*?)(</td>)", html_mensa)
         tagesmenu_veg = re.findall(r"(<td>Tagesmenü vegetarisch</td>.*?)(</td>)", html_mensa)
-        # Probably should make an regex OR
         mensa_vital = re.findall(r"(<td>mensaVital.*?</td>.*?)(</td>)", html_mensa)
+        tages_angebot = re.findall(r"(<td>Angebot des Tages</td>.*?)(</td>)", html_mensa)
 
         def cleanUp(menu):
             daily_menu = []
@@ -273,13 +273,15 @@ Mensa:
                 t_menu = re.sub("(<.*?>)", "", m[0])
                 t_menu = re.sub("  |, ", "\n- ", t_menu)
                 t_menu = re.sub("Tagessuppe ", "Tagessuppe\n- ", t_menu)
-                t_menu = re.sub("Tagesmenü vegetarisch|Tagesmenü|mensaVital vegan|mensaVital vegetarisch|mensaVital", "", t_menu)
+                t_menu = re.sub("Tagesmenü vegetarisch|Tagesmenü|mensaVital vegan|mensaVital vegetarisch|mensaVital|Angebot des Tages", "", t_menu)
                 daily_menu.append((t_menu))
             return daily_menu
 
         menu1 = cleanUp(tagesmenu)
         menu2 = cleanUp(tagesmenu_veg)
         menu3 = cleanUp(mensa_vital)
+        menu4= cleanUp(tages_angebot)
+
         embed = discord.Embed(
             description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."),
                                                                          week_end.strftime("%d.%m.")), color=color)
@@ -298,9 +300,13 @@ Mensa:
                 vegan = menu3[counter - weekday]
             except IndexError:
                 vegan = ""
+            try:
+                angebot = menu4[counter - weekday]
+            except IndexError:
+                angebot = ""
             embed.add_field(name="{}".format(wochentage[counter]),
-                            value="*Tagesmenü:*\n- {}\n\n*Tagesmenü vegetarisch:*\n- {}\n\n*MensaVital:*\n- {}\n".format(
-                                speise, vegetarisch, vegan), inline=False)
+                            value="*Tagesmenü:*\n- {}\n\n*Tagesmenü vegetarisch:*\n- {}\n\n*MensaVital:*\n- {}\n\n*Angebot des Tages:*\n- {}\n".format(
+                                speise, vegetarisch, vegan, angebot), inline=False)
             counter += 1
 
         embed.set_thumbnail(
