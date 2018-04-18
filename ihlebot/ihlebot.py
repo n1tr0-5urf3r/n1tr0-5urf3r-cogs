@@ -229,13 +229,17 @@ class Ihlebot:
         return color
 
     @commands.command(pass_context=True)
-    async def mensa(self, ctx):
+    async def mensa(self, ctx, subcommand=None):
         user = ctx.message.author
         color = self.getColor(user)
 
         # Get current calendarweek
         today = datetime.datetime.now()
         cal_week = today.strftime("%W")
+
+        # Probably should make this in a subcommand
+        if subcommand.lower() == "nextweek":
+            cal_week += 1
         weekday = datetime.datetime.today().weekday()
         week_start = today - datetime.timedelta(days=weekday)
         week_end = today + datetime.timedelta(days=4 - weekday)
