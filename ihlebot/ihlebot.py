@@ -257,6 +257,9 @@ Mensa:
     z.B. !mensa oder !mensa nextweek
     Alternativ auch Abkürzungen wie "h" oder "nw"
 ```""")
+        # Show next week on weekends
+        if weekday > 4:
+            cal_week = int(cal_week) + 1
 
         url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
 
