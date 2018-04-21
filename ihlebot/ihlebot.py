@@ -382,7 +382,7 @@ Mensa:
             return await self.bot.say(embed=embed)
 
         if join_group is None:
-            send_help()
+            await send_help()
         author = ctx.message.author
         server = ctx.message.server
         if "übungsgruppe-" in join_group:
@@ -391,7 +391,9 @@ Mensa:
                 await self.bot.add_roles(author, role)
                 await self.bot.say("Du wurdest zu {} hinzugefügt".format(join_group))
             except AttributeError:
-                send_help()
+                await send_help()
+        else:
+            await send_help()
 
 
 def setup(bot):
