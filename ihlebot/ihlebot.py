@@ -354,11 +354,11 @@ Mensa:
         for channel in all_channels:
             if "übungsgruppe-" in channel.name:
                 role = discord.utils.get(server.roles, name=channel.name)
-                await self.bot.edit_channel_permissions(channel, everyone)
-                for perm in list_perms:
-                    perms = discord.PermissionOverwrite(perm=True)
-                    await self.bot.edit_channel_permissions(channel, role, perms)
-                    await asyncio.sleep(1.5)
+                await self.bot.edit_channel_permissions(channel, server.default_role, everyone_perms)
+               # for perm in list_perms:
+                perms = discord.PermissionOverwrite(read_messages=True)
+                await self.bot.edit_channel_permissions(channel, role, perms)
+                await asyncio.sleep(1.5)
 def setup(bot):
     n = Ihlebot(bot)
     loop = asyncio.get_event_loop()
