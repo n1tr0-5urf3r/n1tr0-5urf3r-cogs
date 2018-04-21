@@ -323,7 +323,8 @@ Mensa:
 
     @commands.command(pass_context=True)
     async def createroles(self, ctx, subcommand=None):
-        guild = self.client.get_guild()
+        client = discord.Client()
+        guild = client.get_guild()
         await self.bot.say(guild)
 
 def setup(bot):
