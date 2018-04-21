@@ -325,14 +325,14 @@ Mensa:
     async def createroles(self, ctx, subcommand=None):
         server = ctx.message.server
         all_channels = server.channels
-        guild = ctx.guild
+        author = ctx.message.author
         group_channels = []
         for channel in all_channels:
             if "übungsgruppe-" in channel.name:
                 if channel.name not in group_channels:
                     group_channels.append(channel.name)
         for group_channel in group_channels:
-            await guild.create_role(name=group_channel, mentionable=True, reason="Automatically created")
+            await client.create_role(author.server, name=group_channel)
 
         await self.bot.say(server.name)
         await self.bot.say(str(type(server)))
