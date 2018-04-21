@@ -321,6 +321,11 @@ Mensa:
         await self.bot.say(embed=embed)
 
 
+    @commands.command(pass_context=True)
+    async def createroles(self, ctx, subcommand=None):
+        guild = self.bot.get_guild()
+        await self.bot.say(guild)
+
 def setup(bot):
     n = Ihlebot(bot)
     loop = asyncio.get_event_loop()
