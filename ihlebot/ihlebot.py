@@ -334,15 +334,18 @@ Mensa:
             if "übungsgruppe-" in channel.name:
                 if channel.name not in group_channels:
                     group_channels.append(channel.name)
-        #await self.bot.say(all_channels_name)
         for group_channel in group_channels:
             if group_channel not in all_roles:
                 await self.bot.create_role(author.server, name=group_channel)
                 await self.bot.say("Role {} created".format(group_channel))
 
-        await self.bot.say(server.name)
-        await self.bot.say(group_channels)
-
+        for channel in all_channels:
+            if "übungsgruppe-" in channel.name:
+                perms = discord.PermissionOverwrite()
+                perms.send_messages = False
+                role = discord.utils.get(server.roles, name=channel.name)
+                await self.bot.edit_channel_permissions(channel, role, perms)
+                await asyncio.sleep(1.5)
 def setup(bot):
     n = Ihlebot(bot)
     loop = asyncio.get_event_loop()
