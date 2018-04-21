@@ -339,23 +339,26 @@ Mensa:
 
 
         # Needed permissions
+        list_perms = ["send_messages", "read_messages", "manage_messages", "embed_links", "attach_files", "read_message_history"]
      #   perms = discord.Permissions(send_messages=True, read_messages=True, manage_messages=True, embed_links=True, attach_files=True, read_message_history=True)
-        perms = discord.Permissions(send_messages=True)
+       # perms = discord.PermissionOverwrite(send_messages=True)
         everyone_perms = discord.PermissionOverwrite(read_messages=False)
         everyone = discord.ChannelPermissions(target=server.default_role, overwrite=everyone_perms)
         # Create a role for each channel
         for group_channel in group_channels:
             if group_channel not in all_roles:
-                await self.bot.create_role(author.server, name=group_channel, permissions=perms)
+                await self.bot.create_role(author.server, name=group_channel)
                 await self.bot.say("Role {} created".format(group_channel))
 
         # Grant permissions to role
         for channel in all_channels:
             if "übungsgruppe-" in channel.name:
                 role = discord.utils.get(server.roles, name=channel.name)
-                #await self.bot.edit_channel_permissions(channel, everyone)
-                await self.bot.edit_channel_permissions(channel, role, perms)
-                await asyncio.sleep(1.5)
+                await self.bot.edit_channel_permissions(channel, everyone)
+                for perm in list_perms:
+                    perms = discord.PermissionOverwrite(perm=True)
+                    await self.bot.edit_channel_permissions(channel, role, perms)
+                    await asyncio.sleep(1.5)
 def setup(bot):
     n = Ihlebot(bot)
     loop = asyncio.get_event_loop()
