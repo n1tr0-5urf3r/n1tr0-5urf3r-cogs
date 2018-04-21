@@ -260,6 +260,9 @@ Mensa:
         # Show next week on weekends
         if weekday > 4:
             cal_week = int(cal_week) + 1
+            weekday = 0
+            week_start = today + datetime.timedelta(days=(7 - today.weekday()))
+            week_end = week_start + datetime.timedelta(days=4)
 
         url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
 
