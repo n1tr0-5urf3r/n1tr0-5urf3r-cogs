@@ -326,17 +326,19 @@ Mensa:
         server = ctx.message.server
         author = ctx.message.author
         all_channels = server.channels
+        all_roles = []
         group_channels = []
-        all_channels_name = []
+        for role in server.roles:
+            all_roles.append(role.name)
         for channel in all_channels:
             if "übungsgruppe-" in channel.name:
                 if channel.name not in group_channels:
                     group_channels.append(channel.name)
-            all_channels_name.append(channel.name)
         #await self.bot.say(all_channels_name)
         for group_channel in group_channels:
-            if group_channel not in all_channels_name:
+            if group_channel not in all_roles:
                 await self.bot.create_role(author.server, name=group_channel)
+                await self.bot.say("Role {} created".format(group_channel))
 
         await self.bot.say(server.name)
         await self.bot.say(group_channels)
