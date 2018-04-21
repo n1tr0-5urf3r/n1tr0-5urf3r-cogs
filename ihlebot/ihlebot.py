@@ -324,15 +324,18 @@ Mensa:
     @commands.command(pass_context=True)
     async def createroles(self, ctx, subcommand=None):
         server = ctx.message.server
-        all_channels = server.channels
         author = ctx.message.author
+        all_channels = server.channels
         group_channels = []
+        all_channels_name = []
         for channel in all_channels:
             if "übungsgruppe-" in channel.name:
                 if channel.name not in group_channels:
                     group_channels.append(channel.name)
+            all_channels_name.append(channel.name)
         for group_channel in group_channels:
-            await self.bot.create_role(author.server, name=group_channel)
+            if group_channel not in all_channels_name:
+                await self.bot.create_role(author.server, name=group_channel)
 
         await self.bot.say(server.name)
         await self.bot.say(group_channels)
