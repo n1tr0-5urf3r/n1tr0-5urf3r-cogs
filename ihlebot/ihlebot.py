@@ -323,6 +323,7 @@ Mensa:
 
     @commands.command(pass_context=True)
     async def createroles(self, ctx):
+        """Create roles to each channel that begins with "übungsgruppe- and set permissions"""
         server = ctx.message.server
         author = ctx.message.author
         all_channels = server.channels
@@ -365,9 +366,7 @@ Mensa:
 
     @commands.command(pass_context=True)
     async def gruppe(self, ctx, join_group=None):
-
         server = ctx.message.server
-
         async def send_help():
             group_channels = []
             all_channels = server.channels
