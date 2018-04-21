@@ -332,7 +332,7 @@ Mensa:
                 if channel.name not in group_channels:
                     group_channels.append(channel.name)
         for group_channel in group_channels:
-            await client.create_role(author.server, name=group_channel)
+            await self.bot.create_role(author.server, name=group_channel)
 
         await self.bot.say(discord._version)
         await self.bot.say(server.name)
