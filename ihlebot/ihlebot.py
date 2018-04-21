@@ -366,6 +366,8 @@ Mensa:
     @commands.command(pass_context=True)
     async def gruppe(self, ctx, join_group=None):
 
+        server = ctx.message.server
+
         async def send_help():
             group_channels = []
             all_channels = server.channels
@@ -384,7 +386,6 @@ Mensa:
         if join_group is None:
             return await send_help()
         author = ctx.message.author
-        server = ctx.message.server
         if "übungsgruppe-" in join_group:
             try:
                 role = discord.utils.get(server.roles, name=join_group)
