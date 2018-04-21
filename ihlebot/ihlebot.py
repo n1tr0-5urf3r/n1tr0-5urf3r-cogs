@@ -322,7 +322,7 @@ Mensa:
 
 
     @commands.command(pass_context=True)
-    async def createroles(self, ctx, subcommand=None):
+    async def createroles(self, ctx):
         server = ctx.message.server
         author = ctx.message.author
         all_channels = server.channels
@@ -337,9 +337,7 @@ Mensa:
                 if channel.name not in group_channels:
                     group_channels.append(channel.name)
 
-
         # Needed permissions
-        list_perms = ["send_messages", "read_messages", "manage_messages", "embed_links", "attach_files", "read_message_history"]
         everyone_perms = discord.PermissionOverwrite(read_messages=False)
         overwrite = discord.PermissionOverwrite()
         overwrite.read_messages = True
@@ -362,7 +360,20 @@ Mensa:
                 await self.bot.edit_channel_permissions(channel, server.default_role, everyone_perms)
                 # Grant permission to role
                 await self.bot.edit_channel_permissions(channel, role, overwrite)
+                await self.bot.say("Granted permissions for role {} to channel {}".format(role, channel))
                 await asyncio.sleep(1.5)
+
+    @commands.command(pass_context=True)
+    async def createroles(self, ctx, join_group=None):
+        if join_group is None:
+            return await self.bot.say("Bitte eine Übungsgruppe angeben.")
+        author = ctx.message.author
+        server = ctx.message.server
+        if "übungsgruppe-" in join_group:
+            role = discord.utils.get(server.roles, name=join_group)
+            await self.bot.add_roles(author, role)
+            await self.bot.say("Du wurdest zu {} hinzugefügt".format(join_group))
+
 def setup(bot):
     n = Ihlebot(bot)
     loop = asyncio.get_event_loop()
