@@ -333,10 +333,10 @@ Mensa:
                 if channel.name not in group_channels:
                     group_channels.append(channel.name)
             all_channels_name.append(channel.name)
-        await self.bot.say(all_channels_name)
-   #     for group_channel in group_channels:
-            #if group_channel not in all_channels_name:
-            #    await self.bot.create_role(author.server, name=group_channel)
+        #await self.bot.say(all_channels_name)
+        for group_channel in group_channels:
+            if group_channel not in all_channels_name:
+                await self.bot.create_role(author.server, name=group_channel)
 
         await self.bot.say(server.name)
         await self.bot.say(group_channels)
