@@ -389,7 +389,7 @@ Mensa:
             try:
                 role = discord.utils.get(server.roles, name=join_group)
                 await self.bot.add_roles(author, role)
-                await self.bot.say("Du wurdest zu {} hinzugefügt".format(join_group))
+                await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(author.mention(), join_group))
             except AttributeError:
                 await send_help()
         else:
