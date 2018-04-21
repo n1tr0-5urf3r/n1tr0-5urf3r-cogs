@@ -337,8 +337,10 @@ Mensa:
                 if channel.name not in group_channels:
                     group_channels.append(channel.name)
 
+
         # Needed permissions
-        perms = discord.Permissions(send_messages=True, read_messages=True, manage_messages=True, embed_links=True, attach_files=True, read_message_history=True)
+     #   perms = discord.Permissions(send_messages=True, read_messages=True, manage_messages=True, embed_links=True, attach_files=True, read_message_history=True)
+        perms = discord.Permissions(send_messages=True)
         everyone_perms = discord.PermissionOverwrite(read_messages=False)
         everyone = discord.ChannelPermissions(target=server.default_role, overwrite=everyone_perms)
         # Create a role for each channel
