@@ -326,10 +326,12 @@ Mensa:
         server = ctx.message.server
         all_channels = server.channels
         group_channels = []
-    #    for channel in all_channels:
-    #
+        for channel in all_channels:
+            if "übungsgruppe-" in channel.name:
+                if channel.name not in group_channels:
+                    group_channels.append(channel.name)
         await self.bot.say(server.name)
-        await self.bot.say(all_channels)
+        await self.bot.say(group_channels)
 
 def setup(bot):
     n = Ihlebot(bot)
