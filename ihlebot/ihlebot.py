@@ -365,14 +365,34 @@ Mensa:
 
     @commands.command(pass_context=True)
     async def gruppe(self, ctx, join_group=None):
+
+        async def send_help():
+            group_channels = []
+            all_channels = server.channels
+            for channel in all_channels:
+                if "übungsgruppe-" in channel.name:
+                    if channel.name not in group_channels:
+                        group_channels.append(channel.name)
+            embed = discord.Embed(
+                description="**Verfügbare Übungsgruppen**")
+            embed.add_field(name="Gruppen", value="\n".join(group_channels))
+
+            await self.bot.say("Gruppe nicht gefunden oder angegeben. Verfügbare Gruppen sind:")
+            embed.set_footer(text='Bot by Fabi')
+            return await self.bot.say(embed=embed)
+
         if join_group is None:
-            return await self.bot.say("Bitte eine Übungsgruppe angeben.")
+            send_help()
         author = ctx.message.author
         server = ctx.message.server
         if "übungsgruppe-" in join_group:
-            role = discord.utils.get(server.roles, name=join_group)
-            await self.bot.add_roles(author, role)
-            await self.bot.say("Du wurdest zu {} hinzugefügt".format(join_group))
+            try:
+                role = discord.utils.get(server.roles, name=join_group)
+                await self.bot.add_roles(author, role)
+                await self.bot.say("Du wurdest zu {} hinzugefügt".format(join_group))
+            except AttributeError:
+                send_help()
+
 
 def setup(bot):
     n = Ihlebot(bot)
