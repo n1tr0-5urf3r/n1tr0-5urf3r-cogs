@@ -382,7 +382,7 @@ Mensa:
             return await self.bot.say(embed=embed)
 
         if join_group is None:
-            await send_help()
+            return await send_help()
         author = ctx.message.author
         server = ctx.message.server
         if "übungsgruppe-" in join_group:
