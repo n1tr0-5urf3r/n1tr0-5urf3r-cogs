@@ -374,9 +374,10 @@ Mensa:
                 if "übungsgruppe-" in channel.name:
                     if channel.name not in group_channels:
                         group_channels.append(channel.name.replace("übungsgruppe-", ""))
+            sorted_groups = sorted(group_channels)
             embed = discord.Embed(
                 description="**Verfügbare Übungsgruppen**")
-            embed.add_field(name="Gruppen", value="\n".join(group_channels))
+            embed.add_field(name="Gruppen", value="\n".join(sorted_groups))
 
             await self.bot.say("Gruppe nicht gefunden oder angegeben. Verfügbare Gruppen sind:")
             embed.set_footer(text='Bot by Fabi')
