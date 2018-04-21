@@ -323,9 +323,13 @@ Mensa:
 
     @commands.command(pass_context=True)
     async def createroles(self, ctx, subcommand=None):
-        client = discord.Client()
         server = ctx.message.server
+        all_channels = server.channels
+        group_channels = []
+    #    for channel in all_channels:
+    #
         await self.bot.say(server.name)
+        await self.bot.say(all_channels)
 
 def setup(bot):
     n = Ihlebot(bot)
