@@ -328,21 +328,34 @@ Mensa:
         all_channels = server.channels
         all_roles = []
         group_channels = []
+        # Collect already available roles
         for role in server.roles:
             all_roles.append(role.name)
+        # Collect needed channel names
         for channel in all_channels:
             if "übungsgruppe-" in channel.name:
                 if channel.name not in group_channels:
                     group_channels.append(channel.name)
+
+        # Needed permissions
+        perms = discord.PermissionOverwrite()
+        perms.send_messages = True
+        perms.read_messages = True
+        perms.manage_messages = True
+        perms.embed_links = True
+        perms.attach_files = True
+        perms. read_message_history = True
+        everyone_perms = discord.PermissionOverwrite(read_messages=False)
+        everyone = discord.ChannelPermissions(target=server.default_role, overwrite=everyone_perms)
+        # Create a role for each channel
         for group_channel in group_channels:
             if group_channel not in all_roles:
-                await self.bot.create_role(author.server, name=group_channel)
+                await self.bot.create_role(author.server, name=group_channel, permissions=perms)
                 await self.bot.say("Role {} created".format(group_channel))
 
+        # Grant permissions to role
         for channel in all_channels:
             if "übungsgruppe-" in channel.name:
-                perms = discord.PermissionOverwrite()
-                perms.send_messages = False
                 role = discord.utils.get(server.roles, name=channel.name)
                 await self.bot.edit_channel_permissions(channel, role, perms)
                 await asyncio.sleep(1.5)
