@@ -364,7 +364,7 @@ Mensa:
                 await asyncio.sleep(1.5)
 
     @commands.command(pass_context=True)
-    async def createroles(self, ctx, join_group=None):
+    async def gruppe(self, ctx, join_group=None):
         if join_group is None:
             return await self.bot.say("Bitte eine Übungsgruppe angeben.")
         author = ctx.message.author
