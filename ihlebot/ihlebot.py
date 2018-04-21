@@ -373,7 +373,7 @@ Mensa:
             for channel in all_channels:
                 if "übungsgruppe-" in channel.name:
                     if channel.name not in group_channels:
-                        group_channels.append(channel.name)
+                        group_channels.append(channel.name.replace("übungsgruppe-", ""))
             embed = discord.Embed(
                 description="**Verfügbare Übungsgruppen**")
             embed.add_field(name="Gruppen", value="\n".join(group_channels))
@@ -384,6 +384,7 @@ Mensa:
 
         if join_group is None:
             return await send_help()
+        join_group = "übungsgruppe-{}".format(join_group)
         author = ctx.message.author
         if "übungsgruppe-" in join_group:
             try:
