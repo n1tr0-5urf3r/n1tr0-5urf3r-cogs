@@ -415,14 +415,14 @@ Mensa:
 
         if leave_group is None:
             return await send_help()
-        leave_group = "übungsgruppe-{}".format(leave_group)
+        leave_group_full = "übungsgruppe-{}".format(leave_group)
         try:
-            role = discord.utils.get(server.roles, name=leave_group)
+            role = discord.utils.get(server.roles, name=leave_group_full)
             if leave_group not in role_names:
-                await self.bot.say("{} du bist nicht in der Gruppe {}".format(author.mention, leave_group))
+                await self.bot.say("{} du bist nicht in der Gruppe {}".format(author.mention, leave_group_full))
             else:
                 await self.bot.remove_roles(author, role)
-                await self.bot.say("{} du wurdest aus der Gruppe {} entfernt".format(author.mention, leave_group))
+                await self.bot.say("{} du wurdest aus der Gruppe {} entfernt".format(author.mention, leave_group_full))
         except AttributeError:
             await send_help()
 
