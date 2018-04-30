@@ -397,6 +397,24 @@ Mensa:
         else:
             await send_help()
 
+    @commands.command(pass_context=True)
+    async def gruppeverlassen(self, ctx, leave_group=None):
+        server = ctx.message.server
+        author = ctx.message.author
+        async def send_help():
+            all_roles = author.roles
+            await self.bot.say(all_roles)
+
+        if leave_group is None:
+            return await send_help()
+        leave_group = "übungsgruppe-{}".format(leave_group)
+        try:
+            role = discord.utils.get(server.roles, name=leave_group)
+            await self.bot.remove_roles(author, role)
+            await self.bot.say("{} du wurdest aus der Gruppe {} entfernt".format(author.mention, leave_group))
+        except AttributeError:
+            await send_help()
+
 
 def setup(bot):
     n = Ihlebot(bot)
