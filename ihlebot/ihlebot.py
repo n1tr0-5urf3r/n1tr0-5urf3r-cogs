@@ -406,7 +406,8 @@ Mensa:
             role_names = []
             embed = discord.Embed(description = "**Zugeordnete Übungsgruppen**")
             for role_name in all_roles:
-                role_names.append(role_name.name)
+                if not "everyone" in role_name.name:
+                    role_names.append(role_name.name.replace("übungsgruppe-", ""))
             embed.add_field(name="Gruppen", value="\n".join(role_names))
             await self.bot.say("Gruppe nicht gefunden oder zugeordnet. Zugeordnete Gruppen sind:")
             embed.set_footer(text='Bot by Fabi')
