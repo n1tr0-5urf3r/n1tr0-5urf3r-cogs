@@ -420,6 +420,7 @@ Mensa:
             role = discord.utils.get(server.roles, name=leave_group_full)
             if leave_group not in role_names:
                 await self.bot.say("{} du bist nicht in der Gruppe {}".format(author.mention, leave_group_full))
+                await send_help()
             else:
                 await self.bot.remove_roles(author, role)
                 await self.bot.say("{} du wurdest aus der Gruppe {} entfernt".format(author.mention, leave_group_full))
