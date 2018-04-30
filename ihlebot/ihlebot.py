@@ -403,7 +403,14 @@ Mensa:
         author = ctx.message.author
         async def send_help():
             all_roles = author.roles
-            await self.bot.say(all_roles)
+            role_names = []
+            embed = discord.Embed(description = "**Zugeordnete Übungsgruppen**")
+            for role_name in all_roles:
+                role_names.append(role_name.name)
+            embed.add_field(name="Gruppen", value="\n".join(role_names))
+            await self.bot.say("Gruppe nicht gefunden oder zugeordnet. Zugeordnete Gruppen sind:")
+            embed.set_footer(text='Bot by Fabi')
+            return await self.bot.say(embed=embed)
 
         if leave_group is None:
             return await send_help()
