@@ -418,7 +418,7 @@ Mensa:
         leave_group = "übungsgruppe-{}".format(leave_group)
         try:
             role = discord.utils.get(server.roles, name=leave_group)
-            if "übungsgruppe-{}".format(leave_group) not in role_names:
+            if leave_group not in role_names:
                 await self.bot.say("{} du bist nicht in der Gruppe {}".format(author.mention, leave_group))
             else:
                 await self.bot.remove_roles(author, role)
