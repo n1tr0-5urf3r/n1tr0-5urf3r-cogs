@@ -401,13 +401,13 @@ Mensa:
     async def gruppeverlassen(self, ctx, leave_group=None):
         server = ctx.message.server
         author = ctx.message.author
+        all_roles = author.roles
+        role_names = []
+        for role_name in all_roles:
+            if not "everyone" in role_name.name:
+                role_names.append(role_name.name.replace("übungsgruppe-", ""))
         async def send_help():
-            all_roles = author.roles
-            role_names = []
             embed = discord.Embed(description = "**Zugeordnete Übungsgruppen**")
-            for role_name in all_roles:
-                if not "everyone" in role_name.name:
-                    role_names.append(role_name.name.replace("übungsgruppe-", ""))
             embed.add_field(name="Gruppen", value="\n".join(role_names))
             await self.bot.say("Gruppe nicht gefunden oder zugeordnet. Zugeordnete Gruppen sind:")
             embed.set_footer(text='Bot by Fabi')
@@ -418,8 +418,11 @@ Mensa:
         leave_group = "übungsgruppe-{}".format(leave_group)
         try:
             role = discord.utils.get(server.roles, name=leave_group)
-            await self.bot.remove_roles(author, role)
-            await self.bot.say("{} du wurdest aus der Gruppe {} entfernt".format(author.mention, leave_group))
+            if "übungsgruppe-{}".format(leave_group) not in role_names:
+                await self.bot.say("{} du bist nicht in der Gruppe {}".format(author.mention, leave_group))
+            else:
+                await self.bot.remove_roles(author, role)
+                await self.bot.say("{} du wurdest aus der Gruppe {} entfernt".format(author.mention, leave_group))
         except AttributeError:
             await send_help()
 
