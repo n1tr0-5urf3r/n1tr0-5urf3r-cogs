@@ -1,6 +1,7 @@
 # Discord stuff
 import discord
 import asyncio
+import aiohttp
 from discord.ext import commands
 
 
@@ -16,7 +17,7 @@ class UniBot:
         self.session.close()
 
 
-    @commands.group(pass_context=True)
+    @commands.command(pass_context=True)
     async def testclass(self, ctx):
         """First Test, Commandcall"""
         await self.bot.say('Test funktioniert')
