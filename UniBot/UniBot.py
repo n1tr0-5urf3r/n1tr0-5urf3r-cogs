@@ -112,6 +112,83 @@ class UniBot:
             embed.set_footer(text='Bot by Fabi')
             await self.bot.say(embed=embed)
 
+        @commands.command(pass_context=True)
+        async def createroles(self, ctx):
+            """Create roles to each channel that begins with "übungsgruppe- and set permissions"""
+            server = ctx.message.server
+            author = ctx.message.author
+            all_channels = server.channels
+            all_roles = []
+            group_channels = []
+            # Collect already available roles
+            for role in server.roles:
+                all_roles.append(role.name)
+            # Collect needed channel names
+            for channel in all_channels:
+                if "übungsgruppe-" in channel.name:
+                    if channel.name not in group_channels:
+                        group_channels.append(channel.name)
+
+            # Needed permissions
+            everyone_perms = discord.PermissionOverwrite(read_messages=False)
+            overwrite = discord.PermissionOverwrite()
+            overwrite.read_messages = True
+            overwrite.send_message = True
+            overwrite.manage_messages = True
+            overwrite.embed_links = True
+            overwrite.attach_files = True
+            overwrite.read_message_history = True
+            # Create a role for each channel
+            for group_channel in group_channels:
+                if group_channel not in all_roles:
+                    await self.bot.create_role(author.server, name=group_channel)
+                    await self.bot.say("Role {} created".format(group_channel))
+
+            # Grant permissions to role
+            for channel in all_channels:
+                if "übungsgruppe-" in channel.name:
+                    role = discord.utils.get(server.roles, name=channel.name)
+                    # Deny permission to everyone
+                    await self.bot.edit_channel_permissions(channel, server.default_role, everyone_perms)
+                    # Grant permission to role
+                    await self.bot.edit_channel_permissions(channel, role, overwrite)
+                    await self.bot.say("Granted permissions for role {} to channel {}".format(role, channel))
+                    await asyncio.sleep(1.5)
+
+        @commands.command(pass_context=True)
+        async def gruppe(self, ctx, join_group=None):
+            server = ctx.message.server
+
+            async def send_help():
+                group_channels = []
+                all_channels = server.channels
+                for channel in all_channels:
+                    if "übungsgruppe-" in channel.name:
+                        if channel.name not in group_channels:
+                            group_channels.append(channel.name.replace("übungsgruppe-", ""))
+                sorted_groups = sorted(group_channels)
+                embed = discord.Embed(
+                    description="**Verfügbare Übungsgruppen**")
+                embed.add_field(name="Gruppen", value="\n".join(sorted_groups))
+
+                await self.bot.say("Gruppe nicht gefunden oder angegeben. Verfügbare Gruppen sind:")
+                embed.set_footer(text='Bot by Fabi')
+                return await self.bot.say(embed=embed)
+
+            if join_group is None:
+                return await send_help()
+            join_group = "übungsgruppe-{}".format(join_group)
+            author = ctx.message.author
+            if "übungsgruppe-" in join_group:
+                try:
+                    role = discord.utils.get(server.roles, name=join_group)
+                    await self.bot.add_roles(author, role)
+                    await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(author.mention, join_group))
+                except AttributeError:
+                    await send_help()
+            else:
+                await send_help()
+
 def setup(bot):
     n = UniBot(bot)
     loop = asyncio.get_event_loop()
