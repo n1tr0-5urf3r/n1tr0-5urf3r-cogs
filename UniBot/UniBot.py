@@ -3,7 +3,9 @@ import discord
 import asyncio
 import aiohttp
 from discord.ext import commands
-
+import re
+import datetime
+import requests
 
 
 class UniBot:
@@ -16,12 +18,99 @@ class UniBot:
     def __unload(self):
         self.session.close()
 
+        @commands.command(pass_context=True)
+        async def mensa(self, ctx, subcommand=None):
+            user = ctx.message.author
+            color = self.getColor(user)
 
-    @commands.command(pass_context=True)
-    async def testclass(self, ctx):
-        """First Test, Commandcall"""
-        await self.bot.say('Test funktioniert')
+            # Get current calendarweek
+            today = datetime.datetime.now()
+            cal_week = today.strftime("%W")
 
+            # Probably should make this in a subcommand
+            weekday = datetime.datetime.today().weekday()
+            week_start = today - datetime.timedelta(days=weekday)
+            week_end = today + datetime.timedelta(days=4 - weekday)
+            if subcommand:
+                if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
+                    cal_week = int(cal_week) + 1
+                    weekday = 0
+                    week_start = today + datetime.timedelta(days=(7 - today.weekday()))
+                    week_end = week_start + datetime.timedelta(days=4)
+                elif subcommand.lower() == "help" or subcommand.lower() == "h":
+                    return await self.bot.say("""```
+    Mensa:
+        help         Diese Nachricht
+        <leer>       Speiseplan der aktuellen Woche
+        nextweek     Speiseplan der nächsten Woche
+
+        z.B. !mensa oder !mensa nextweek
+        Alternativ auch Abkürzungen wie "h" oder "nw"
+    ```""")
+            # Show next week on weekends
+            if weekday > 4:
+                cal_week = int(cal_week) + 1
+                weekday = 0
+                week_start = today + datetime.timedelta(days=(7 - today.weekday()))
+                week_end = week_start + datetime.timedelta(days=4)
+
+            url_mensa = "https://www.my-stuwe.de/mensa/mensa-morgenstelle-tuebingen/?woche={}".format(cal_week)
+
+            r = requests.get(url_mensa)
+            html_mensa = re.sub('\n', ' ', r.content.decode('utf8'))
+            tagesmenu = re.findall(r"(<td>Tagesmenü</td>.*?)(</td>)", html_mensa)
+            tagesmenu_veg = re.findall(r"(<td>Tagesmenü vegetarisch</td>.*?)(</td>)", html_mensa)
+            mensa_vital = re.findall(r"(<td>mensaVital.*?</td>.*?)(</td>)", html_mensa)
+            tages_angebot = re.findall(r"(<td>Angebot des Tages</td>.*?)(</td>)", html_mensa)
+
+            def cleanUp(menu):
+                daily_menu = []
+                for m in menu:
+                    t_menu = re.sub("(<.*?>)", "", m[0])
+                    t_menu = re.sub("  |, ", "\n- ", t_menu)
+                    t_menu = re.sub("Tagessuppe ", "Tagessuppe\n- ", t_menu)
+                    t_menu = re.sub(
+                        "Tagesmenü vegetarisch|Tagesmenü|mensaVital vegan|mensaVital vegetarisch|mensaVital|Angebot des Tages",
+                        "", t_menu)
+                    daily_menu.append((t_menu))
+                return daily_menu
+
+            menu1 = cleanUp(tagesmenu)
+            menu2 = cleanUp(tagesmenu_veg)
+            menu3 = cleanUp(mensa_vital)
+            menu4 = cleanUp(tages_angebot)
+
+            embed = discord.Embed(
+                description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."),
+                                                                             week_end.strftime("%d.%m.")), color=color)
+
+            if weekday > 0:
+                counter = 0 + weekday
+            else:
+                counter = 0
+            wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
+            for speise in menu1:
+                try:
+                    vegetarisch = menu2[counter - weekday]
+                except IndexError:
+                    vegetarisch = ""
+                try:
+                    vegan = menu3[counter - weekday]
+                except IndexError:
+                    vegan = ""
+                try:
+                    angebot = menu4[counter - weekday]
+                except IndexError:
+                    angebot = ""
+                embed.add_field(name="{}".format(wochentage[counter]),
+                                value="*Tagesmenü:*\n- {}\n\n*Tagesmenü vegetarisch:*\n- {}\n\n*MensaVital:*\n- {}\n\n*Angebot des Tages:*\n- {}\n".format(
+                                    speise, vegetarisch, vegan, angebot), inline=False)
+                counter += 1
+
+            embed.set_thumbnail(
+                url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
+            embed.set_footer(text='Bot by Fabi')
+            await self.bot.say(embed=embed)
 
 def setup(bot):
     n = UniBot(bot)
