@@ -189,6 +189,38 @@ class UniBot:
             else:
                 await send_help()
 
+        @commands.command(pass_context=True)
+        async def gruppeverlassen(self, ctx, leave_group=None):
+            server = ctx.message.server
+            author = ctx.message.author
+            all_roles = author.roles
+            role_names = []
+            for role_name in all_roles:
+                if not "everyone" in role_name.name:
+                    role_names.append(role_name.name.replace("übungsgruppe-", ""))
+
+            async def send_help():
+                embed = discord.Embed(description="**Zugeordnete Übungsgruppen**")
+                embed.add_field(name="Gruppen", value="\n".join(role_names))
+                await self.bot.say("Gruppe nicht gefunden oder zugeordnet. Zugeordnete Gruppen sind:")
+                embed.set_footer(text='Bot by Fabi')
+                return await self.bot.say(embed=embed)
+
+            if leave_group is None:
+                return await send_help()
+            leave_group_full = "übungsgruppe-{}".format(leave_group)
+            try:
+                role = discord.utils.get(server.roles, name=leave_group_full)
+                if leave_group not in role_names:
+                    await self.bot.say("{} du bist nicht in der Gruppe {}".format(author.mention, leave_group_full))
+                    await send_help()
+                else:
+                    await self.bot.remove_roles(author, role)
+                    await self.bot.say(
+                        "{} du wurdest aus der Gruppe {} entfernt".format(author.mention, leave_group_full))
+            except AttributeError:
+                await send_help()
+
 def setup(bot):
     n = UniBot(bot)
     loop = asyncio.get_event_loop()
