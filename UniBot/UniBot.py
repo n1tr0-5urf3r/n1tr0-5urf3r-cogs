@@ -177,6 +177,7 @@ class UniBot:
 
             if join_group is None:
                 return await send_help()
+            join_group = join_group.lower()
             join_group = "übungsgruppe-{}".format(join_group)
             author = ctx.message.author
             if "übungsgruppe-" in join_group:
@@ -208,6 +209,7 @@ class UniBot:
 
             if leave_group is None:
                 return await send_help()
+            leave_group = leave_group.lower()
             leave_group_full = "übungsgruppe-{}".format(leave_group)
             try:
                 role = discord.utils.get(server.roles, name=leave_group_full)
