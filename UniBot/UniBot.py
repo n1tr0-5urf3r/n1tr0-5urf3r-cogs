@@ -178,7 +178,7 @@ class UniBot:
             if join_group is None:
                 return await send_help()
             join_group = join_group.lower()
-            join_group = "übungsgruppe-{}".format(join_group)
+            join_group = "übungsgruppe-{}".format(join_group.lower())
             author = ctx.message.author
             if "übungsgruppe-" in join_group:
                 try:
