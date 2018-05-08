@@ -387,6 +387,7 @@ Mensa:
 
         if join_group is None:
             return await send_help()
+        join_group = join_group.lower()
         join_group = "übungsgruppe-{}".format(join_group)
         author = ctx.message.author
         if "übungsgruppe-" in join_group:
