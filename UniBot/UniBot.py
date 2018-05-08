@@ -180,11 +180,11 @@ class UniBot:
             join_group = join_group.lower()
             join_group = "übungsgruppe-{}".format(join_group.lower())
             author = ctx.message.author
-            if "übungsgruppe-" in join_group:
+            if "übungsgruppe-" in join_group.lower():
                 try:
-                    role = discord.utils.get(server.roles, name=join_group)
+                    role = discord.utils.get(server.roles, name=join_group.lower())
                     await self.bot.add_roles(author, role)
-                    await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(author.mention, join_group))
+                    await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(author.mention, join_group.lower()))
                 except AttributeError:
                     await send_help()
             else:
