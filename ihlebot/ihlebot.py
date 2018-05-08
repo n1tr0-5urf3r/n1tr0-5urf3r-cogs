@@ -15,6 +15,12 @@ import asyncio
 import aiohttp
 import urllib.request, json
 
+
+# Discord stuff
+import datetime
+import requests
+
+
 client = discord.Client()
 
 class Ihlebot:
