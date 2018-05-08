@@ -418,6 +418,7 @@ Mensa:
 
         if leave_group is None:
             return await send_help()
+        leave_group = leave_group.lower()
         leave_group_full = "übungsgruppe-{}".format(leave_group)
         try:
             role = discord.utils.get(server.roles, name=leave_group_full)
