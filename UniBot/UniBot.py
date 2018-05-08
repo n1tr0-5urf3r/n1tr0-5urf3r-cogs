@@ -160,6 +160,7 @@ class UniBot:
             server = ctx.message.server
 
             async def send_help():
+                await self.bot.say("DEBUG: Gruppe {} lower: {}".format(join_group, join_group.lower()))
                 group_channels = []
                 all_channels = server.channels
                 for channel in all_channels:
