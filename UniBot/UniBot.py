@@ -160,7 +160,6 @@ class UniBot:
             server = ctx.message.server
 
             async def send_help():
-                await self.bot.say("DEBUG: Gruppe {} lower: {}".format(join_group, join_group.lower()))
                 group_channels = []
                 all_channels = server.channels
                 for channel in all_channels:
@@ -182,7 +181,6 @@ class UniBot:
             join_group = "übungsgruppe-{}".format(join_group.lower())
             author = ctx.message.author
             if "übungsgruppe-" in join_group.lower():
-                await self.bot.say("DEBUG: Gruppe {} lower: {}".format(join_group, join_group.lower()))
                 try:
                     role = discord.utils.get(server.roles, name=join_group.lower())
                     await self.bot.add_roles(author, role)
