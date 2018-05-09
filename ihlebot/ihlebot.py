@@ -433,8 +433,8 @@ Mensa:
     @commands.command(pass_context=True)
     async def gruppeninfo(self, ctx, group=None):
         server = ctx.message.server
-        author = ctx.message.author
         channel = ctx.message.channel
+        group_info = None
         # redundant part, fix this
         async def send_help():
             group_channels = []
@@ -448,24 +448,25 @@ Mensa:
                 description="**Verfügbare Übungsgruppen**")
             embed.add_field(name="Gruppen", value="\n".join(sorted_groups))
 
-        if "ich-" in channel.name and group is None:
-            group = channel.name
+        if group is not None:
+            group_info = "übungsgruppe-{}".format(group)
+        if "übungsgruppe-" in channel.name and group is None:
+            group_info = channel.name
         elif group is None:
             return await send_help()
-        group = group.lower()
-        role = discord.utils.get(server.roles, name=group)
+        group_info = group_info.lower()
+        role = discord.utils.get(server.roles, name=group_info)
 
         member_list = []
         members = server.members
         for member in members:
             # Check if member has role
-            #cur_member = discord.utils.get(server.members, name=member)
             roles_member = member.roles
             if role in roles_member:
                 member_list.append(member)
 
-        for member in member_list[:20]:
-            await self.bot.say(member)
+        embed = discord.Embed(description="**Zugeordnete Mitglieder**")
+        embed.add_field(name=group_info, value="\n".join(member_list))
 
 
 def setup(bot):
