@@ -355,6 +355,8 @@ Mensa:
                 await self.bot.create_role(author.server, name=group_channel)
                 await self.bot.say("Role {} created".format(group_channel))
 
+        role_bots = discord.utils.get(server.roles, name="Bots")
+
         # Grant permissions to role
         for channel in all_channels:
             if "übungsgruppe-" in channel.name:
@@ -363,6 +365,7 @@ Mensa:
                 await self.bot.edit_channel_permissions(channel, server.default_role, everyone_perms)
                 # Grant permission to role
                 await self.bot.edit_channel_permissions(channel, role, overwrite)
+                await self.bot.edit_channel_permissions(channel, role_bots, overwrite)
                 await self.bot.say("Granted permissions for role {} to channel {}".format(role, channel))
                 await asyncio.sleep(1.5)
 
