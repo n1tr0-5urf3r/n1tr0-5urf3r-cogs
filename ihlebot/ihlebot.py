@@ -436,25 +436,30 @@ Mensa:
         author = ctx.message.author
         channel = ctx.message.channel
         # redundant part, fix this
-        all_roles = author.roles
-        role_names = []
-        for role_name in all_roles:
-            if not "everyone" in role_name.name:
-                role_names.append(role_name.name.replace("übungsgruppe-", ""))
         async def send_help():
-            embed = discord.Embed(description = "**Zugeordnete Übungsgruppen**")
-            embed.add_field(name="Gruppen", value="\n".join(role_names))
-            await self.bot.say("Gruppe nicht gefunden oder zugeordnet. Zugeordnete Gruppen sind:")
-            embed.set_footer(text='Bot by Fabi')
-            return await self.bot.say(embed=embed)
+            group_channels = []
+            all_channels = server.channels
+            for channel in all_channels:
+                if "übungsgruppe-" in channel.name:
+                    if channel.name not in group_channels:
+                        group_channels.append(channel.name.replace("übungsgruppe-", ""))
+            sorted_groups = sorted(group_channels)
+            embed = discord.Embed(
+                description="**Verfügbare Übungsgruppen**")
+            embed.add_field(name="Gruppen", value="\n".join(sorted_groups))
 
 
         if "ich-" in channel.name and group is None:
             group = channel.name
         elif group is None:
             return await send_help()
+        group = group.lower()
+        role = discord.utils.get(server.roles, name=group)
 
-        await self.bot.say(group)
+        members = discord.utils.get(server.members)
+
+        for member in members:
+            await self.bot.say(member)
 
 
 
