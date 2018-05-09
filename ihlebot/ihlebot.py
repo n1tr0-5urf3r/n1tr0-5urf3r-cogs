@@ -461,7 +461,7 @@ Mensa:
             # Check if member has role
             #cur_member = discord.utils.get(server.members, name=member)
             roles_member = member.roles
-            if role.name in roles_member:
+            if role in roles_member:
                 member_list.append(member)
 
         for member in member_list[:20]:
