@@ -457,8 +457,8 @@ Mensa:
         role = discord.utils.get(server.roles, name=group)
 
         members = server.members
-        for member in members[:20]:
-            await self.bot.say(member)
+        for k,v  in members[:20].items():
+            await self.bot.say(k, v)
 
 
 
