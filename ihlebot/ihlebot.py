@@ -448,8 +448,11 @@ Mensa:
                 description="**Verfügbare Übungsgruppen**")
             embed.add_field(name="Gruppen", value="\n".join(sorted_groups))
 
+            return await self.bot.say(embed=embed)
+
         if group is not None:
             group_info = "übungsgruppe-{}".format(group)
+
         if "übungsgruppe-" in channel.name and group is None:
             group_info = channel.name
         elif group is None:
