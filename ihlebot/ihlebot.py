@@ -468,6 +468,8 @@ Mensa:
         embed = discord.Embed(description="**Zugeordnete Mitglieder**")
         embed.add_field(name=group_info, value="\n".join(member_list))
 
+        return await self.bot.say(embed=embed)
+
 
 def setup(bot):
     n = Ihlebot(bot)
