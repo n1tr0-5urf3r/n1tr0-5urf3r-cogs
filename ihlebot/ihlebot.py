@@ -456,7 +456,7 @@ Mensa:
         group = group.lower()
         role = discord.utils.get(server.roles, name=group)
 
-        members = discord.utils.get(server.members)
+        members = server.members
 
         await self.bot.say(members)
 
