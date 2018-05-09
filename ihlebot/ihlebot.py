@@ -459,8 +459,6 @@ Mensa:
 
         if "übungsgruppe-" in channel.name and group is None:
             group_info = channel.name
-        elif "tutoren" in channel.name and group is None:
-            group_info = "tutoren"
         elif group is None:
             return await send_help()
         group_info = group_info.lower()
