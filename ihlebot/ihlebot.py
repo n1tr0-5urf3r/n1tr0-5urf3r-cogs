@@ -458,8 +458,8 @@ Mensa:
 
         member_list = []
         members = server.members
-        for k,v  in members.items():
-            member_list.append(v)
+        for member in members:
+            member_list.append(member)
 
         for member in member_list[:20]:
             await self.bot.say(member)
