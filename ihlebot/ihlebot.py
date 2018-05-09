@@ -454,7 +454,7 @@ Mensa:
         elif group is None:
             return await send_help()
 
-        await ctx.send(group)
+        await self.bot.say(group)
 
 
 
