@@ -436,6 +436,7 @@ Mensa:
     @commands.command(pass_context=True)
     async def gruppeninfo(self, ctx, group=None):
         server = ctx.message.server
+        color = self.getColor(ctx.message.author)
         channel = ctx.message.channel
         group_info = None
         # redundant part, fix this
@@ -458,6 +459,8 @@ Mensa:
 
         if "übungsgruppe-" in channel.name and group is None:
             group_info = channel.name
+        elif "tutoren" in channel.name and group is None:
+            group_info = "tutoren"
         elif group is None:
             return await send_help()
         group_info = group_info.lower()
@@ -469,8 +472,8 @@ Mensa:
             # Check if member has role
             roles_member = member.roles
             if role in roles_member:
-                member_list.append(member.name)
-        embed = discord.Embed(description="**Zugeordnete Mitglieder**")
+                member_list.append(member.nick)
+        embed = discord.Embed(description="**Zugeordnete Mitglieder**", color=color)
         if member_list:
             embed.add_field(name=group_info, value="\n".join(member_list))
         else:
