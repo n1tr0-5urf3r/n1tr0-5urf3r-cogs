@@ -448,7 +448,6 @@ Mensa:
                 description="**Verfügbare Übungsgruppen**")
             embed.add_field(name="Gruppen", value="\n".join(sorted_groups))
 
-
         if "ich-" in channel.name and group is None:
             group = channel.name
         elif group is None:
@@ -460,8 +459,8 @@ Mensa:
         members = server.members
         for member in members:
             # Check if member has role
-            cur_member = discord.utils.get(server.members, name=member)
-            roles_member = cur_member.roles
+            #cur_member = discord.utils.get(server.members, name=member)
+            roles_member = member.roles
             if role.name in roles_member:
                 member_list.append(member)
 
