@@ -467,10 +467,11 @@ Mensa:
             roles_member = member.roles
             if role in roles_member:
                 member_list.append(member.name)
-
         embed = discord.Embed(description="**Zugeordnete Mitglieder**")
-        embed.add_field(name=group_info, value="\n".join(member_list))
-
+        if member_list:
+            embed.add_field(name=group_info, value="\n".join(member_list))
+        else:
+            embed.add_field(name=group_info, value="Niemand")
         return await self.bot.say(embed=embed)
 
 
