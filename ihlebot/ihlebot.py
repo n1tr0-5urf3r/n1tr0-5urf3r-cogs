@@ -449,7 +449,7 @@ Mensa:
             return await self.bot.say(embed=embed)
 
 
-        if "ich-" in channel.name:
+        if "ich-" in channel.name and group is None:
             group = channel.name
         elif group is None:
             return await send_help()
