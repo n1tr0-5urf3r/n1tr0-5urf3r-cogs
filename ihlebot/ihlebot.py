@@ -463,7 +463,7 @@ Mensa:
             # Check if member has role
             roles_member = member.roles
             if role in roles_member:
-                member_list.append(member)
+                member_list.append(member.name)
 
         embed = discord.Embed(description="**Zugeordnete Mitglieder**")
         embed.add_field(name=group_info, value="\n".join(member_list))
