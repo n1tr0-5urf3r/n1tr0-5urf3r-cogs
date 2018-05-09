@@ -430,6 +430,33 @@ Mensa:
         except AttributeError:
             await send_help()
 
+    @commands.command(pass_context=True)
+    async def gruppeninfo(self, ctx, group=None):
+        server = ctx.message.server
+        author = ctx.message.author
+        channel = ctx.message.channel
+        # redundant part, fix this
+        all_roles = author.roles
+        role_names = []
+        for role_name in all_roles:
+            if not "everyone" in role_name.name:
+                role_names.append(role_name.name.replace("übungsgruppe-", ""))
+        async def send_help():
+            embed = discord.Embed(description = "**Zugeordnete Übungsgruppen**")
+            embed.add_field(name="Gruppen", value="\n".join(role_names))
+            await self.bot.say("Gruppe nicht gefunden oder zugeordnet. Zugeordnete Gruppen sind:")
+            embed.set_footer(text='Bot by Fabi')
+            return await self.bot.say(embed=embed)
+
+
+        if "ich-" in channel.name:
+            group = channel.name
+        elif group is None:
+            return await send_help()
+
+        await ctx.send(group)
+
+
 
 def setup(bot):
     n = Ihlebot(bot)
