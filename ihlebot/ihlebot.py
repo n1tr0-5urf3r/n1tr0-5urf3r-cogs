@@ -458,8 +458,7 @@ Mensa:
 
         members = discord.utils.get(server.members)
 
-        for member in members:
-            await self.bot.say(member)
+        await self.bot.say(members)
 
 
 
