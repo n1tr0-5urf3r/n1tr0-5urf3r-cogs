@@ -456,10 +456,13 @@ Mensa:
         group = group.lower()
         role = discord.utils.get(server.roles, name=group)
 
+        member_list = []
         members = server.members
-        for k,v  in members[:20].items():
-            await self.bot.say(k, v)
+        for k,v  in members.items():
+            member_list.append(v)
 
+        for member in member_list[:20]:
+            await self.bot.say(member)
 
 
 def setup(bot):
