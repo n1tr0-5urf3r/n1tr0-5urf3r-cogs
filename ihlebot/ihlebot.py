@@ -455,7 +455,7 @@ Mensa:
             return await self.bot.say(embed=embed)
 
         if group is "tutoren":
-            group_info = "tutoren"
+            group_info = "Informatik-II-Tutor"
         elif group is not None and "tutoren" not in group:
             group_info = "übungsgruppe-{}".format(group)
 
