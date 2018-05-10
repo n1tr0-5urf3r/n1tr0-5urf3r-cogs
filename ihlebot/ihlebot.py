@@ -456,7 +456,7 @@ Mensa:
 
         if group is "tutoren":
             group_info = group
-        elif group is not None and group is not "tutoren":
+        elif group is not None and "tutoren" not in group:
             group_info = "übungsgruppe-{}".format(group)
 
         if "übungsgruppe-" in channel.name and group is None:
