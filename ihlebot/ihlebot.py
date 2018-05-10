@@ -454,7 +454,9 @@ Mensa:
 
             return await self.bot.say(embed=embed)
 
-        if group is not None:
+        if group is "tutoren":
+            group_info = group
+        elif group is not None:
             group_info = "übungsgruppe-{}".format(group)
 
         if "übungsgruppe-" in channel.name and group is None:
