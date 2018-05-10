@@ -438,7 +438,7 @@ Mensa:
         server = ctx.message.server
         color = self.getColor(ctx.message.author)
         channel = ctx.message.channel
-        group_info = ""
+        group_info = None
         # redundant part, fix this
         async def send_help():
             group_channels = []
@@ -454,9 +454,7 @@ Mensa:
 
             return await self.bot.say(embed=embed)
 
-        if group is "tutoren":
-            group_info = "Informatik-II-Tutor"
-        elif group is not None and "tutoren" not in group:
+        if group is not None:
             group_info = "übungsgruppe-{}".format(group)
 
         if "übungsgruppe-" in channel.name and group is None:
