@@ -438,7 +438,7 @@ Mensa:
         server = ctx.message.server
         color = self.getColor(ctx.message.author)
         channel = ctx.message.channel
-        group_info = None
+        group_info = ""
         # redundant part, fix this
         async def send_help():
             group_channels = []
