@@ -487,7 +487,7 @@ Mensa:
     @commands.command(pass_context=True)
     async def faq(self, ctx):
         embed = discord.Embed(description="FAQ", color=0xff0000)
-        embed.add_field(name="Q: Was hat es mit der Gewitterwolke im InfoMark auf sich?\n ", value="""**A:** Die Wolke zeigt an dass der Code-Test auf InfoMark fehlgeschlagen ist, da aber 
+        embed.add_field(name="Q: Was hat es mit der Gewitterwolke im InfoMark auf sich?\n ", value="""\n**A:** Die Wolke zeigt an dass der Code-Test auf InfoMark fehlgeschlagen ist, da aber 
    keine Tests mehr gemacht werden zeigt die Wolke immer einen Fehler an.\n""")
         embed.add_field(name="Q: Wie kann ich mich in die Tutorien-Gruppe eintragen?", value="""**A:** Der Befehl "!gruppe" zeigt die Übungsgruppen an, die zur Verfügung stehen. Mit
    "gruppe [NAME DER GRUPPE]" trägt man sich in diese ein. Mit "gruppeverlassen [NAME DER GRUPPE]
