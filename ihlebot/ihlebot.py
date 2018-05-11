@@ -15,13 +15,12 @@ import asyncio
 import aiohttp
 import urllib.request, json
 
-
 # Discord stuff
 import datetime
 import requests
 
-
 client = discord.Client()
+
 
 class Ihlebot:
     """ Command definitions"""
@@ -241,14 +240,14 @@ class Ihlebot:
 
         # Probably should make this in a subcommand
         weekday = datetime.datetime.today().weekday()
-        week_start = today - datetime.timedelta(days = weekday)
-        week_end = today + datetime.timedelta(days = 4 - weekday)
+        week_start = today - datetime.timedelta(days=weekday)
+        week_end = today + datetime.timedelta(days=4 - weekday)
         if subcommand:
             if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
                 cal_week = int(cal_week) + 1
                 weekday = 0
-                week_start = today + datetime.timedelta(days = (7 - today.weekday()))
-                week_end = week_start + datetime.timedelta(days = 4)
+                week_start = today + datetime.timedelta(days=(7 - today.weekday()))
+                week_end = week_start + datetime.timedelta(days=4)
             elif subcommand.lower() == "help" or subcommand.lower() == "h":
                 return await self.bot.say("""```
 Mensa:
@@ -281,14 +280,16 @@ Mensa:
                 t_menu = re.sub("(<.*?>)", "", m[0])
                 t_menu = re.sub("  |, ", "\n- ", t_menu)
                 t_menu = re.sub("Tagessuppe ", "Tagessuppe\n- ", t_menu)
-                t_menu = re.sub("Tagesmenü vegetarisch|Tagesmenü|mensaVital vegan|mensaVital vegetarisch|mensaVital|Angebot des Tages", "", t_menu)
+                t_menu = re.sub(
+                    "Tagesmenü vegetarisch|Tagesmenü|mensaVital vegan|mensaVital vegetarisch|mensaVital|Angebot des Tages",
+                    "", t_menu)
                 daily_menu.append((t_menu))
             return daily_menu
 
         menu1 = cleanUp(tagesmenu)
         menu2 = cleanUp(tagesmenu_veg)
         menu3 = cleanUp(mensa_vital)
-        menu4= cleanUp(tages_angebot)
+        menu4 = cleanUp(tages_angebot)
 
         embed = discord.Embed(
             description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."),
@@ -321,7 +322,6 @@ Mensa:
             url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
         embed.set_footer(text='Bot by Fabi')
         await self.bot.say(embed=embed)
-
 
     @commands.command(pass_context=True)
     async def createroles(self, ctx):
@@ -372,6 +372,7 @@ Mensa:
     @commands.command(pass_context=True)
     async def gruppe(self, ctx, join_group=None):
         server = ctx.message.server
+
         async def send_help():
             group_channels = []
             all_channels = server.channels
@@ -412,8 +413,9 @@ Mensa:
         for role_name in all_roles:
             if not "everyone" in role_name.name:
                 role_names.append(role_name.name.replace("übungsgruppe-", ""))
+
         async def send_help():
-            embed = discord.Embed(description = "**Zugeordnete Übungsgruppen**")
+            embed = discord.Embed(description="**Zugeordnete Übungsgruppen**")
             embed.add_field(name="Gruppen", value="\n".join(role_names))
             await self.bot.say("Gruppe nicht gefunden oder zugeordnet. Zugeordnete Gruppen sind:")
             embed.set_footer(text='Bot by Fabi')
@@ -439,6 +441,7 @@ Mensa:
         color = self.getColor(ctx.message.author)
         channel = ctx.message.channel
         group_info = None
+
         # redundant part, fix this
         async def send_help():
             group_channels = []
@@ -479,6 +482,42 @@ Mensa:
             embed.add_field(name=group_info, value="\n".join(member_list))
         else:
             embed.add_field(name=group_info, value="Niemand")
+        return await self.bot.say(embed=embed)
+
+    @commands.command(pass_context=True)
+    async def faq(self, ctx):
+        embed = discord.Embed(description="FAQ", color=0xff0000)
+        embed.add_field(name="Q: Was hat es mit der Gewitterwolke im InfoMark auf sich? ", value="""A: Die Wolke zeigt an dass der Code-Test auf InfoMark fehlgeschlagen ist, da aber 
+   keine Tests mehr gemacht werden zeigt die Wolke immer einen Fehler an.""")
+        embed.add_field(name="Q: Wie kann ich mich in die Tutorien-Gruppe eintragen?", value="""A: Der Befehl "!gruppe" zeigt die Übungsgruppen an, die zur Verfügung stehen. Mit
+   "gruppe [NAME DER GRUPPE]" trägt man sich in diese ein. Mit "gruppeverlassen [NAME DER GRUPPE]
+   kann man sich aus einer Gruppe austragen. Dafür steht der Channel #gruppenzuweisung bereit.
+   Ein Beispiel: !gruppe m2-mo-12-14 , !gruppeverlassen m2-mo-12-14""")
+        embed.add_field(name="Q: Wie kann ich beim Music-Bot ein Lied in die Warteschlange setzen?",
+                        value="A: Der Befehl dafür ist: \"$play [LINK DES LIEDS]\" oder \"$play [NAME DES LIEDS]\", dabei sucht es automatisch.")
+        embed.add_field(name="Q: Sollen beide Gruppenpartner die Lösung für das aktuelle Lösungsblatt abgeben?",
+                        value="A: Solange beide Namen auf dem Blatt stehen reicht es wenn einer abgibt.")
+        embed.add_field(name="Q: Wie füge ich die .java Vorlage aus InfoMark in Eclipse ein?", value="""A: Zuerst muss man ein neues Projekt anlegen (oder ein schon vorhandenes benutzen), 
+   dann muss man ein Package erstellen das den gleichen Namen hat, wie in der Vorlage definiert.
+   Ein Beispiel: in Eclipse heißt es "package HW1;", dann muss auch das eigene Package "HW1" heißen.""")
+        embed.add_field(name="Q: Wie kann ich noch einen Übungspartner finden? ", value="""A: Es gibt viele Möglichkeiten noch einen Übungspartner zu finden. Beispielsweise in der #tauschbörse oder 
+   in den Gruppen des jeweiligen Tutoriums.""")
+        embed.add_field(name="Q: Müssen wir in Partnerarbeit abgeben?", value="""A: Bestenfalls ja. Je weniger die Tutoren zu korrigieren haben, desto mehr Zeit können sie sich pro Korrektur 
+   nehmen, was unter Umständen auch zu mehr Punkten führt. In Ausnahmefällen ist es aber trotzdem möglich, das 
+   aber erst mit dem jeweiligen Tutor abklären.""")
+        embed.add_field(name="Q: Kann mein Übungspartner in einer anderen Übungsgruppe sein?", value="""A: Solange ihr den gleichen Tutor habt sollte das kein Problem sein. Sind es unterschiedliche Tutoren, dann
+   eher ungern, aber in Ausnahmefällen dennoch möglich. So oder so bitte dennoch mit dem jeweiligen Tutor(en) 
+   abklären.""")
+        embed.add_field(name="Q: Wo findet der HelpDesk statt?", value="""A: Für Informatik: C-Bau, Raum N03; C-Bau, Raum H13; C-Bau, Raum H33.
+   Für Mathe: B-Bau, Raum B9N22.""")
+        embed.add_field(name="Q: Gibt es ein Skript?", value="""A: Für Informatik: Es gibt kein Skript, aber die Folien aus der Vorlesung sind im InfoMark.
+   Für Mathe: Hier gibt es auch kein Skript, Vic ist aber so nett und erstellt selbstständig mit LaTeX eines.
+   Für Logik: Auch hier gibt es kein Skript, die Folien sind aber in der Ilias. """)
+        embed.add_field(name="Q: Wie gebe ich die Lösungen für das Übungsblatt ab?", value="""A: Für Informatik: Sie wird online im InfoMark abgegeben.
+   Für Mathe: Es werden Ordner in der Vorlesung ausgelegt, mit den Namen der Tutoren darauf.
+   Für IdS: Sie werden online im Moodle abgegeben.
+   Für GDI: Wie in IdS.""")
+
         return await self.bot.say(embed=embed)
 
 
