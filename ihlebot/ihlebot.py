@@ -324,6 +324,7 @@ Mensa:
         await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True)
+    @commands.has_role("Tester")
     async def createroles(self, ctx):
         """Create roles to each channel that begins with "übungsgruppe- and set permissions"""
         server = ctx.message.server
