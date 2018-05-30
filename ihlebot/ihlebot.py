@@ -231,6 +231,7 @@ class Ihlebot:
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
+        return await self.bot.say("Der Speiseplan wird vom Studierendenwerk leider zurzeit nicht mehr zur Verfügung gestellt.")
         user = ctx.message.author
         color = self.getColor(user)
 
@@ -324,7 +325,7 @@ Mensa:
         await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True)
-    @commands.has_role("Tester")
+    @commands.has_role("Administrator")
     async def createroles(self, ctx):
         """Create roles to each channel that begins with "übungsgruppe- and set permissions"""
         server = ctx.message.server
@@ -372,6 +373,7 @@ Mensa:
 
     @commands.command(pass_context=True)
     async def gruppe(self, ctx, join_group=None):
+
         server = ctx.message.server
 
         async def send_help():
