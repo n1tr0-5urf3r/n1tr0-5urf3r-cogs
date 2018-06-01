@@ -394,7 +394,7 @@ Mensa:
             return await self.bot.send_message(destination, embed=embed)
 
         # Harcoded channel ID :(
-        if ctx.message.channel.id != "437291813276090408":
+        if ctx.message.channel.id != "437291813276090408" or ctx.message.channel.id != "438732571166375938":
             await send_help(ctx.message.author)
             await self.bot.send_message(ctx.message.author, "Bitte nutze den Channel #gruppenzuweisung dazu!")
         else:
@@ -404,12 +404,15 @@ Mensa:
             join_group = "übungsgruppe-{}".format(join_group)
             author = ctx.message.author
             if "übungsgruppe-" in join_group:
-                try:
-                    role = discord.utils.get(server.roles, name=join_group)
-                    await self.bot.add_roles(author, role)
-                    await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(author.mention, join_group))
-                except AttributeError:
-                    await send_help(ctx.message.channel)
+                if join_group in [y.name.lower() for y in author.roles]:
+                    await self.bot.say("{}, du bist bereits in der Gruppe {}".format(author.mention, join_group))
+                else:
+                    try:
+                        role = discord.utils.get(server.roles, name=join_group)
+                        await self.bot.add_roles(author, role)
+                        await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(author.mention, join_group))
+                    except AttributeError:
+                        await send_help(ctx.message.channel)
             else:
                 await send_help(ctx.message.channel)
 
@@ -431,7 +434,7 @@ Mensa:
             return await self.bot.send_message(destination, embed=embed)
 
         # Harcoded channel ID :(
-        if ctx.message.channel.id != "437291813276090408":
+        if ctx.message.channel.id != "437291813276090408" or ctx.message.channel.id != "438732571166375938":
             await send_help(ctx.message.author)
             await self.bot.send_message(ctx.message.author, "Bitte nutze den Channel #gruppenzuweisung dazu!")
         else:
