@@ -395,7 +395,8 @@ Mensa:
 
         if ctx.message.channel.id is not "437291813276090408":
             await self.bot.say("Falscher Channel")
-            await self.bot.say(ctx.message.author, "Falscher Channel!")
+            await self.bot.send_message(ctx.message.author, "Wrong Channel!")
+
         else:
             if join_group is None:
                 return await send_help()
