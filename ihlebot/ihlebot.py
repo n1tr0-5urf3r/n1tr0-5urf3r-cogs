@@ -367,9 +367,12 @@ Mensa:
                     for food in id["menu"]:
                         menu.append(food)
                     continue
+
+            if menuLine == "":
+                menuLine = "Keine Daten vorhanden"
             # build embed here
             embed.add_field(name="{}".format(wochentage[cur_weekday]),
-                            value="*{}*\n".format(menuLine) + "\n".join(menu), inline=False)
+                            value="*{}*\n".format(menuLine) + "\n- ".join(menu) + "\n", inline=False)
 
         embed.set_thumbnail(
             url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
