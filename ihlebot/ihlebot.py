@@ -331,6 +331,8 @@ Mensa:
 
         data = r.json()
         wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
+        needed_days = []
+        menu = []
 
         # Get current calendarweek
         today = datetime.datetime.now()
@@ -340,19 +342,25 @@ Mensa:
         week_start = today - datetime.timedelta(days=weekday)
         week_end = today + datetime.timedelta(days=4 - weekday)
 
-        needed_days = []
+        # DEBUG
+        weekday = 5
+
+        # Show next week on weekends
+        if weekday > 4:
+            today = today + datetime.timedelta(days=7 - weekday)
+            weekday = 0
+            week_start = today + datetime.timedelta(days=(7 - today.weekday()))
+            week_end = week_start + datetime.timedelta(days=4)
 
         embed = discord.Embed(
             description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."),
                                                                          week_end.strftime("%d.%m.")), color=color)
-
         # Get Weekdays from today till friday
         for day in range(weekday, 5):
             days_till_end_of_week = 4 - day
             needed_days.append(today + datetime.timedelta(days=days_till_end_of_week))
 
         needed_days.reverse()
-        menu = []
         for day in needed_days:
             menu_cur_day = ""
             cur_weekday = day.weekday()
@@ -370,15 +378,11 @@ Mensa:
                     # Reset menu
                     menu = []
                     continue
-
             if menu_cur_day == "":
                 menu_cur_day = "Keine Daten vorhanden"
             # build embed here
             embed.add_field(name="{}".format(wochentage[cur_weekday]),
                             value=menu_cur_day, inline=False)
-
-
-
         embed.set_thumbnail(
             url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
         embed.set_footer(text='Bot by Fabi')
