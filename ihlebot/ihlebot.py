@@ -356,7 +356,6 @@ Mensa:
 
         menu = []
         for day in needed_days:
-            menuLine = ""
             menu_cur_day = ""
             cur_weekday = day.weekday()
             # Go through all meals (6/day)
@@ -369,7 +368,7 @@ Mensa:
                         menu.append(food)
 
                     # menu is fully available, build string
-                    menu_cur_day += "*{}*\n".format(menuLine) + "\n- ".join(menu) + "\n"
+                    menu_cur_day += "*{}*\n".format(menuLine) + "- "+"\n- ".join(menu) + "\n\n"
                     # Reset menu
                     menu = []
                     continue
