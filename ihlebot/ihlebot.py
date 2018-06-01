@@ -319,6 +319,59 @@ Mensa:
         await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True)
+    async def mensaneu(self, ctx):
+
+        user = ctx.message.author
+        color = self.getColor(user)
+
+        url_mensa = "https://www.my-stuwe.de//wp-json/mealplans/v1/canteens/621?lang=de"
+        r = requests.get(url_mensa)
+        r.encoding = 'utf-8-sig'
+
+
+        data = r.json()
+        wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
+
+        # Get current calendarweek
+        today = datetime.datetime.now()
+        cal_week = today.strftime("%W")
+
+        weekday = datetime.datetime.today().weekday()
+        week_start = today - datetime.timedelta(days=weekday)
+        week_end = today + datetime.timedelta(days=4 - weekday)
+
+        # DEBUG
+        weekday = 2
+
+        needed_days = []
+
+        embed = discord.Embed(
+            description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."),
+                                                                         week_end.strftime("%d.%m.")), color=color)
+
+        # Get Weekdays from today till friday
+        for day in range(weekday, 5):
+            days_till_end_of_week = 4 - day
+            needed_days.append(today - datetime.timedelta(days=days_till_end_of_week))
+
+        for day in needed_days:
+            menu = []
+            cur_weekday = day.weekday()
+            # Go through all meals (6/day)
+            for id in data["621"]["menus"]:
+                # If meal matches today
+                if str(day.date()) in id["menuDate"]:
+                    # Collect meal for this day
+                    menuLine = id["menuLine"]
+                    for food in id["menu"]:
+                        menu.append(food)
+                    continue
+            # build embed here
+            embed.add_field(name="{}".format(wochentage[cur_weekday]),
+                            value="*{}*\n".format("menuLine"), inline=False)
+
+
+    @commands.command(pass_context=True)
     @commands.has_role("Administrator")
     async def createroles(self, ctx):
         """Create roles to each channel that begins with "übungsgruppe- and set permissions"""
