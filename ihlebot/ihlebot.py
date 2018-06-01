@@ -397,7 +397,6 @@ Mensa:
         if ctx.message.channel.id != "437291813276090408":
             await send_help(ctx.message.author)
             await self.bot.send_message(ctx.message.author, "Bitte nutze den Channel #gruppenzuweisung dazu!")
-
         else:
             if join_group is None:
                 return await send_help(ctx.message.channel)
@@ -424,26 +423,31 @@ Mensa:
             if not "everyone" in role_name.name:
                 role_names.append(role_name.name.replace("übungsgruppe-", ""))
 
-        async def send_help():
+        async def send_help(destination):
             embed = discord.Embed(description="**Zugeordnete Übungsgruppen**")
             embed.add_field(name="Gruppen", value="\n".join(role_names))
-            await self.bot.say("Gruppe nicht gefunden oder zugeordnet. Zugeordnete Gruppen sind:")
+            await self.bot.send_message(destination, "Gruppe nicht gefunden oder zugeordnet. Zugeordnete Gruppen sind:")
             embed.set_footer(text='Bot by Fabi')
-            return await self.bot.say(embed=embed)
+            return await self.bot.send_message(destination, embed=embed)
 
-        if leave_group is None:
-            return await send_help()
-        leave_group = leave_group.lower()
-        leave_group_full = "übungsgruppe-{}".format(leave_group)
-        try:
-            role = discord.utils.get(server.roles, name=leave_group_full)
-            if leave_group not in role_names:
-                await self.bot.say("{} du bist nicht in der Gruppe {}".format(author.mention, leave_group_full))
-            else:
-                await self.bot.remove_roles(author, role)
-                await self.bot.say("{} du wurdest aus der Gruppe {} entfernt".format(author.mention, leave_group_full))
-        except AttributeError:
-            await send_help()
+        # Harcoded channel ID :(
+        if ctx.message.channel.id != "437291813276090408":
+            await send_help(ctx.message.author)
+            await self.bot.send_message(ctx.message.author, "Bitte nutze den Channel #gruppenzuweisung dazu!")
+        else:
+            if leave_group is None:
+                return await send_help(ctx.message.channel)
+            leave_group = leave_group.lower()
+            leave_group_full = "übungsgruppe-{}".format(leave_group)
+            try:
+                role = discord.utils.get(server.roles, name=leave_group_full)
+                if leave_group not in role_names:
+                    await self.bot.say("{} du bist nicht in der Gruppe {}".format(author.mention, leave_group_full))
+                else:
+                    await self.bot.remove_roles(author, role)
+                    await self.bot.say("{} du wurdest aus der Gruppe {} entfernt".format(author.mention, leave_group_full))
+            except AttributeError:
+                await send_help(ctx.message.channel)
 
     @commands.command(pass_context=True)
     async def gruppeninfo(self, ctx, group=None):
