@@ -377,7 +377,7 @@ Mensa:
         server = ctx.message.server
 
 
-        async def send_help():
+        async def send_help(destination):
             group_channels = []
             all_channels = server.channels
             for channel in all_channels:
@@ -391,17 +391,16 @@ Mensa:
 
             await self.bot.say("Gruppe nicht gefunden oder angegeben. Verfügbare Gruppen sind:")
             embed.set_footer(text='Bot by Fabi')
-            return await self.bot.say(embed=embed)
+            return await self.bot.send_message(destination, embed=embed)
 
         # Harcoded channel ID :(
         if ctx.message.channel.id is not "437291813276090408":
-            embed = await send_help()
-            await self.bot.send_message(ctx.message.author, "Wrong Channel!")
-            await self.bot.send_message(ctx.message.author, embed)
+            await send_help(ctx.message.author)
+            await self.bot.send_message(ctx.message.author, "Bitte nutze den Channel #gruppenzuweisung dazu!")
 
         else:
             if join_group is None:
-                return await send_help()
+                return await send_help(ctx.message.channel)
             join_group = join_group.lower()
             join_group = "übungsgruppe-{}".format(join_group)
             author = ctx.message.author
@@ -411,9 +410,9 @@ Mensa:
                     await self.bot.add_roles(author, role)
                     await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(author.mention, join_group))
                 except AttributeError:
-                    await send_help()
+                    await send_help(ctx.message.channel)
             else:
-                await send_help()
+                await send_help(ctx.message.channel)
 
     @commands.command(pass_context=True)
     async def gruppeverlassen(self, ctx, leave_group=None):
