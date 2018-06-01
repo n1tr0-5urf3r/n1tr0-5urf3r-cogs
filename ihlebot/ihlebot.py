@@ -370,6 +370,11 @@ Mensa:
             embed.add_field(name="{}".format(wochentage[cur_weekday]),
                             value="*{}*\n".format("menuLine"), inline=False)
 
+        embed.set_thumbnail(
+            url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
+        embed.set_footer(text='Bot by Fabi')
+        await self.bot.say(embed=embed)
+
 
     @commands.command(pass_context=True)
     @commands.has_role("Administrator")
