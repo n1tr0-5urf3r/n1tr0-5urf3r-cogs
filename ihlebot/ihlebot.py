@@ -376,6 +376,7 @@ Mensa:
 
         server = ctx.message.server
 
+
         async def send_help():
             group_channels = []
             all_channels = server.channels
@@ -392,20 +393,23 @@ Mensa:
             embed.set_footer(text='Bot by Fabi')
             return await self.bot.say(embed=embed)
 
-        if join_group is None:
-            return await send_help()
-        join_group = join_group.lower()
-        join_group = "übungsgruppe-{}".format(join_group)
-        author = ctx.message.author
-        if "übungsgruppe-" in join_group:
-            try:
-                role = discord.utils.get(server.roles, name=join_group)
-                await self.bot.add_roles(author, role)
-                await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(author.mention, join_group))
-            except AttributeError:
-                await send_help()
+        if ctx.message.channel.id is not "437291813276090408":
+            await self.bot.say("Falscher Channel")
         else:
-            await send_help()
+            if join_group is None:
+                return await send_help()
+            join_group = join_group.lower()
+            join_group = "übungsgruppe-{}".format(join_group)
+            author = ctx.message.author
+            if "übungsgruppe-" in join_group:
+                try:
+                    role = discord.utils.get(server.roles, name=join_group)
+                    await self.bot.add_roles(author, role)
+                    await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(author.mention, join_group))
+                except AttributeError:
+                    await send_help()
+            else:
+                await send_help()
 
     @commands.command(pass_context=True)
     async def gruppeverlassen(self, ctx, leave_group=None):
