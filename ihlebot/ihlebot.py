@@ -347,7 +347,7 @@ Mensa:
 
         # Show next week on weekends
         if weekday > 4:
-            today = today + datetime.timedelta(days=7 - weekday)
+            today = today + datetime.timedelta(days=8 - weekday)
             weekday = 0
             week_start = today + datetime.timedelta(days=(7 - today.weekday()))
             week_end = week_start + datetime.timedelta(days=4)
