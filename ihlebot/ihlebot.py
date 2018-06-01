@@ -301,7 +301,7 @@ class Ihlebot:
                     for food in id["menu"]:
                         menu.append(food)
                     # menu is fully available, build string
-                    menu_cur_day += "*{} - {}*\n".format(menuLine, price) + "- "+"\n- ".join(menu) + "\n\n"
+                    menu_cur_day += "*{} - {}€*\n".format(menuLine, price) + "- "+"\n- ".join(menu) + "\n\n"
                     # Reset menu
                     menu = []
                     continue
