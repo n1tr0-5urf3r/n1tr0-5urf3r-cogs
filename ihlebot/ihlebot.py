@@ -357,6 +357,7 @@ Mensa:
         menu = []
         for day in needed_days:
             menuLine = ""
+            menu_cur_day = ""
             cur_weekday = day.weekday()
             # Go through all meals (6/day)
             for id in data["621"]["menus"]:
@@ -367,13 +368,16 @@ Mensa:
                     for food in id["menu"]:
                         menu.append(food)
                     if menuLine == "":
-                        menuLine = "Keine Daten vorhanden"
-                    # build embed here
-                    embed.add_field(name="{}".format(wochentage[cur_weekday]),
-                                    value="*{}*\n".format(menuLine) + "\n- ".join(menu) + "\n", inline=False)
+                        menuLine = "Keine Daten vorhanden" + "\n- ".join(menu) + "\n"
+                    # menu is fully available, build string
+                    menu_cur_day = "*{}*".format(menuLine)
                     # Reset menu
                     menu = []
                     continue
+
+            # build embed here
+            embed.add_field(name="{}".format(wochentage[cur_weekday]),
+                            value=menu_cur_day, inline=False)
 
 
 
