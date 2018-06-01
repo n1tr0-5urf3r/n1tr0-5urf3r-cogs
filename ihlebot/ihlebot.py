@@ -368,9 +368,9 @@ Mensa:
                     for food in id["menu"]:
                         menu.append(food)
                     if menuLine == "":
-                        menuLine = "Keine Daten vorhanden" + "\n- ".join(menu) + "\n"
+                        menuLine = "Keine Daten vorhanden"
                     # menu is fully available, build string
-                    menu_cur_day = "*{}*".format(menuLine)
+                    menu_cur_day += "*{}*\n".format(menuLine) + "\n- ".join(menu) + "\n"
                     # Reset menu
                     menu = []
                     continue
