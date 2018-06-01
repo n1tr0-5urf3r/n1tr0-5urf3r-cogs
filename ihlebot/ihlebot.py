@@ -353,8 +353,9 @@ Mensa:
         # Get Weekdays from today till friday
         for day in range(weekday, 5):
             days_till_end_of_week = 4 - day
-            needed_days.append(today - datetime.timedelta(days=days_till_end_of_week))
+            needed_days.append(today + datetime.timedelta(days=days_till_end_of_week))
 
+        needed_days.reverse()
         menu = []
         for day in needed_days:
             menu_cur_day = ""
