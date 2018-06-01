@@ -319,20 +319,11 @@ Mensa:
         await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True)
-    async def mensaneu(self, ctx):
-
+    async def mensaneu(self, ctx, subcommand=None):
         user = ctx.message.author
         color = self.getColor(user)
 
-        url_mensa = "https://www.my-stuwe.de//wp-json/mealplans/v1/canteens/621?lang=de"
-        r = requests.get(url_mensa)
-        r.encoding = 'utf-8-sig'
 
-
-        data = r.json()
-        wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
-        needed_days = []
-        menu = []
 
         # Get current calendarweek
         today = datetime.datetime.now()
@@ -341,6 +332,34 @@ Mensa:
         weekday = datetime.datetime.today().weekday()
         week_start = today - datetime.timedelta(days=weekday)
         week_end = today + datetime.timedelta(days=4 - weekday)
+
+        if subcommand:
+            if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
+                cal_week = int(cal_week) + 1
+                today = today + datetime.timedelta(days=8 - weekday)
+                weekday = 0
+                week_start = today
+                week_end = week_start + datetime.timedelta(days=4)
+            elif subcommand.lower() == "help" or subcommand.lower() == "h":
+                return await self.bot.say("""```
+        Mensa:
+            help         Diese Nachricht
+            <leer>       Speiseplan der aktuellen Woche
+            nextweek     Speiseplan der nächsten Woche
+
+            z.B. !mensa oder !mensa nextweek
+            Alternativ auch Abkürzungen wie "h" oder "nw"
+        ```""")
+
+
+        url_mensa = "https://www.my-stuwe.de//wp-json/mealplans/v1/canteens/621?lang=de"
+        r = requests.get(url_mensa)
+        r.encoding = 'utf-8-sig'
+
+        data = r.json()
+        wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
+        needed_days = []
+        menu = []
 
         # Show next week on weekends
         if weekday > 4:
