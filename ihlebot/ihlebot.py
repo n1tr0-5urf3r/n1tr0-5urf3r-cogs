@@ -389,12 +389,13 @@ Mensa:
                 description="**Verfügbare Übungsgruppen**")
             embed.add_field(name="Gruppen", value="\n".join(sorted_groups))
 
-            await self.bot.say("Gruppe nicht gefunden oder angegeben. Verfügbare Gruppen sind:")
+            await self.bot.send_message(destination, "Gruppe nicht gefunden oder angegeben. Verfügbare Gruppen sind:")
             embed.set_footer(text='Bot by Fabi')
             return await self.bot.send_message(destination, embed=embed)
 
         # Harcoded channel ID :(
-        if ctx.message.channel.id is not "437291813276090408":
+        if ctx.message.channel.id is not "438732571166375938":
+            await self.bot.say("Richtiger channel")
             await send_help(ctx.message.author)
             await self.bot.send_message(ctx.message.author, "Bitte nutze den Channel #gruppenzuweisung dazu!")
 
