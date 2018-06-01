@@ -341,7 +341,8 @@ Mensa:
         week_end = today + datetime.timedelta(days=4 - weekday)
 
         # DEBUG
-        weekday = 2
+        weekday = 0
+        today = today + datetime.timedelta(days=3)
 
         needed_days = []
 
