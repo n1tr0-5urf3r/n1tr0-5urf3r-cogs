@@ -356,6 +356,7 @@ Mensa:
 
         for day in needed_days:
             menu = []
+            menuLine = ""
             cur_weekday = day.weekday()
             # Go through all meals (6/day)
             for id in data["621"]["menus"]:
@@ -368,7 +369,7 @@ Mensa:
                     continue
             # build embed here
             embed.add_field(name="{}".format(wochentage[cur_weekday]),
-                            value="*{}*\n".format("menuLine"), inline=False)
+                            value="*{}*\n".format(menuLine) + "\n".join(menu), inline=False)
 
         embed.set_thumbnail(
             url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
