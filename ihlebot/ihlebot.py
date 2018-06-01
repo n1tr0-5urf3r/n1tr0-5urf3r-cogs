@@ -394,8 +394,8 @@ Mensa:
             return await self.bot.send_message(destination, embed=embed)
 
         # Harcoded channel ID :(
-        if ctx.message.channel.id is not "438732571166375938":
-            await self.bot.say("Falscher channel " + ctx.message.channel.id)
+        if ctx.message.channel.id is not 438732571166375938:
+            await self.bot.say("Falscher channel " + ctx.message.channel.id + " " + str(type(ctx.message.channel.id)))
             await send_help(ctx.message.author)
             await self.bot.send_message(ctx.message.author, "Bitte nutze den Channel #gruppenzuweisung dazu!")
 
