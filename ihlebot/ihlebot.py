@@ -39,12 +39,6 @@ class Ihlebot:
         game = discord.Game(name='Justified Loyalty')
         await self.bot.change_status(game)
 
-    # @commands.command(pass_context=True)
-    # async def beleidige(self, ctx, name):
-    #     """Second Test, Variablenverarbeitung"""
-    #     msg = await self.bot.say(name + ' ist ein Behindi!')
-    #     await self.bot.add_reaction(msg, '😲')
-
     @commands.command(pass_context=True)
     async def pizza(self, ctx):
         """Pizza!"""
