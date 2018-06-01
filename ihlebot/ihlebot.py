@@ -393,9 +393,11 @@ Mensa:
             embed.set_footer(text='Bot by Fabi')
             return await self.bot.say(embed=embed)
 
+        # Harcoded channel ID :(
         if ctx.message.channel.id is not "437291813276090408":
-            await self.bot.say("Falscher Channel")
+            embed = await send_help()
             await self.bot.send_message(ctx.message.author, "Wrong Channel!")
+            await self.bot.send_message(ctx.message.author, embed)
 
         else:
             if join_group is None:
