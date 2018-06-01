@@ -367,17 +367,18 @@ Mensa:
                     menuLine = id["menuLine"]
                     for food in id["menu"]:
                         menu.append(food)
-                    if menuLine == "":
-                        menuLine = "Keine Daten vorhanden"
+
                     # menu is fully available, build string
                     menu_cur_day += "*{}*\n".format(menuLine) + "\n- ".join(menu) + "\n"
                     # Reset menu
                     menu = []
                     continue
 
+            if menu_cur_day == "":
+                menu_cur_day = "Keine Daten vorhanden"
             # build embed here
             embed.add_field(name="{}".format(wochentage[cur_weekday]),
-                            value="l" + menu_cur_day, inline=False)
+                            value=menu_cur_day, inline=False)
 
 
 
