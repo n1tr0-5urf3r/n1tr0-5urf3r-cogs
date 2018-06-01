@@ -297,10 +297,11 @@ class Ihlebot:
                 if str(day.date()) in id["menuDate"]:
                     # Collect meal for this day
                     menuLine = id["menuLine"]
+                    price = id["studentPrice"]
                     for food in id["menu"]:
                         menu.append(food)
                     # menu is fully available, build string
-                    menu_cur_day += "*{}*\n".format(menuLine) + "- "+"\n- ".join(menu) + "\n\n"
+                    menu_cur_day += "*{} - {}*\n".format(menuLine, price) + "- "+"\n- ".join(menu) + "\n\n"
                     # Reset menu
                     menu = []
                     continue
