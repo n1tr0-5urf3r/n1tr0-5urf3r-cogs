@@ -354,8 +354,8 @@ Mensa:
             days_till_end_of_week = 4 - day
             needed_days.append(today - datetime.timedelta(days=days_till_end_of_week))
 
+        menu = []
         for day in needed_days:
-            menu = []
             menuLine = ""
             cur_weekday = day.weekday()
             # Go through all meals (6/day)
@@ -366,13 +366,16 @@ Mensa:
                     menuLine = id["menuLine"]
                     for food in id["menu"]:
                         menu.append(food)
+                    if menuLine == "":
+                        menuLine = "Keine Daten vorhanden"
+                    # build embed here
+                    embed.add_field(name="{}".format(wochentage[cur_weekday]),
+                                    value="*{}*\n".format(menuLine) + "\n- ".join(menu) + "\n", inline=False)
+                    # Reset menu
+                    menu = []
                     continue
 
-            if menuLine == "":
-                menuLine = "Keine Daten vorhanden"
-            # build embed here
-            embed.add_field(name="{}".format(wochentage[cur_weekday]),
-                            value="*{}*\n".format(menuLine) + "\n- ".join(menu) + "\n", inline=False)
+
 
         embed.set_thumbnail(
             url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
