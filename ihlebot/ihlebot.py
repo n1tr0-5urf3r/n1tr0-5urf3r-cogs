@@ -349,7 +349,7 @@ Mensa:
         if weekday > 4:
             today = today + datetime.timedelta(days=8 - weekday)
             weekday = 0
-            week_start = today + datetime.timedelta(days=(7 - today.weekday()))
+            week_start = today
             week_end = week_start + datetime.timedelta(days=4)
 
         embed = discord.Embed(
