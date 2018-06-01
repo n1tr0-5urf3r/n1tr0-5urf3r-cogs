@@ -377,7 +377,7 @@ Mensa:
 
             # build embed here
             embed.add_field(name="{}".format(wochentage[cur_weekday]),
-                            value=menu_cur_day, inline=False)
+                            value="l" + menu_cur_day, inline=False)
 
 
 
