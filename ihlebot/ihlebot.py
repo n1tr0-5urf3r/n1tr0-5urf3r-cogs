@@ -279,15 +279,20 @@ class Ihlebot:
             week_start = today
             week_end = week_start + datetime.timedelta(days=4)
 
+
+        # Get Weekdays from today till friday
+        if subcommand:
+            if subcommand.lower == "heute":
+                needed_days.append(today)
+        else:
+            for day in range(weekday, 5):
+                days_till_end_of_week = 4 - day
+                needed_days.append(today + datetime.timedelta(days=days_till_end_of_week))
+
+        needed_days.reverse()
         embed = discord.Embed(
             description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."),
                                                                          week_end.strftime("%d.%m.")), color=color)
-        # Get Weekdays from today till friday
-        for day in range(weekday, 5):
-            days_till_end_of_week = 4 - day
-            needed_days.append(today + datetime.timedelta(days=days_till_end_of_week))
-
-        needed_days.reverse()
         for day in needed_days:
             menu_cur_day = ""
             cur_weekday = day.weekday()
