@@ -292,7 +292,11 @@ class Ihlebot:
                 needed_days.append(today + datetime.timedelta(days=days_till_end_of_week))
 
         needed_days.reverse()
-        embed = discord.Embed(
+        if (heute_flag):
+            embed = discord.Embed(
+            description="Mensa Morgenstelle, am {}".format(today.strftime("%d.%m.")), color=color)
+        else:
+            embed = discord.Embed(
             description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."),
                                                                          week_end.strftime("%d.%m.")), color=color)
         for day in needed_days:
