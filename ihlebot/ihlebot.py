@@ -270,7 +270,7 @@ class Ihlebot:
         data = r.json()
 
         # Needed later
-        wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
+        wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
         needed_days = []
         menu = []
 
