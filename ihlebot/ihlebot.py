@@ -252,7 +252,7 @@ class Ihlebot:
                 week_end = week_start + datetime.timedelta(days=4)
             elif subcommand.lower() == "heute":
                 heute_flag = True
-            elif subcommand.lower() == "help" or subcommand.lower() == "h":
+            else:
                 return await self.bot.say("""```
         Mensa:
             help         Diese Nachricht
@@ -286,12 +286,9 @@ class Ihlebot:
 
         # Get Weekdays from today till friday
         if (heute_flag):
-            if weekday == 5:
-                today = today + datetime.timedelta(days=2)
-            elif weekday == 6:
-                today = today + datetime.timedelta(days=1)
+            if weekday > 4:
+                today = next_weekday(today, 0)
             needed_days.append(today)
-            await self.bot.say(needed_days)
         else:
             for day in range(weekday, 5):
                 days_till_end_of_week = 4 - day
