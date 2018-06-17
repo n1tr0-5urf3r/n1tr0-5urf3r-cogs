@@ -236,14 +236,15 @@ class Ihlebot:
         week_end = today + datetime.timedelta(days=4 - weekday)
         heute_flag = False
 
+        def next_weekday(d, weekday):
+            days_ahead = weekday - d.weekday()
+            if days_ahead <= 0:  # Target day already happened this week
+                days_ahead += 7
+            return d + datetime.timedelta(days_ahead)
+
         if subcommand:
             if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
                 cal_week = int(cal_week) + 1
-                def next_weekday(d, weekday):
-                    days_ahead = weekday - d.weekday()
-                    if days_ahead <= 0:  # Target day already happened this week
-                        days_ahead += 7
-                    return d + datetime.timedelta(days_ahead)
 
                 today = next_weekday(today, 0)
                 weekday = 0
@@ -277,7 +278,7 @@ class Ihlebot:
         # Show next week on weekends
         if weekday > 4:
             # could also use next_weekday() here
-            today = today + datetime.timedelta(days=8 - weekday)
+            today = next_weekday(today, 0)
             weekday = 0
             week_start = today
             week_end = week_start + datetime.timedelta(days=4)
