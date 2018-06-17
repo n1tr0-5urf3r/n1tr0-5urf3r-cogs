@@ -285,7 +285,11 @@ class Ihlebot:
 
         # Get Weekdays from today till friday
         if (heute_flag):
-                needed_days.append(today)
+            if weekday == 5:
+                today = today + datetime.timedelta(days=1)
+            elif weekday == 6:
+                today = today + datetime.timedelta(days=2)
+            needed_days.append(today)
         else:
             for day in range(weekday, 5):
                 days_till_end_of_week = 4 - day
