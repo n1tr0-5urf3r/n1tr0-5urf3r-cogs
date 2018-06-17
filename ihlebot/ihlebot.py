@@ -290,6 +290,7 @@ class Ihlebot:
             elif weekday == 6:
                 today = today + datetime.timedelta(days=1)
             needed_days.append(today)
+            await self.bot.say(needed_days)
         else:
             for day in range(weekday, 5):
                 days_till_end_of_week = 4 - day
