@@ -258,6 +258,7 @@ class Ihlebot:
             help         Diese Nachricht
             <leer>       Speiseplan der aktuellen Woche
             nextweek     Speiseplan der nächsten Woche
+            heute        Speiseplan von heute
 
             z.B. !mensa oder !mensa nextweek
             Alternativ auch Abkürzungen wie "h" oder "nw"
