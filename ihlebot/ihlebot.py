@@ -236,7 +236,7 @@ class Ihlebot:
         if text is None:
             text='Empty'
         asciistring = f.renderText(text)
-        return await self.bot.say(asciistring)
+        return await self.bot.say("```{}```".format(asciistring))
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
