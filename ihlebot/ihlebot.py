@@ -228,11 +228,13 @@ class Ihlebot:
         return color
 
     @commands.command(pass_context=True)
-    async def ascii(self, ctx, font, text):
+    async def ascii(self, ctx, font=None, text=None):
         try:
             f = Figlet(font=font)
         except pyfiglet.FontNotFound:
             f = Figlet(font='slant')
+        if text is None:
+            text='Empty'
         asciistring = f.renderText(text)
         return await self.bot.say(asciistring)
 
