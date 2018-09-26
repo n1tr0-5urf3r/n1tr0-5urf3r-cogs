@@ -246,7 +246,7 @@ class Ihlebot:
             embed = discord.Embed(
                 description="Usage: !ascii <fontname> <text>\nFont defaults to slant.\nAvailable fonts:")
             for chunk in fonts_chunks:
-                embed.add_field(name="Fonts", value=chunk)
+                embed.add_field(name="-", value="``{}``".format(chunk))
             return await self.bot.say(embed=embed)
         else:
             try:
