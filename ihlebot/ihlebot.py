@@ -230,6 +230,8 @@ class Ihlebot:
     @commands.command(pass_context=True)
     async def ascii(self, ctx, attr, text=None):
         """Print String to ascii art: <font> <text>"""
+        f = Figlet()
+        fonts = f.getFonts()
         if attr.lower() == "help":
             def chunks(s, n):
                 """Produce `n`-character chunks from `s`."""
@@ -237,8 +239,6 @@ class Ihlebot:
                     yield s[start:start + n]
             fonts_string = ""
             fonts_chunks = []
-            f = Figlet()
-            fonts = f.getFonts()
             for font in fonts:
                 fonts_string += "{},".format(font)
             for chunk in chunks(fonts_string, 900):
@@ -249,15 +249,16 @@ class Ihlebot:
                 embed.add_field(name="-", value="``{}``".format(chunk))
             return await self.bot.say(embed=embed)
         else:
-            try:
+            if attr.lower() in fonts:
                 f = Figlet(font=attr.lower())
-                await self.bot.say(attr)
-                await self.bot.say(text)
-            except pyfiglet.FontNotFound:
+                await self.bot.say("DEBUG font matched: " + text)
+            else:
                 f = Figlet(font='slant')
-                text = attr + text
+                text = attr + " " + text
+                await self.bot.say("DEBUG font not matched: " + text)
             if text is None:
                 text = 'Empty'
+                await self.bot.say("DEBUG no text: " + text)
             asciistring = f.renderText(text)
             try:
                 return await self.bot.say("```{}```".format(asciistring))
