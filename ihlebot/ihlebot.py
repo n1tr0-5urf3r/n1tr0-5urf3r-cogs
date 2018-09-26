@@ -236,7 +236,10 @@ class Ihlebot:
         if text is None:
             text='Empty'
         asciistring = f.renderText(text)
-        return await self.bot.say("```{}```".format(asciistring))
+        try:
+            return await self.bot.say("```{}```".format(asciistring))
+        except discord.errors.HTTPException:
+            return await self.bot.say("Message too long")
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
