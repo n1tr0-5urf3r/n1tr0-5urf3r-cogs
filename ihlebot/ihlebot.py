@@ -228,7 +228,7 @@ class Ihlebot:
         return color
 
     @commands.command(pass_context=True)
-    async def ascii(self, ctx, param: str):
+    async def ascii(self, ctx, *, param):
         """Print String to ascii art: <font> <text>"""
         f = Figlet()
         fonts = f.getFonts()
