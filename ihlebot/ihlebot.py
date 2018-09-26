@@ -230,7 +230,7 @@ class Ihlebot:
     @commands.command(pass_context=True)
     async def ascii(self, ctx, attr=None, text=None):
         """Print String to ascii art: <font> <text>"""
-        if attr.lower == "help" and text is None:
+        if attr.lower == "help":
             f = Figlet()
             fonts = f.getFonts()
             return await self.bot.say("Usage: !ascii <fontname> <text>\nFont defaults to slant.\nAvailable fonts:``{}``".format(fonts))
