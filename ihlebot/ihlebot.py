@@ -228,11 +228,12 @@ class Ihlebot:
         return color
 
     @commands.command(pass_context=True)
-    async def ascii(self, ctx, param):
+    async def ascii(self, ctx, param: str):
         """Print String to ascii art: <font> <text>"""
         f = Figlet()
         fonts = f.getFonts()
         attr = param.split(' ', 1)[0]
+        await self.bot.say(param)
         if attr.lower() == "help":
             def chunks(s, n):
                 """Produce `n`-character chunks from `s`."""
