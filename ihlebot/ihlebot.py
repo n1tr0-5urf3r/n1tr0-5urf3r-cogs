@@ -231,16 +231,30 @@ class Ihlebot:
     async def ascii(self, ctx, attr=None, text=None):
         """Print String to ascii art: <font> <text>"""
         if attr.lower() == "help":
+            def chunks(s, n):
+                """Produce `n`-character chunks from `s`."""
+                for start in range(0, len(s), n):
+                    yield s[start:start + n]
+            fonts_string = ""
+            fonts_chunks = []
             f = Figlet()
             fonts = f.getFonts()
-            return await self.bot.say("Usage: !ascii <fontname> <text>\nFont defaults to slant.\nAvailable fonts:``{}``".format(fonts))
+            for font in fonts:
+                fonts_string += "{},".format(font)
+            for chunk in chunks(fonts_string, 900):
+                fonts_chunks.append(chunk)
+            embed = discord.Embed(
+                description="Usage: !ascii <fontname> <text>\nFont defaults to slant.\nAvailable fonts:")
+            for chunk in fonts_chunks:
+                embed.add_field(name="Fonts", value=chunk)
+            return await self.bot.say(embed=embed)
         else:
             try:
                 f = Figlet(font=attr)
             except pyfiglet.FontNotFound:
                 f = Figlet(font='slant')
             if text is None:
-                text='Empty'
+                text=attr
             asciistring = f.renderText(text)
             try:
                 return await self.bot.say("```{}```".format(asciistring))
