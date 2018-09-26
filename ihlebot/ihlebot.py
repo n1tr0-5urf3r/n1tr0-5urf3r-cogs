@@ -229,6 +229,8 @@ class Ihlebot:
 
     @commands.command(pass_context=True)
     async def ascii(self, ctx, font=None, text=None):
+        """Print String to ascii art: <font> <text>
+        Available Fonts: http://www.figlet.org/fontdb.cgi"""
         try:
             f = Figlet(font=font)
         except pyfiglet.FontNotFound:
