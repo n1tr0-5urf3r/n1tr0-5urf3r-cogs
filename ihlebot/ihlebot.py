@@ -15,6 +15,10 @@ import asyncio
 import aiohttp
 import urllib.request, json
 
+# For ASCII art
+from pyfiglet import Figlet
+import pyfiglet
+
 # Discord stuff
 import datetime
 import requests
@@ -222,6 +226,15 @@ class Ihlebot:
         except:
             color = discord.Embed.Empty
         return color
+
+    @commands.command(pass_context=True)
+    async def ascii(self, ctx, font, text):
+        try:
+            f = Figlet(font=font)
+        except pyfiglet.FontNotFound:
+            f = Figlet(font='slant')
+        asciistring = f.renderText(text)
+        return await self.bot.say(asciistring)
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
