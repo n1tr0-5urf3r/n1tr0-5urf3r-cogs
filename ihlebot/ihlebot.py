@@ -228,7 +228,7 @@ class Ihlebot:
         return color
 
     @commands.command(pass_context=True)
-    async def ascii(self, ctx, attr=None, text=None):
+    async def ascii(self, ctx, attr, text=None):
         """Print String to ascii art: <font> <text>"""
         if attr.lower() == "help":
             def chunks(s, n):
@@ -254,7 +254,7 @@ class Ihlebot:
             except pyfiglet.FontNotFound:
                 f = Figlet(font='slant')
             if text is None:
-                text=attr
+                text=attr+text
             asciistring = f.renderText(text)
             try:
                 return await self.bot.say("```{}```".format(asciistring))
