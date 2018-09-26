@@ -228,7 +228,7 @@ class Ihlebot:
         return color
 
     @commands.command(pass_context=True)
-    async def ascii(self, ctx, attr, text):
+    async def ascii(self, ctx, attr, text=None):
         """Print String to ascii art: <font> <text>"""
         if attr.lower() == "help":
             def chunks(s, n):
