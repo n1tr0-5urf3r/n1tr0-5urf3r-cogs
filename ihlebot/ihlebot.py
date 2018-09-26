@@ -204,7 +204,7 @@ class Ihlebot:
         await self.bot.say(embed=embed)
         await self.bot.say("https://img.pr0gramm.com/{}".format(item))
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=["cf"])
     async def coinflip(self, ctx, player1=None, *, player2=None):
         """Coinflip, defaults to Kopf/Zahl if no players are given"""
         rng = randint(1, 10)
@@ -228,20 +228,24 @@ class Ihlebot:
         return color
 
     @commands.command(pass_context=True)
-    async def ascii(self, ctx, font=None, text=None):
-        """Print String to ascii art: <font> <text>
-        Available Fonts: http://www.figlet.org/fontdb.cgi"""
-        try:
-            f = Figlet(font=font)
-        except pyfiglet.FontNotFound:
-            f = Figlet(font='slant')
-        if text is None:
-            text='Empty'
-        asciistring = f.renderText(text)
-        try:
-            return await self.bot.say("```{}```".format(asciistring))
-        except discord.errors.HTTPException:
-            return await self.bot.say("Message too long")
+    async def ascii(self, ctx, attr=None, text=None):
+        """Print String to ascii art: <font> <text>"""
+        if attr.lower == "help" and text is None:
+            f = Figlet()
+            fonts = f.getFonts()
+            return await self.bot.say("Usage: !ascii <fontname> <text>\nFont defaults to slant.\nAvailable fonts:``{}``".format(fonts))
+        else:
+            try:
+                f = Figlet(font=attr)
+            except pyfiglet.FontNotFound:
+                f = Figlet(font='slant')
+            if text is None:
+                text='Empty'
+            asciistring = f.renderText(text)
+            try:
+                return await self.bot.say("```{}```".format(asciistring))
+            except discord.errors.HTTPException:
+                return await self.bot.say("Message too long")
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
