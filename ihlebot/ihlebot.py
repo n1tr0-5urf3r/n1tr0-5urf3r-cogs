@@ -233,7 +233,6 @@ class Ihlebot:
         f = Figlet()
         fonts = f.getFonts()
         attr = param.split(' ', 1)[0]
-        await self.bot.say(param)
         if attr.lower() == "help":
             def chunks(s, n):
                 """Produce `n`-character chunks from `s`."""
@@ -253,15 +252,13 @@ class Ihlebot:
         else:
             if attr.lower() in fonts:
                 f = Figlet(font=attr.lower())
-                text = param.split(' ', 1)[1]
-                await self.bot.say("DEBUG font matched: " + text)
+                try:
+                    text = param.split(' ', 1)[1]
+                except IndexError:
+                    text = 'Empty'
             else:
                 f = Figlet(font='slant')
                 text = param
-                await self.bot.say("DEBUG font not matched: " + text)
-            if text is None:
-                text = 'Empty'
-                await self.bot.say("DEBUG no text: " + text)
             asciistring = f.renderText(text)
             try:
                 return await self.bot.say("```{}```".format(asciistring))
