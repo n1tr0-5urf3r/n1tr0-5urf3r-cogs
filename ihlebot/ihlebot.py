@@ -269,8 +269,7 @@ class Ihlebot:
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
-        user = ctx.message.author
-        color = self.getColor(self.bot)
+        color = self.getColor(self.bot.magenta())
 
         # Get time stuff
         today = datetime.datetime.now()
