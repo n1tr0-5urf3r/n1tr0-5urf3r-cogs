@@ -205,10 +205,10 @@ class Ihlebot:
         await self.bot.say("https://img.pr0gramm.com/{}".format(item))
 
     @commands.command(pass_context=True, aliases=["cf"])
-    async def coinflip(self, ctx, choice=None):
+    async def coinflip(self, ctx, param=None):
         """Coinflip, defaults to Kopf/Zahl if no players are given"""
 
-        if choice is None:
+        if param is None:
             rng = randint(1, 10)
             if rng <= 5:
                 return await self.bot.say("Kopf gewinnt!")
@@ -216,8 +216,9 @@ class Ihlebot:
                 return await self.bot.say("Zahl gewinnt!")
         else:
             choices = []
-            for word in choice.split(' '):
+            for word in param.split(' '):
                 choices.append(word)
+            await self.bot.say(param)
             for word in choices:
                 await self.bot.say(word)
             length = len(choices)
