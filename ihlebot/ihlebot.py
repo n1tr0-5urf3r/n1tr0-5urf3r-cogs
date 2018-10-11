@@ -220,7 +220,7 @@ class Ihlebot:
                 choices.append(word)
             length = len(choices)
             rng = randint(0,length-1)
-            return await self.bot.say("*{}* hat gewonnen!".format(choices[rng]))
+            return await self.bot.say("**{}** hat gewonnen!".format(choices[rng]))
 
     def getColor(self, user):
         try:
