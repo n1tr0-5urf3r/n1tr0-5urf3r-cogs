@@ -205,7 +205,7 @@ class Ihlebot:
         await self.bot.say("https://img.pr0gramm.com/{}".format(item))
 
     @commands.command(pass_context=True, aliases=["cf"])
-    async def coinflip(self, ctx, param=None):
+    async def coinflip(self, ctx, *, param=None):
         """Coinflip, defaults to Kopf/Zahl if no players are given"""
 
         if param is None:
