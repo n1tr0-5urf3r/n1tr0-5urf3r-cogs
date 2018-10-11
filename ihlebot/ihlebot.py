@@ -205,20 +205,22 @@ class Ihlebot:
         await self.bot.say("https://img.pr0gramm.com/{}".format(item))
 
     @commands.command(pass_context=True, aliases=["cf"])
-    async def coinflip(self, ctx, player1=None, *, player2=None):
+    async def coinflip(self, ctx, choice):
         """Coinflip, defaults to Kopf/Zahl if no players are given"""
-        rng = randint(1, 10)
 
-        if player1 is None and player2 is None:
-            if rng < 5:
+        if choice is None:
+            rng = randint(1, 10)
+            if rng <= 5:
                 return await self.bot.say("Kopf gewinnt!")
             else:
                 return await self.bot.say("Zahl gewinnt!")
         else:
-            if rng < 5:
-                return await self.bot.say("{} hat gewonnen!".format(player1))
-            else:
-                return await self.bot.say("{} hat gewonnen!".format(player2))
+            choices = []
+            for word in choice.split(' '):
+                choices.append(word)
+            length = len(choices)
+            rng = randint(0,length)
+            return await self.bot.say("{} hat gewonnen!".format(choices[rng]))
 
     def getColor(self, user):
         try:
