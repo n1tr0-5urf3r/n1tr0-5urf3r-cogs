@@ -218,9 +218,6 @@ class Ihlebot:
             choices = []
             for word in param.split(' '):
                 choices.append(word)
-            await self.bot.say(param)
-            for word in choices:
-                await self.bot.say(word)
             length = len(choices)
             rng = randint(0,length-1)
             return await self.bot.say("{} hat gewonnen!".format(choices[rng]))
