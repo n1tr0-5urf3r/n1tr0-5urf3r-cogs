@@ -270,7 +270,7 @@ class Ihlebot:
 
 
     @commands.command(pass_context=True)
-    async def big(self, ctx, emoji):
+    async def big(self, ctx, emoji: discord.Emoji):
         await self.bot.say(emoji.url)
 
     @commands.command(pass_context=True)
