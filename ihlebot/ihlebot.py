@@ -275,7 +275,9 @@ class Ihlebot:
         emojis = []
         for ej in server.emojis:
             emojis.append(ej)
-        await self.bot.say(emojis[0].url)
+            if (emoji == ej.name):
+                await self.bot.say(ej.url)
+                break
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
