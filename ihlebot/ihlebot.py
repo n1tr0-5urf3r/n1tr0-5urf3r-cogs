@@ -275,7 +275,8 @@ class Ihlebot:
         emojis = []
         for ej in server.emojis:
             emojis.append(ej)
-            if (emoji is ":"+ej.name+":"):
+            await self.bot.say(emoji + ":"+ej.name+":")
+            if (emoji == ":"+ej.name+":"):
                 await self.bot.say(ej.url)
                 break
 
