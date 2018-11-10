@@ -69,7 +69,7 @@ class Ihlebot:
         data = discord.Embed(description="Emojilist")
         for ej in server.emojis:
             data.add_field(
-                name=ej.name, value=str(ej) + " " + ej.url, inline=False)
+                name=ej.name, value=str(ej) + " " + ej.url.replace("https://cdn.discordapp.com/emojis/", ""), inline=False)
         await self.bot.say(embed=data)
 
     # @commands.command(pass_context=True)
