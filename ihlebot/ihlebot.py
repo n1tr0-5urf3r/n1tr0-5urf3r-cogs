@@ -36,6 +36,9 @@ class Ihlebot:
     def __unload(self):
         self.session.close()
 
+    def user_is_me(ctx):
+        return ctx.message.author.id == "240799236113956864"
+
     @commands.group(pass_context=True)
     async def ihle(self, ctx):
         """First Test, Commandcall"""
@@ -270,8 +273,8 @@ class Ihlebot:
 
 
     @commands.command(pass_context=True)
-    @commands.has_role("Administrator")
-    async def big(self, ctx, emoji):
+    @commands.check(user_is_me)
+    async def emojiurl(self, ctx):
         server = ctx.message.server
         emojis = []
         for ej in server.emojis:
