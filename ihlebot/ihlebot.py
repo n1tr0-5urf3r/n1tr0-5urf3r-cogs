@@ -268,6 +268,11 @@ class Ihlebot:
             except discord.errors.HTTPException:
                 return await self.bot.say("Message too long")
 
+
+    @commands.command(pass_context=True)
+    async def big(self, ctx, emoji):
+        await self.bot.say(emoji.url)
+
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
         color = discord.Colour.magenta()
