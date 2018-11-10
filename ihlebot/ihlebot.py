@@ -69,7 +69,7 @@ class Ihlebot:
         data = discord.Embed(description="Emojilist")
         for ej in server.emojis:
             data.add_field(
-                name=ej.name, value=str(ej) + " " + ej.id, inline=False)
+                name=ej.name, value=str(ej) + " " + ej.url, inline=False)
         await self.bot.say(embed=data)
 
     # @commands.command(pass_context=True)
@@ -277,8 +277,8 @@ class Ihlebot:
             emojis.append(ej)
             await self.bot.say(emoji + ":"+ej.name+":")
             if (emoji == ":"+ej.name+":"):
+
                 await self.bot.say(ej.url)
-                break
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
