@@ -149,7 +149,7 @@ class Ihlebot:
         """Check if Server is online"""
 
         # Check for valid IP else do DNS lookup
-        valid_ip = re.compile("[0-9]{,3}\.[0-9]{,3}\.[0-9]{,3}")
+        valid_ip = re.compile("([0-9]{1,3}\.){3}[0-9]{1,3}")
         valid_hostname = re.compile(".*\.[a-zA-Z]{2,}")
         valid = False
 
