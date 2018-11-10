@@ -271,9 +271,11 @@ class Ihlebot:
 
     @commands.command(pass_context=True)
     async def big(self, ctx, emoji):
-        await self.bot.say(emoji)
-        await self.bot.say(emoji.name)
-        await self.bot.say(emoji.url)
+        server = ctx.message.server
+        emojis = []
+        for ej in server.emojis:
+            emojis.append(ej)
+        await self.bot.say(emojis[0].url)
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
