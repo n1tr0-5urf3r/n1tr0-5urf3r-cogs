@@ -270,14 +270,13 @@ class Ihlebot:
 
 
     @commands.command(pass_context=True)
+    @commands.has_role("Administrator")
     async def big(self, ctx, emoji):
         server = ctx.message.server
         emojis = []
         for ej in server.emojis:
             emojis.append(ej)
-            await self.bot.say(str(emoji.name) + " :{}:".format(ej.name))
-            if (str(emoji) == ":{}:".format(ej.name)):
-                await self.bot.say(ej.url)
+            await self.bot.say(ej.url)
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
