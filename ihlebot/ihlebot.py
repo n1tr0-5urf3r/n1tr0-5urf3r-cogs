@@ -300,7 +300,7 @@ class Ihlebot:
                 days_ahead += 7
             return d + datetime.timedelta(days_ahead)
 
-        mensa_id = "665" # Tuebingen Morgenstelle
+        mensa_id = "621" # Tuebingen Morgenstelle
 
         if subcommand:
             if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
