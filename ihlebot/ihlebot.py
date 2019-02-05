@@ -300,6 +300,8 @@ class Ihlebot:
                 days_ahead += 7
             return d + datetime.timedelta(days_ahead)
 
+        mensa_id = "665" # Tuebingen Morgenstelle
+
         if subcommand:
             if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
                 cal_week = int(cal_week) + 1
@@ -310,6 +312,8 @@ class Ihlebot:
                 week_end = week_start + datetime.timedelta(days=4)
             elif subcommand.lower() == "heute":
                 heute_flag = True
+            elif subcommand.lower() == "nt":
+                mensa_id = "665"  # Nuertingen
             else:
                 return await self.bot.say("""```
         Mensa:
@@ -324,10 +328,6 @@ class Ihlebot:
         ```""")
 
         # Get data
-        if subcommand.lower() == "nt":
-            mensa_id = "665" # Nuertingen
-        else:
-            mensa_id = "621"  # Tuebingen Morgenstelle
         url_mensa = "https://www.my-stuwe.de//wp-json/mealplans/v1/canteens/{}?lang=de".format(mensa_id)
         r = requests.get(url_mensa)
         r.encoding = 'utf-8-sig'
