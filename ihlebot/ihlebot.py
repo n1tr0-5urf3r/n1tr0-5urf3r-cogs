@@ -314,6 +314,9 @@ class Ihlebot:
                 heute_flag = True
             elif subcommand.lower() == "nt":
                 mensa_id = "665"  # Nuertingen
+            elif subcommand.lower() == "nt heute": # This is ugly
+                mensa_id = "665"  # Nuertingen
+                heute_flag = True
             else:
                 return await self.bot.say("""```
         Mensa:
