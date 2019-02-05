@@ -330,9 +330,10 @@ class Ihlebot:
         data = r.json()
 
         if not data:
-            emoji = get(self.bot.get_all_emojis(), name="woah")
-            reply = await self.bot.say("Keine Daten vom Studierenwerk bekommen :eelsbadman:")
-            return await self.bot.add_reaction(reply, emoji)
+            emoji_woah = get(self.bot.get_all_emojis(), name="woah")
+            emoji_bad = get(self.bot.get_all_emojis(), name="eelsbadman")
+            reply = await self.bot.say("Keine Daten vom Studierenwerk bekommen {}".format(emoji_bad))
+            return await self.bot.add_reaction(reply, emoji_woah)
 
         # Needed later
         wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
