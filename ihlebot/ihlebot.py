@@ -331,8 +331,7 @@ class Ihlebot:
 
         if not data:
             emoji = get(self.bot.get_all_emojis(), name="woah")
-            await self.bot.say(emoji)
-            reply = await self.bot.say("Keine Daten vom Studierenwerk bekommen")
+            reply = await self.bot.say("Keine Daten vom Studierenwerk bekommen :eelsbadman:")
             return await self.bot.add_reaction(reply, emoji)
 
         # Needed later
