@@ -22,6 +22,7 @@ import pyfiglet
 # Discord stuff
 import datetime
 import requests
+from discord.utils import get
 
 client = discord.Client()
 
@@ -327,6 +328,11 @@ class Ihlebot:
         r = requests.get(url_mensa)
         r.encoding = 'utf-8-sig'
         data = r.json()
+
+        if not data:
+            emoji = get(self.bot.get_all_emojis(), name=':woah:')
+            reply = await self.bot.say("Keine Daten vom Studierenwerk bekommen")
+            return await self.bot.add_reaction(reply, emoji)
 
         # Needed later
         wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
