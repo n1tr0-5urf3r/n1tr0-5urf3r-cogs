@@ -317,13 +317,18 @@ class Ihlebot:
             <leer>       Speiseplan der aktuellen Woche
             nextweek     Speiseplan der nächsten Woche
             heute        Speiseplan von heute
+            nt           Speiseplan in Nürtingen
 
             z.B. !mensa oder !mensa nextweek
             Alternativ auch Abkürzungen wie "h" oder "nw"
         ```""")
 
         # Get data
-        url_mensa = "https://www.my-stuwe.de//wp-json/mealplans/v1/canteens/621?lang=de"
+        if subcommand.lower() == "nt":
+            mensa_id = "665" # Nuertingen
+        else:
+            mensa_id = "621"  # Tuebingen Morgenstelle
+        url_mensa = "https://www.my-stuwe.de//wp-json/mealplans/v1/canteens/{}?lang=de".format(mensa_id)
         r = requests.get(url_mensa)
         r.encoding = 'utf-8-sig'
         data = r.json()
@@ -348,7 +353,6 @@ class Ihlebot:
             week_start = today
             week_end = week_start + datetime.timedelta(days=4)
 
-
         # Get Weekdays from today till friday
         if (heute_flag):
             if weekday > 4:
@@ -360,18 +364,19 @@ class Ihlebot:
                 needed_days.append(today + datetime.timedelta(days=days_till_end_of_week))
 
         needed_days.reverse()
+        canteen = data[mensa_id]["canteen"]
         if (heute_flag):
             embed = discord.Embed(
-            description="Mensa Morgenstelle, am {}".format(today.strftime("%d.%m.")), color=color)
+            description="{}, am {}".format(canteen, today.strftime("%d.%m.")), color=color)
         else:
             embed = discord.Embed(
-            description="Mensa Morgenstelle, KW {} vom {} bis {}".format(cal_week, week_start.strftime("%d.%m."),
+            description="{}, KW {} vom {} bis {}".format(canteen, cal_week, week_start.strftime("%d.%m."),
                                                                          week_end.strftime("%d.%m.")), color=color)
         for day in needed_days:
             menu_cur_day = ""
             cur_weekday = day.weekday()
             # Go through all meals (6/day)
-            for id in data["621"]["menus"]:
+            for id in data[mensa_id]["menus"]:
                 # If meal matches today
                 if str(day.date()) in id["menuDate"]:
                     # Collect meal for this day
