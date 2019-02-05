@@ -384,7 +384,7 @@ class Ihlebot:
                 if str(day.date()) in id["menuDate"]:
                     # Collect meal for this day
                     menuLine = id["menuLine"]
-                    if "Dessert SB" not in menuLine or "Beilagen vorport." not in menuLine or "Salat-/ Gemüsebuffet" not in menuLine or "Beilagen SB" not in menuLine:
+                    if "Dessert" not in menuLine and "Beilagen" not in menuLine and "Salat" not in menuLine:
                         price = id["studentPrice"]
                         for food in id["menu"]:
                             menu.append(food)
