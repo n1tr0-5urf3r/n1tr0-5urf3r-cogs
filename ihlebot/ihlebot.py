@@ -323,12 +323,12 @@ class Ihlebot:
         ```""")
 
         # Get data
-
         url_mensa = "https://www.my-stuwe.de//wp-json/mealplans/v1/canteens/621?lang=de"
         r = requests.get(url_mensa)
         r.encoding = 'utf-8-sig'
         data = r.json()
 
+        # No data from studierenwerk
         if not data:
             emoji_woah = get(self.bot.get_all_emojis(), name="woah")
             emoji_bad = get(self.bot.get_all_emojis(), name="eelsbadman")
