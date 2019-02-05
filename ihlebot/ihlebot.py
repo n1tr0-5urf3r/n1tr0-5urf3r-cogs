@@ -314,7 +314,7 @@ class Ihlebot:
                 heute_flag = True
             elif subcommand.lower() == "nt":
                 mensa_id = "665"  # Nuertingen
-            elif subcommand.lower() == "nt heute": # This is ugly
+            elif subcommand.lower() == "ntheute": # This is ugly
                 mensa_id = "665"  # Nuertingen
                 heute_flag = True
             else:
@@ -384,14 +384,17 @@ class Ihlebot:
                 if str(day.date()) in id["menuDate"]:
                     # Collect meal for this day
                     menuLine = id["menuLine"]
-                    price = id["studentPrice"]
-                    for food in id["menu"]:
-                        menu.append(food)
-                    # menu is fully available, build string
-                    menu_cur_day += "*{} - {}€*\n".format(menuLine, price) + "- "+"\n- ".join(menu) + "\n\n"
-                    # Reset menu
-                    menu = []
-                    continue
+                    if "Dessert" not in menuLine:
+                        price = id["studentPrice"]
+                        for food in id["menu"]:
+                            menu.append(food)
+                        # menu is fully available, build string
+                        menu_cur_day += "*{} - {}€*\n".format(menuLine, price) + "- "+"\n- ".join(menu) + "\n\n"
+                        # Reset menu
+                        menu = []
+                        continue
+                    else:
+                        continue
             if menu_cur_day == "":
                 menu_cur_day = "Keine Daten vorhanden"
             # build embed here
