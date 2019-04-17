@@ -404,23 +404,21 @@ class Ihlebot:
                         continue
                     else:
                         continue
-                if data_caf:
-                    for id in data_caf[caf_id]["menus"]:
-                        # If meal matches today
-                        if str(day.date()) in id["menuDate"]:
-                            # Collect meal for this day
-                            menuLine = id["menuLine"]
-                            if "Dessert" not in menuLine and "Beilagen" not in menuLine and "Salat" not in menuLine:
-                                price = id["studentPrice"]
-                                for food in id["menu"]:
-                                    menu.append(food)
-                                # menu is fully available, build string
-                                menu_cur_day += "*{} - {}€*\n".format(menuLine, price) + "- " + "\n- ".join(menu) + "\n\n"
-                                # Reset menu
-                                menu = []
-                                continue
-                            else:
-                                continue
+            embed.add_field(name="{}".format(wochentage[cur_weekday]),
+                            value=menu_cur_day, inline=False)
+            if data_caf:
+                for id in data_caf[caf_id]["menus"]:
+                    # If meal matches today
+                    if str(day.date()) in id["menuDate"]:
+                        # Collect meal for this day
+                        menuLine = "Cafeteria"
+                        price = id["studentPrice"]
+                        for food in id["menu"]:
+                            menu.append(food)
+                        # menu is fully available, build string
+                        menu_cur_day += "*{} - {}€*\n".format(menuLine, price) + "- " + "\n- ".join(menu) + "\n\n"
+                        # Reset menu
+                        menu = []
             if menu_cur_day == "":
                 menu_cur_day = "Keine Daten vorhanden"
             # build embed here
