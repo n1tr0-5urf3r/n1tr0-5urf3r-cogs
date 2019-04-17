@@ -404,8 +404,6 @@ class Ihlebot:
                         continue
                     else:
                         continue
-            embed.add_field(name="{}".format(wochentage[cur_weekday]),
-                            value=menu_cur_day, inline=False)
             if data_caf:
                 for id in data_caf[caf_id]["menus"]:
                     # If meal matches today
