@@ -426,7 +426,7 @@ class Ihlebot:
                             value=menu_cur_day, inline=False)
         embed.set_thumbnail(
             url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
-        embed.set_footer(text='Bot by Fabi')
+        embed.set_footer(text='Bot by Fabi / N1tR0#0914')
         await self.bot.say(embed=embed)
 
 
