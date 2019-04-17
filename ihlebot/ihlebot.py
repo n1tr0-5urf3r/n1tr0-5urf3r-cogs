@@ -405,7 +405,7 @@ class Ihlebot:
                     else:
                         continue
                 if data_caf:
-                    for id in data_caf[mensa_id]["menus"]:
+                    for id in data_caf[caf_id]["menus"]:
                         # If meal matches today
                         if str(day.date()) in id["menuDate"]:
                             # Collect meal for this day
