@@ -340,7 +340,7 @@ class Ihlebot:
             return data
 
         data = get_data(mensa_id)
-        if "nt" not in subcommand.lower():
+        if subcommand and "nt" not in subcommand.lower():
             data_caf = get_data(caf_id)
         else:
             data_caf = None
