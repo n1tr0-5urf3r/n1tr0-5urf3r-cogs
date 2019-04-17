@@ -301,6 +301,7 @@ class Ihlebot:
             return d + datetime.timedelta(days_ahead)
 
         mensa_id = "621" # Tuebingen Morgenstelle
+        caf_id = "724"
 
         if subcommand:
             if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
@@ -330,11 +331,19 @@ class Ihlebot:
             Alternativ auch Abkürzungen wie "h" oder "nw"
         ```""")
 
-        # Get data
-        url_mensa = "https://www.my-stuwe.de//wp-json/mealplans/v1/canteens/{}?lang=de".format(mensa_id)
-        r = requests.get(url_mensa)
-        r.encoding = 'utf-8-sig'
-        data = r.json()
+        def get_data(id):
+            # Get data
+            url_mensa = "https://www.my-stuwe.de/wp-json/mealplans/v1/canteens/{}?lang=de".format(id)
+            r = requests.get(url_mensa)
+            r.encoding = 'utf-8-sig'
+            data = r.json()
+            return data
+
+        data = get_data(mensa_id)
+        if "nt" not in subcommand.lower():
+            data_caf = get_data(caf_id)
+        else:
+            data_caf = None
 
         # No data from studierenwerk
         if not data:
@@ -395,6 +404,23 @@ class Ihlebot:
                         continue
                     else:
                         continue
+                if data_caf:
+                    for id in data_caf[mensa_id]["menus"]:
+                        # If meal matches today
+                        if str(day.date()) in id["menuDate"]:
+                            # Collect meal for this day
+                            menuLine = id["menuLine"]
+                            if "Dessert" not in menuLine and "Beilagen" not in menuLine and "Salat" not in menuLine:
+                                price = id["studentPrice"]
+                                for food in id["menu"]:
+                                    menu.append(food)
+                                # menu is fully available, build string
+                                menu_cur_day += "*{} - {}€*\n".format(menuLine, price) + "- " + "\n- ".join(menu) + "\n\n"
+                                # Reset menu
+                                menu = []
+                                continue
+                            else:
+                                continue
             if menu_cur_day == "":
                 menu_cur_day = "Keine Daten vorhanden"
             # build embed here
