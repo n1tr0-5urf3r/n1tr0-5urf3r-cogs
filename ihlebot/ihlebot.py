@@ -365,7 +365,7 @@ class Ihlebot:
                      "[V]": "[ :seedling: ]",
                      "[L]": "[ :sheep: ]",
                      "[W]": "[ :deer: ]",
-                     "[vegan]": "[ :vegan: ]",
+                     "[vegan]": "[ <:vegan:643514903029743618> ]",
                      "Tagesmenü -": ":spaghetti: Tagesmenü -",
                      "Tagesmenü vegetarisch -": ":seedling: Tagesmenü vegetarisch -",
                      "mensaVital": ":apple: mensaVital",
