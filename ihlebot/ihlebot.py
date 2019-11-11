@@ -315,7 +315,7 @@ class Ihlebot:
             data = r.json()
             return data
 
-        async def build_menu(data, caf=False):
+        def build_menu(data, caf=False):
             menu = []
             menu_cur_day = []
             for id in data:
@@ -445,10 +445,10 @@ class Ihlebot:
         for day in needed_days:
             cur_weekday = day.weekday()
             # Go through all meals (6/day)
-            menu_cur_day = await build_menu(data[mensa_id]["menus"])
+            menu_cur_day = build_menu(data[mensa_id]["menus"])
             if data_caf:
                 # Collect data for cafeteria
-                menu_cur_day_caf = await build_menu(data_caf[caf_id]["menus"], caf=True)
+                menu_cur_day_caf = build_menu(data_caf[caf_id]["menus"], caf=True)
                 # Flatten list
                 menu_cur_day_caf = [item for sublist in menu_cur_day_caf for item in sublist]
                 # Append to menu
