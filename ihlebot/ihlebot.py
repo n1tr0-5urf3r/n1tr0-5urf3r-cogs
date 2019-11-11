@@ -40,13 +40,6 @@ class Ihlebot:
     def user_is_me(ctx):
         return ctx.message.author.id == "240799236113956864"
 
-    @commands.group(pass_context=True)
-    async def ihle(self, ctx):
-        """First Test, Commandcall"""
-        await self.bot.say('Ihle ist der beste!')
-        game = discord.Game(name='Justified Loyalty')
-        await self.bot.change_status(game)
-
     @commands.command(pass_context=True)
     async def pizza(self, ctx):
         """Pizza!"""
@@ -64,7 +57,6 @@ class Ihlebot:
 
         rng = random.randint(0, len(pizza_list))
         await self.bot.say(pizza_list[rng])
-
     @commands.command(pass_context=True)
     async def emojis(self, ctx):
         """Returns a list of all Server Emojis"""
@@ -284,7 +276,75 @@ class Ihlebot:
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
-        color = discord.Colour.magenta()
+
+        def embed_list_lines(embed,
+                             lines,
+                             field_name,
+                             max_characters=1024,
+                             inline=False):
+            zero_width_space = u'\u200b'
+            value = "\n".join(lines)
+            if len(value) > 1024:
+                value = ""
+                values = []
+                for line in lines:
+                    if len(value) + len(line) > 1024:
+                        values.append(value)
+                        value = ""
+                    value += line + "\n"
+                if value:
+                    values.append(value)
+                embed.add_field(name=field_name, value=values[0], inline=inline)
+                for v in values[1:]:
+                    embed.add_field(name=zero_width_space, value=v, inline=inline)
+            else:
+                embed.add_field(name=field_name, value=value, inline=inline)
+            return embed
+
+        def next_weekday(d, weekday):
+            days_ahead = weekday - d.weekday()
+            if days_ahead <= 0:  # Target day already happened this week
+                days_ahead += 7
+            return d + datetime.timedelta(days_ahead)
+
+        def get_data(id):
+            # Get data
+            url_mensa = "https://www.my-stuwe.de/wp-json/mealplans/v1/canteens/{}?lang=de".format(id)
+            r = requests.get(url_mensa)
+            r.encoding = 'utf-8-sig'
+            data = r.json()
+            return data
+
+        async def build_menu(data, caf=False):
+            menu = []
+            menu_cur_day = []
+            for id in data:
+                # If meal matches today
+                if str(day.date()) in id["menuDate"]:
+                    # Collect meal for this day
+                    if caf:
+                        menuLine = "Cafeteria"
+                    else:
+                        menuLine = id["menuLine"]
+                    if "Dessert" not in menuLine and "Beilagen" not in menuLine and "Salat" not in menuLine:
+                        price = id["studentPrice"]
+                        # Append newline to last entry
+                        if id["menu"]:
+                            id["menu"][-1] = id["menu"][-1] + "\n"
+                        for food in id["menu"]:
+                            if caf:
+                                if re.match("^Pommes frites$", food):
+                                    continue
+                            food = "- {}".format(food)
+                            menu.append(food)
+                        if not menu:
+                            continue
+                        # menu is fully available, build string
+                        menu_cur_day.append(["*{} - {}€*".format(menuLine, price)])
+                        menu_cur_day.append(menu)
+                        # Reset menu
+                        menu = []
+            return menu_cur_day
 
         # Get time stuff
         today = datetime.datetime.now()
@@ -294,15 +354,19 @@ class Ihlebot:
         week_end = today + datetime.timedelta(days=4 - weekday)
         heute_flag = False
 
-        def next_weekday(d, weekday):
-            days_ahead = weekday - d.weekday()
-            if days_ahead <= 0:  # Target day already happened this week
-                days_ahead += 7
-            return d + datetime.timedelta(days_ahead)
-
+        color = discord.Colour.magenta()
         mensa_id = "621" # Tuebingen Morgenstelle
         caf_id = "724"
-
+        emoji_map = {"[S]": "[ :pig2: ]",
+                     "[R]": "[ :cow2: ]",
+                     "[S/R]": "[ :pig2: / :cow2: ]",
+                     "[F]": "[ :fish: ]",
+                     "[G]": "[ :chicken: ]",
+                     "[V]": "[ :seedling: ]",
+                     "Tagesmenü -": ":spaghetti: Tagesmenü -",
+                     "Tagesmenü vegetarisch -": ":seedling: Tagesmenü vegetarisch -",
+                     "mensaVital": ":apple: mensaVital",
+                     "Cafeteria": ":coffee: Cafeteria"}
         if subcommand:
             if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
                 cal_week = int(cal_week) + 1
@@ -331,14 +395,6 @@ class Ihlebot:
             Alternativ auch Abkürzungen wie "h" oder "nw"
         ```""")
 
-        def get_data(id):
-            # Get data
-            url_mensa = "https://www.my-stuwe.de/wp-json/mealplans/v1/canteens/{}?lang=de".format(id)
-            r = requests.get(url_mensa)
-            r.encoding = 'utf-8-sig'
-            data = r.json()
-            return data
-
         data = get_data(mensa_id)
         if subcommand and "nt" not in subcommand.lower() or not subcommand:
             data_caf = get_data(caf_id)
@@ -355,7 +411,6 @@ class Ihlebot:
         # Needed later
         wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
         needed_days = []
-        menu = []
 
         # Show next week on weekends
         if weekday > 4:
@@ -385,47 +440,27 @@ class Ihlebot:
             description="{}, KW {} vom {} bis {}".format(canteen, cal_week, week_start.strftime("%d.%m."),
                                                                          week_end.strftime("%d.%m.")), color=color)
         for day in needed_days:
-            menu_cur_day = ""
             cur_weekday = day.weekday()
             # Go through all meals (6/day)
-            for id in data[mensa_id]["menus"]:
-                # If meal matches today
-                if str(day.date()) in id["menuDate"]:
-                    # Collect meal for this day
-                    menuLine = id["menuLine"]
-                    if "Dessert" not in menuLine and "Beilagen" not in menuLine and "Salat" not in menuLine:
-                        price = id["studentPrice"]
-                        for food in id["menu"]:
-                            menu.append(food)
-                        if not menu:
-                            continue
-                        # menu is fully available, build string
-                        menu_cur_day += "*{} - {}€*\n".format(menuLine, price) + "- "+"\n- ".join(menu) + "\n\n"
-                        # Reset menu
-                        menu = []
-                        continue
-                    else:
-                        continue
+            menu_cur_day = await build_menu(data[mensa_id]["menus"])
             if data_caf:
-                for id in data_caf[caf_id]["menus"]:
-                    # If meal matches today
-                    if str(day.date()) in id["menuDate"]:
-                        # Collect meal for this day
-                        menuLine = "Cafeteria"
-                        price = id["studentPrice"]
-                        for food in id["menu"]:
-                            menu.append(food)
-                        if not menu:
-                            continue
-                        # menu is fully available, build string
-                        menu_cur_day += "*{} - {}€*\n".format(menuLine, price) + "- " + "\n- ".join(menu) + "\n\n"
-                        # Reset menu
-                        menu = []
-            if menu_cur_day == "":
+                # Collect data for cafeteria
+                menu_cur_day_caf = await build_menu(data_caf[caf_id]["menus"], caf=True)
+                # Flatten list
+                menu_cur_day_caf = [item for sublist in menu_cur_day_caf for item in sublist]
+                # Append to menu
+                menu_cur_day.append(menu_cur_day_caf)
+            # Flatten list
+            menu_cur_day = [item for sublist in menu_cur_day for item in sublist]
+            if menu_cur_day == []:
                 menu_cur_day = "Keine Daten vorhanden"
+            else:
+                # Do emoji mapping here
+                for k, v in emoji_map.items():
+                    menu_cur_day = [w.replace(k, v) for w in menu_cur_day]
             # build embed here
-            embed.add_field(name="{}".format(wochentage[cur_weekday]),
-                            value=menu_cur_day, inline=False)
+            embed = embed_list_lines(
+                embed, menu_cur_day, "> **{}**".format(wochentage[cur_weekday]), inline=True)
         embed.set_thumbnail(
             url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
         embed.set_footer(text='Bot by Fabi / N1tR0#0914')
@@ -644,7 +679,6 @@ class Ihlebot:
    Für GDI: Wie in IdS.\n""")
 
         return await self.bot.say(embed=embed)
-
 
 def setup(bot):
     n = Ihlebot(bot)
