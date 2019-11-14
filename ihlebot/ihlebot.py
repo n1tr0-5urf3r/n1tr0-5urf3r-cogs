@@ -335,7 +335,7 @@ class Ihlebot:
                             if caf:
                                 if re.match("^Pommes frites$", food):
                                     continue
-                            food = "- {}".format(food)
+                            food = "-{}".format(food)
                             menu.append(food)
                         if not menu:
                             continue
@@ -367,9 +367,11 @@ class Ihlebot:
                      "[W]": "[ :deer: ]",
                      "[vegan]": "[ <:vegan:643514903029743618> ]",
                      "Tagesmenü -": ":spaghetti: Tagesmenü -",
+                     "Tagesmenü 2 -": ":spaghetti: Tagesmenü 2 -",
                      "Tagesmenü vegetarisch -": ":seedling: Tagesmenü vegetarisch -",
                      "mensaVital": ":apple: mensaVital",
-                     "Cafeteria": ":coffee: Cafeteria"}
+                     "Cafeteria": ":coffee: Cafeteria",
+                     "Angebot des Tages": ":dollar: Angebot des Tages"}
         if subcommand:
             if subcommand.lower() == "nextweek" or subcommand.lower() == "nw":
                 cal_week = int(cal_week) + 1
