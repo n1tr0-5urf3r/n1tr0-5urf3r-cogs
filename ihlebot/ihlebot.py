@@ -459,13 +459,14 @@ class Ihlebot:
             menu_cur_day = [item for sublist in menu_cur_day for item in sublist]
             if menu_cur_day == []:
                 menu_cur_day = "Keine Daten vorhanden"
+                embed.add_field(name="> **{}**".format(wochentage[cur_weekday]), value=menu_cur_day)
             else:
                 # Do emoji mapping here
                 for k, v in emoji_map.items():
                     menu_cur_day = [w.replace(k, v) for w in menu_cur_day]
-            # build embed here
-            embed = embed_list_lines(
-                embed, menu_cur_day, "> **{}**".format(wochentage[cur_weekday]), inline=True)
+                # build embed here
+                embed = embed_list_lines(
+                    embed, menu_cur_day, "> **{}**".format(wochentage[cur_weekday]), inline=True)
         embed.set_thumbnail(
             url='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg/220px-Studentenwerk_T%C3%BCbingen-Hohenheim_logo.svg.png')
         embed.set_footer(text='Bot by Fabi / N1tR0#0914')
