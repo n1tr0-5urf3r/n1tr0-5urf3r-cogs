@@ -205,18 +205,20 @@ class Ihlebot:
             await self.bot.say(ej.url)
 
     @commands.command(pass_context=True)
-    async def wahrheit(self, ctx, s1, s2, s3):
+    async def w(self, ctx, s1, s2, s3):
         """
+        Erzähle zwei Wahrheiten und eine Lüge! Die anderen müssen raten, welche Aussage gelogen ist.
+        Beispiel: !w "Ich war noch niemals in New York" "Ich mag Gurken" "Ich studiere Informatik"
 
         :param s1: A truth
-        :param s2: Another truth
+        :param s2: Another truth, maybe a lie
         :param s3: Another truth
         :return:
         """
         reply = await self.bot.say(":one: {}\n:two: {}\n:three: {}".format(s1, s2, s3))
-        for i in range(1, 3):
-            emoji = ('{i}\N{combining enclosing keycap}')
-            return await self.bot.add_reaction(reply, emoji)
+        emojis = ['1\N{combining enclosing keycap}', '2\N{combining enclosing keycap}', '3\N{combining enclosing keycap}']
+        for emoji in emojis:
+            await self.bot.add_reaction(reply, emoji)
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
