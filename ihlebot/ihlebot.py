@@ -215,7 +215,7 @@ class Ihlebot:
         """
         exp = [s1, s2, s3]
         reply = await self.bot.say("test".format())
-        reactions = ['one', 'two', 'three']
+        reactions = [f"1\N{combining enclosing keycap}"]
         for emoji in reactions:
             await self.bot.add_reaction(reply, emoji)
 
