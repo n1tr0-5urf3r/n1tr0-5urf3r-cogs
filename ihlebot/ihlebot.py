@@ -215,7 +215,7 @@ class Ihlebot:
         :param s3: Another truth
         :return:
         """
-        if s4:
+        if s4 or not s3 or not s2:
             return await self.bot.say("Denke dran nur 3 Antworten zu geben und diese mit \"\" abzutrennen.")
         reply = await self.bot.say(":one: {}\n:two: {}\n:three: {}".format(s1, s2, s3))
         emojis = ['1\N{combining enclosing keycap}', '2\N{combining enclosing keycap}', '3\N{combining enclosing keycap}']
