@@ -216,7 +216,8 @@ class Ihlebot:
         exp = [s1, s2, s3]
         reply = await self.bot.say("test".format())
         #reactions = [f"1\N{combining enclosing keycap}"]
-        await self.bot.add_reaction(reply, emoji="one:702254553067814984")
+        emoji = self.bot.get_emoji(702254553067814984)
+        await self.bot.add_reaction(reply, emoji=emoji)
 
 
     @commands.command(pass_context=True)
