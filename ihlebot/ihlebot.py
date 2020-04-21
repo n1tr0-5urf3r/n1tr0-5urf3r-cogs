@@ -215,10 +215,9 @@ class Ihlebot:
         """
         exp = [s1, s2, s3]
         reply = await self.bot.say("test".format())
-        reactions = ['dart']
+        emoji_one = get(self.bot.get_all_emojis(), name="one")
         #reactions = [f"1\N{combining enclosing keycap}"]
-        for emoji in reactions:
-            await self.bot.add_reaction(reply, emoji)
+        await self.bot.add_reaction(reply, emoji_one)
 
 
     @commands.command(pass_context=True)
