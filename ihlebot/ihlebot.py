@@ -213,10 +213,10 @@ class Ihlebot:
         :param s3: Another truth
         :return:
         """
-        exp = [s1, s2, s3]
-        reply = await self.bot.say("test".format())
-        emoji = ('1\N{combining enclosing keycap}')
-        return await self.bot.add_reaction(reply, emoji)
+        reply = await self.bot.say(":one: {}\n:two: {}\n:three: {}".format(s1, s2, s3))
+        for i in range(1, 3):
+            emoji = ('{i}\N{combining enclosing keycap}')
+            return await self.bot.add_reaction(reply, emoji)
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
