@@ -215,7 +215,10 @@ class Ihlebot:
         """
         exp = [s1, s2, s3]
         reply = await self.bot.say("test".format())
-        return await self.bot.add_reaction(reply, ":one:")
+        reactions = ['one', 'two', 'three']
+        for emoji in reactions:
+            await self.bot.add_reaction(reply, emoji)
+
 
     @commands.command(pass_context=True)
     async def mensa(self, ctx, subcommand=None):
