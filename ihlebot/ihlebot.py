@@ -222,7 +222,7 @@ class Ihlebot:
         for emoji in emojis:
             await self.bot.add_reaction(reply, emoji)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=["Mensa"])
     async def mensa(self, ctx, subcommand=None):
 
         def embed_list_lines(embed,
