@@ -424,14 +424,13 @@ class Ihlebot:
 
     @commands.command(pass_context=True)
     @commands.has_role("Administrator")
-    async def allrole(self, ctx):
+    async def allrole(self, ctx, group=None):
         server = ctx.message.server
-        role = discord.utils.get(server.roles, name="rw-")
+        role = discord.utils.get(server.roles, name=group.lower())
         members = server.members
         for member in members:
             try:
                 await self.bot.add_roles(member, role)
-                await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(member.mention, "rw-"))
             except AttributeError:
                 await self.bot.say("Fehler")
 
