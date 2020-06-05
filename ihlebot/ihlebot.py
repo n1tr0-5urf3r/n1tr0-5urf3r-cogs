@@ -420,7 +420,22 @@ class Ihlebot:
         embed.set_footer(text='Bot by Fabi / N1tR0#0914')
         await self.bot.say(embed=embed)
 
-    # @commands.command(pass_context=True)
+
+
+    @commands.command(pass_context=True)
+    @commands.has_role("Administrator")
+    async def allrole(self, ctx):
+        server = ctx.message.server
+        role = discord.utils.get(server.roles, name="rw-")
+        members = server.members
+        for member in members:
+            try:
+                await self.bot.add_roles(member, role)
+                await self.bot.say("{}, du wurdest zu {} hinzugefügt".format(member.mention, "rw-"))
+            except AttributeError:
+                await self.bot.say("Fehler")
+
+# @commands.command(pass_context=True)
     # @commands.has_role("Administrator")
     # async def createroles(self, ctx):
     #     """Create roles to each channel that begins with "übungsgruppe- and set permissions"""
