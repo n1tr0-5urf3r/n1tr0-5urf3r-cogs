@@ -422,17 +422,17 @@ class Ihlebot:
 
 
 
-    @commands.command(pass_context=True)
-    @commands.has_role("Administrator")
-    async def allrole(self, ctx, group=None):
-        server = ctx.message.server
-        role = discord.utils.get(server.roles, name=group.lower())
-        members = server.members
-        for member in members:
-            try:
-                await self.bot.add_roles(member, role)
-            except AttributeError:
-                await self.bot.say("Fehler")
+    # @commands.command(pass_context=True)
+    # @commands.has_role("Administrator")
+    # async def allrole(self, ctx, group=None):
+    #     server = ctx.message.server
+    #     role = discord.utils.get(server.roles, name=group.lower())
+    #     members = server.members
+    #     for member in members:
+    #         try:
+    #             await self.bot.add_roles(member, role)
+    #         except AttributeError:
+    #             await self.bot.say("Fehler")
 
 # @commands.command(pass_context=True)
     # @commands.has_role("Administrator")
